@@ -2,17 +2,20 @@
   <el-container class="container">
     <el-header class="header">
       <div>
-        <img :src="logoUrl" alt="">
+        <img
+          :src="logoUrl"
+          alt=""
+        >
       </div>
-      <p class="header__p">HELLO, USERNAME</p>
+      <p class="header__p">
+        HELLO, USERNAME
+      </p>
     </el-header>
     <el-container class="main">
-      <el-aside width="240px">
-        <aside-menu/>
+      <el-aside width="280px">
+        <aside-menu />
       </el-aside>
-      <el-main class="main__stage">
-
-      </el-main>
+      <el-main class="main__stage" />
     </el-container>
   </el-container>
 </template>

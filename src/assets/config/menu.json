@@ -1,7 +1,7 @@
 [
   {
     "name": "form",
-    "desc": "表单组件",
+    "desc": "表单类组件",
     "children": [
       {
         "name": "Radio",
@@ -22,11 +22,6 @@
         "name": "Cascader",
         "desc": "级联选择器",
         "componentName": "el-cascader"
-      },
-      {
-        "name": "Switch",
-        "desc": "开关",
-        "componentName": "el-switch"
       },
       {
         "name": "Switch",
