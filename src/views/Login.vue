@@ -2,16 +2,21 @@
   <div class="home">
     <el-form class="form">
       <el-form-item>
-        <el-input placeholder="请输入用户名"></el-input>
+        <keep-alive>
+          <el-input placeholder="请输入用户名" />
+        </keep-alive>
       </el-form-item>
       <el-form-item>
-        <el-input placeholder="请输入密码"></el-input>
+        <el-input placeholder="请输入密码" />
       </el-form-item>
       <el-form-item>
         <el-button
           type="primary"
           style="width: 100%"
-          @click="login">登录</el-button>
+          @click="login"
+        >
+          登录
+        </el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -21,7 +26,7 @@
 // @ is an alias to /src
 
 export default {
-  name: 'login',
+  name: 'Login',
   methods: {
     login () {
       this.$router.push({ name: 'home' })

@@ -15,16 +15,20 @@
       <el-aside width="280px">
         <aside-menu />
       </el-aside>
-      <el-main class="main__stage" />
+      <el-main class="main__stage">
+        <sketchpad />
+      </el-main>
     </el-container>
   </el-container>
 </template>
 
 <script>
 import asideMenu from '@/components/asideMenu'
+import sketchpad from '@/components/sketchpad'
 export default {
   components: {
-    asideMenu
+    asideMenu,
+    sketchpad
   },
   data () {
     return {
@@ -54,9 +58,9 @@ export default {
     height: 100%;
     padding: 10px;
     background: #e7e7e7;
-
     .main__stage {
       margin-left: 10px;
+      text-align: left;
       width: 100%;
       height: 100%;
       background: #fff;

@@ -1,12 +1,25 @@
 [
   {
+    "name": "basic",
+    "desc": "基础组件",
+    "children": [
+      {
+        "name": "Button",
+        "desc": "按钮",
+        "componentName": "el-button",
+        "innerText": "默认按钮"
+      }
+    ]
+  },
+  {
     "name": "form",
     "desc": "表单类组件",
     "children": [
       {
         "name": "Radio",
         "desc": "单选框",
-        "componentName": "el-radio"
+        "componentName": "el-radio",
+        "innerText": "备选项"
       },
       {
         "name": "CheckBox",
@@ -46,7 +59,7 @@
       {
         "name": "DateTimePicker",
         "desc": "时间日期选择器",
-        "componentName": "el-date-time-picker"
+        "componentName": "el-date-picker"
       },
       {
         "name": "Upload",
@@ -129,7 +142,7 @@
       {
         "name": "NavMenu",
         "desc": "导航菜单",
-        "componentName": "el-navmenu"
+        "componentName": "el-menu"
       },
       {
         "name": "Tabs",

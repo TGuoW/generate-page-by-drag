@@ -16,12 +16,10 @@
           :key="item.name"
           :index="item.name"
         >
-          <!-- <span > -->
           <move-component
             slot="title"
             :info="item"
           />
-          <!-- </span> -->
         </el-menu-item>
       </el-submenu>
     </el-menu>
