@@ -1,4 +1,6 @@
-# generate-page-by-drag1
+# generate-page-by-drag
+
+通过拖曳生成页面，以及相应的vue代码，使用的ui库为ElementUI
 
 ## Project setup
 ```
