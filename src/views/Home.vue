@@ -16,7 +16,12 @@
         <aside-menu />
       </el-aside>
       <el-main class="main__stage">
-        <sketchpad />
+        <div class="stage__sketchpad">
+          <sketchpad />
+        </div>
+        <div class="stage__detail">
+          <component-detail />
+        </div>
       </el-main>
     </el-container>
   </el-container>
@@ -25,10 +30,12 @@
 <script>
 import asideMenu from '@/components/asideMenu'
 import sketchpad from '@/components/sketchpad'
+import componentDetail from '@/components/componentDetail'
 export default {
   components: {
     asideMenu,
-    sketchpad
+    sketchpad,
+    componentDetail
   },
   data () {
     return {
@@ -63,7 +70,17 @@ export default {
       text-align: left;
       width: 100%;
       height: 100%;
-      background: #fff;
+      padding: 0;
+      display: flex;
+      .stage__sketchpad {
+        background: #fff;
+        flex: 1;
+      }
+      .stage__detail {
+        background: #fff;
+        margin-left: 10px;
+        width: 320px;
+      }
     }
   }
 </style>
