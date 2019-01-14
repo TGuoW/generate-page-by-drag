@@ -4,22 +4,7 @@ export default {
   data () {
     return {
       config: {},
-      formValue: {},
-      type: '',
-      typeSelectArr: [
-        {value: '', label: '默认按钮'},
-        {value: 'primary', label: '主要按钮'},
-        {value: 'success', label: '成功按钮'},
-        {value: 'info', label: '信息按钮'},
-        {value: 'warning', label: '警告按钮'},
-        {value: 'danger', label: '危险按钮'},
-        {value: 'text', label: '文字按钮'}
-      ],
-      isPlain: false,
-      isRound: false,
-      isCircle: false,
-      isDisabled: false,
-      isAutofocus: false
+      formValue: {}
     }
   },
   computed: {
@@ -45,7 +30,7 @@ export default {
       return [
         h('el-button', {
           props: this.formValue
-        }, 'test'),
+        }, this.formValue.innerText),
         h('div', {
           style: {
             lineHeight: '40px'
@@ -92,6 +77,15 @@ export default {
                       active-text="是"
                       inactive-text="否">>
                     </el-switch>
+                  </el-form-item>
+                )
+              }
+              if (item.type === 'input') {
+                node = (
+                  <el-form-item label={item.desc}>
+                    <el-input
+                      on-input={(e) => this.sync(item.name, e)}
+                      value={this.formValue[item.name]}/>
                   </el-form-item>
                 )
               }

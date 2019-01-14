@@ -55,9 +55,12 @@ export default {
     },
     handleMouseMove (e) {
       if (this.isMove) {
-        const index = e.target.__vue__.$attrs.index
+        if (e.target.__vue__) {
+          const index = e.target.__vue__.$attrs.index
+          this.$store.commit('updateCurrentComponentIndex', index)
+        }
         this.pos = [e.pageX, e.pageY]
-        this.$store.commit('updateCurrentComponentIndex', index)
+
       }
     },
     handleMouseUp () {

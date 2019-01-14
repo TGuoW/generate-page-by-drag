@@ -18,6 +18,11 @@ export default {
         ]
       },
       {
+        name: 'innerText',
+        desc: '按钮文字',
+        type: 'input'
+      },
+      {
         name: 'plain',
         desc: '朴素按钮',
         type: 'switch'
@@ -45,6 +50,7 @@ export default {
     ]
   },
   formValue: {
+    innerText: '按钮',
     type: '',
     plain: false,
     round: false,
