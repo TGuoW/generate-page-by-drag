@@ -5,7 +5,11 @@
   vuex：接收详情组件的key以及各类设置的值，更新到画板
   画板：维护组件数组，
   */
+  import viewComponent from './viewComponent.vue'
   export default {
+    components: {
+      viewComponent
+    },
     data() {
       return {
         rowNum: 10
@@ -28,7 +32,11 @@
           class: {
             row: this.currentComponentIndex === 1
           }
-        }, this.componentList.map((item) => h(item.componentName, item.innerText))),
+        }, this.componentList.map((item) => h('view-component', {
+          props: {
+            componentInfo: item
+          }
+        }))),
         h('el-row')
       ])
     },

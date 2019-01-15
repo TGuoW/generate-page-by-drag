@@ -9,11 +9,8 @@ export default {
   },
   computed: {
     currentComponent () {
-      return {
-        name: 'Button',
-        desc: '按钮',
-        componentName: 'el-button'
-      }
+      let getCurrentComponent = this.$store.state.currentComponent
+      return getCurrentComponent
     }
   },
   mounted () {
@@ -23,6 +20,15 @@ export default {
   methods: {
     sync (prop, value) {
       this.formValue[prop] = value
+    }
+  },
+  watch: {
+    formValue: {
+      handler (val) {
+        console.log({...this.currentComponent, ...this.formValue})
+        this.$store.commit('updateCurrentComponent', {...this.currentComponent, ...this.formValue})
+      },
+      deep: true
     }
   },
   render (h) {

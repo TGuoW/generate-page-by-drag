@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     componentList: [],
-    currentComponentIndex: [0, 0]
+    currentComponentIndex: [0, 0],
+    currentComponent: {}
   },
   mutations: {
     addComponent (state, component) {
@@ -14,6 +15,9 @@ export default new Vuex.Store({
     },
     updateCurrentComponentIndex (state, index) {
       state.currentComponentIndex = index
+    },
+    updateCurrentComponent (state, componentInfo) {
+      state.currentComponent = componentInfo
     }
   },
   actions: {
