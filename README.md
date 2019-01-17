@@ -2,6 +2,8 @@
 
 通过拖曳生成页面，以及相应的vue代码，使用的ui库为ElementUI
 
+进度： 按钮
+
 ## Project setup
 ```
 yarn install
