@@ -11,12 +11,13 @@ export default new Vuex.Store({
   },
   mutations: {
     addComponent (state, component) {
-      state.componentList.push(component)
+      state.componentList.push({...component, id: state.componentList.length})
     },
     updateCurrentComponentIndex (state, index) {
       state.currentComponentIndex = index
     },
     updateCurrentComponent (state, componentInfo) {
+      state.componentList.splice(componentInfo.id, 1, componentInfo)
       state.currentComponent = componentInfo
     }
   },

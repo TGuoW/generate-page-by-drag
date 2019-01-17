@@ -1,6 +1,6 @@
 {
-  "name": "generate-page-by-drag1",
-  "version": "0.1.0",
+  "name": "generate-page-by-drag",
+  "version": "0.1.1",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",

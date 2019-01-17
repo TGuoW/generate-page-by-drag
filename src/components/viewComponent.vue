@@ -8,20 +8,14 @@ export default {
       }
     }
   },
-  computed: {
-    componentInfoFormVuex () {
-      return this.$store.state.currentComponent
-    }
-  },
   render (h) {
-    console.log({...this.componentInfoFormVuex, ...this.componentInfo})
     return h('div', {
       on: {
         '!click': this.handleClick
       }
     }, [h(this.componentInfo.componentName, {
-      props: {...this.componentInfoFormVuex, ...this.componentInfo}
-    }, this.componentInfoFormVuex.innerText || this.componentInfo.innerText)])
+      props: this.componentInfo
+    }, this.componentInfo.innerText)])
   },
   methods: {
     handleClick (e) {

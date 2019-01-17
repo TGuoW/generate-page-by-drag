@@ -4,12 +4,15 @@ export default {
   data () {
     return {
       config: {},
-      formValue: {}
+      formValue: {},
+      isFromVuex: false
     }
   },
   computed: {
     currentComponent () {
       let getCurrentComponent = this.$store.state.currentComponent
+      this.formValue = Object.assign({}, this.formValue, getCurrentComponent)
+      this.isFromVuex = true
       return getCurrentComponent
     }
   },
@@ -25,7 +28,10 @@ export default {
   watch: {
     formValue: {
       handler (val) {
-        console.log({...this.currentComponent, ...this.formValue})
+        if (this.isFromVuex) {
+          this.isFromVuex = false
+          return
+        }
         this.$store.commit('updateCurrentComponent', {...this.currentComponent, ...this.formValue})
       },
       deep: true
