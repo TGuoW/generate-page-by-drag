@@ -4,7 +4,7 @@ export default {
     componentInfo: {
       type: Object,
       default () {
-        return ''
+        return {}
       }
     }
   },
@@ -14,7 +14,8 @@ export default {
         '!click': this.handleClick
       }
     }, [h(this.componentInfo.componentName, {
-      props: this.componentInfo
+      props: this.componentInfo,
+      attrs: this.componentInfo
     }, this.componentInfo.innerText)])
   },
   methods: {

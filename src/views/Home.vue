@@ -73,6 +73,7 @@ export default {
       padding: 0;
       display: flex;
       .stage__sketchpad {
+        padding: 10px;
         background: #fff;
         flex: 1;
       }

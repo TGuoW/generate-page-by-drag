@@ -11,26 +11,26 @@ export default [
       }
     ]
   },
-  // {
-  //   "name": "form",
-  //   "desc": "表单类组件",
-  //   "children": [
-  //     {
-  //       "name": "Radio",
-  //       "desc": "单选框",
-  //       "componentName": "el-radio",
-  //       "innerText": "备选项"
-  //     },
+  {
+    "name": "form",
+    "desc": "表单类组件",
+    "children": [
+      {
+        "name": "Radio",
+        "desc": "单选框",
+        "componentName": "el-radio",
+        "innerText": "备选项"
+      },
   //     {
   //       "name": "CheckBox",
   //       "desc": "多选框",
   //       "componentName": "el-checkbox"
   //     },
-  //     {
-  //       "name": "Input",
-  //       "desc": "输入框",
-  //       "componentName": "el-input"
-  //     },
+      {
+        "name": "Input",
+        "desc": "输入框",
+        "componentName": "el-input"
+      },
   //     {
   //       "name": "Cascader",
   //       "desc": "级联选择器",
@@ -86,8 +86,8 @@ export default [
   //       "desc": "表单",
   //       "componentName": "el-form"
   //     }
-  //   ]
-  // },
+    ]
+  },
   // {
   //   "name": "Data",
   //   "desc": "数据类组件",

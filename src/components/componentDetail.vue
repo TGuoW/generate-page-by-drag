@@ -11,18 +11,18 @@ export default {
   computed: {
     currentComponent () {
       let getCurrentComponent = this.$store.state.currentComponent
-      this.formValue = Object.assign({}, this.formValue, getCurrentComponent)
-      this.isFromVuex = true
+      if (getCurrentComponent.name) {
+        this.isFromVuex = true
+        this.config = config[getCurrentComponent.name].baseConfig
+        this.formValue = Object.assign({}, config[getCurrentComponent.name].formValue, getCurrentComponent)
+      }
+
       return getCurrentComponent
     }
   },
-  mounted () {
-    this.config = config['Button'].baseConfig
-    this.formValue = config['Button'].formValue
-  },
   methods: {
     sync (prop, value) {
-      this.formValue[prop] = value
+      this.$set(this.formValue, prop, value)
     }
   },
   watch: {
@@ -40,12 +40,16 @@ export default {
   render (h) {
     const currentComponent = () => {
       return [
-        h('el-button', {
-          props: this.formValue
+        h(this.currentComponent.componentName, {
+          props: this.formValue,
+          attrs: this.formValue,
+          style: {
+            width: '180px'
+          }
         }, this.formValue.innerText),
         h('div', {
           style: {
-            lineHeight: '40px'
+            // lineHeight: '40px'
           }
         }, this.currentComponent.desc + ' ' + this.currentComponent.name)
       ]
@@ -61,7 +65,7 @@ export default {
         <div class="title">
           配置
         </div>
-        <el-form label-width="80px" label-position="right">
+        <el-form label-width="100px" label-position="right">
           { this.config.options ? this.config.options.map(item => {
               let node
               if (item.type === 'select') {
