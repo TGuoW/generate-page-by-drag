@@ -57,7 +57,11 @@ export default {
       if (this.isMove) {
         if (e.target.__vue__) {
           const index = e.target.__vue__.$attrs.index
-          this.$store.commit('updateCurrentComponentIndex', index)
+          this.$store.commit({
+            type: 'updateCurrentComponentIndex',
+            componentInfo: index,
+            index: 0
+          })
         }
         this.pos = [e.pageX, e.pageY]
 
@@ -66,7 +70,11 @@ export default {
     handleMouseUp () {
       if (this.isMove) {
         this.isMove = false
-        this.$store.commit('addComponent', this.info)
+        this.$store.commit({
+          type: 'addComponent',
+          componentInfo: this.info,
+          index: 0
+        })
       }
     }
   },

@@ -23,22 +23,30 @@
         return this.$store.state.currentComponentIndex
       }
     },
+    methods: {
+      handleClickLabel (e) {
+        console.log(e)
+      }
+    },
     render(h) {
-      return h('div', [
-        h('el-row', {
-          attrs: {
-            index: 1
-          },
-          class: {
-            row: this.currentComponentIndex === 1
-          }
-        }, this.componentList.map((item) => h('view-component', {
+      return h('el-form', {
+        props: {
+          'label-width': '100px'
+        }
+      }, this.componentList.map((item, index) => h('el-form-item', {
+        attrs: {
+          index: index + 1
+        },
+        class: {
+          row: this.currentComponentIndex === 1
+        }
+      }, [(<template slot="label">标题</template>),
+        ...item.map(ele => h('view-component', {
           props: {
-            componentInfo: item
+            componentInfo: ele
           }
-        }))),
-        h('el-row')
-      ])
+        }))
+      ])))
     },
   }
 </script>

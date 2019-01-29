@@ -5,20 +5,20 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    componentList: [],
+    componentList: [[]],
     currentComponentIndex: [0, 0],
     currentComponent: {}
   },
   mutations: {
-    addComponent (state, component) {
-      state.componentList.push({...component, id: state.componentList.length})
+    addComponent (state, payload) {
+      state.componentList[payload.index].push({...payload.componentInfo, id: state.componentList[payload.index].length})
     },
     updateCurrentComponentIndex (state, index) {
       state.currentComponentIndex = index
     },
-    updateCurrentComponent (state, componentInfo) {
-      state.componentList.splice(componentInfo.id, 1, componentInfo)
-      state.currentComponent = componentInfo
+    updateCurrentComponent (state, payload) {
+      state.componentList[payload.index].splice(payload.componentInfo.id, 1, payload.componentInfo)
+      state.currentComponent = payload.componentInfo
     }
   },
   actions: {

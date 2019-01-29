@@ -16,7 +16,6 @@ export default {
         this.config = config[getCurrentComponent.name].baseConfig
         this.formValue = Object.assign({}, config[getCurrentComponent.name].formValue, getCurrentComponent)
       }
-
       return getCurrentComponent
     }
   },
@@ -32,7 +31,11 @@ export default {
           this.isFromVuex = false
           return
         }
-        this.$store.commit('updateCurrentComponent', {...this.currentComponent, ...this.formValue})
+        this.$store.commit({
+          type: 'updateCurrentComponent',
+          componentInfo: {...this.currentComponent, ...this.formValue},
+          index: 0
+        })
       },
       deep: true
     }
@@ -41,6 +44,9 @@ export default {
     const currentComponent = () => {
       return [
         h(this.currentComponent.componentName, {
+          on: {
+            input: (e) => this.sync('value', e)
+          },
           props: this.formValue,
           attrs: this.formValue,
           style: {
