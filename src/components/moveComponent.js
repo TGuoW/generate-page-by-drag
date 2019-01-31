@@ -60,7 +60,7 @@ export default {
           this.$store.commit({
             type: 'updateCurrentComponentIndex',
             componentInfo: index,
-            index: 0
+            index: 1
           })
         }
         this.pos = [e.pageX, e.pageY]

@@ -10,23 +10,21 @@ export default {
   },
   computed: {
     currentComponent () {
-      let getCurrentComponent = this.$store.state.currentComponent
-      if (getCurrentComponent.name) {
-        this.isFromVuex = true
-        this.config = config[getCurrentComponent.name].baseConfig
-        this.formValue = Object.assign({}, config[getCurrentComponent.name].formValue, getCurrentComponent)
-      }
-      return getCurrentComponent
-    }
-  },
-  methods: {
-    sync (prop, value) {
-      this.$set(this.formValue, prop, value)
+      return this.$store.state.currentComponent
     }
   },
   watch: {
-    formValue: {
+    currentComponent: {
       handler (val) {
+        if (val.name) {
+          this.isFromVuex = true
+          this.config = config[val.name].baseConfig
+          this.formValue = Object.assign({}, config[val.name].formValue, val)
+        }
+      }
+    },
+    formValue: {
+      handler () {
         if (this.isFromVuex) {
           this.isFromVuex = false
           return
@@ -38,6 +36,11 @@ export default {
         })
       },
       deep: true
+    }
+  },
+  methods: {
+    sync (prop, value) {
+      this.$set(this.formValue, prop, value)
     }
   },
   render (h) {

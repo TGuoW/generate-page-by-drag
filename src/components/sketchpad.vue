@@ -6,13 +6,15 @@
   画板：维护组件数组，
   */
   import viewComponent from './viewComponent.vue'
+  import formItemTitle from './FormItemTitle.vue'
   export default {
     components: {
-      viewComponent
+      viewComponent,
+      formItemTitle
     },
     data() {
       return {
-        rowNum: 10
+        title: ''
       }
     },
     computed: {
@@ -21,11 +23,9 @@
       },
       currentComponentIndex () {
         return this.$store.state.currentComponentIndex
-      }
-    },
-    methods: {
-      handleClickLabel (e) {
-        console.log(e)
+      },
+      titleList () {
+        return this.$store.state.titleList
       }
     },
     render(h) {
@@ -40,7 +40,22 @@
         class: {
           row: this.currentComponentIndex === 1
         }
-      }, [(<template slot="label">标题</template>),
+      }, [(<template slot="label">
+          {h('formItemTitle', {
+            on: {
+              input: (e) => {
+                this.$store.commit({
+                  type: 'updateTitleList',
+                  index: index,
+                  title: e
+                })
+              }
+            },
+            props: {
+              value: this.titleList[index]
+            }
+          })}
+        </template>),
         ...item.map(ele => h('view-component', {
           props: {
             componentInfo: ele
