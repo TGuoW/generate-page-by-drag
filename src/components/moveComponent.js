@@ -55,16 +55,14 @@ export default {
     },
     handleMouseMove (e) {
       if (this.isMove) {
-        if (e.target.__vue__) {
-          const index = e.target.__vue__.$attrs.index
-          this.$store.commit({
-            type: 'updateCurrentComponentIndex',
-            componentInfo: index,
-            index: 1
-          })
-        }
+        // if (e.target.__vue__) {
+        //   const index = e.target.__vue__.$attrs.index
+        //   this.$store.commit({
+        //     type: 'updateCurrentComponentIndex',
+        //     index: index
+        //   })
+        // }
         this.pos = [e.pageX, e.pageY]
-
       }
     },
     handleMouseUp () {
@@ -73,7 +71,7 @@ export default {
         this.$store.commit({
           type: 'addComponent',
           componentInfo: this.info,
-          index: 0
+          // index: 0
         })
       }
     }

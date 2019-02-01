@@ -6,19 +6,51 @@ export default {
       default () {
         return {}
       }
+    },
+    index: {
+      type: Number,
+      default () {
+        return 0
+      }
+    }
+  },
+  data () {
+    return {
+      newComponentInfo: {},
+      isFromVuex: false
+    }
+  },
+  watch: {
+    newComponentInfo: {
+      handler () {
+        if (this.isFromVuex) {
+          this.isFromVuex = false
+          return
+        }
+        this.handleClick()
+      },
+      deep: true
+    },
+    componentInfo: {
+      handler () {
+        this.isFromVuex = true
+        this.newComponentInfo = {...this.componentInfo}
+      }
     }
   },
   methods: {
     handleClick (e) {
-      e.stopPropagation()
+      if (e) {
+        e.stopPropagation()
+      }
       this.$store.commit({
         type:'updateCurrentComponent',
-        componentInfo: this.componentInfo,
-        index: 0
+        componentInfo: {...this.componentInfo, ...this.newComponentInfo},
+        index: this.index
       })
     },
     sync (prop, value) {
-      this.$set(this.componentInfo, prop, value)
+      this.$set(this.newComponentInfo, prop, value)
     }
   },
   render (h) {
@@ -27,8 +59,8 @@ export default {
         '!click': this.handleClick
       }
     }, [h(this.componentInfo.componentName, {
-      props: this.componentInfo,
-      attrs: this.componentInfo,
+      props: {...this.componentInfo, ...this.newComponentInfo},
+      // attrs: this.componentInfo,
       on: {
         input: (e) => this.sync('value', e)
       }

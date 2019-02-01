@@ -8,6 +8,7 @@
         >
       </div>
       <p class="header__p">
+        <theme-picker />
         HELLO, USERNAME
       </p>
     </el-header>
@@ -17,6 +18,7 @@
       </el-aside>
       <el-main class="main__stage">
         <div class="stage__sketchpad">
+          <operate />
           <sketchpad />
         </div>
         <div class="stage__detail">
@@ -28,13 +30,17 @@
 </template>
 
 <script>
+import ThemePicker from '@/components/ThemePicker'
 import asideMenu from '@/components/asideMenu'
+import operate from '@/components/operate'
 import sketchpad from '@/components/sketchpad'
 import componentDetail from '@/components/componentDetail'
 export default {
   components: {
     asideMenu,
+    operate,
     sketchpad,
+    ThemePicker,
     componentDetail
   },
   data () {

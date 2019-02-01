@@ -28,17 +28,28 @@
         return this.$store.state.titleList
       }
     },
+    methods: {
+      setCurrentIndex (index) {
+        this.$store.commit({
+          type: 'updateCurrentComponentIndex',
+          index: index
+        })
+      }
+    },
     render(h) {
       return h('el-form', {
         props: {
           'label-width': '100px'
         }
       }, this.componentList.map((item, index) => h('el-form-item', {
+        nativeOn: {
+          click: () => this.setCurrentIndex(index)
+        },
         attrs: {
           index: index + 1
         },
         class: {
-          row: this.currentComponentIndex === 1
+          row: this.currentComponentIndex === index
         }
       }, [(<template slot="label">
           {h('formItemTitle', {
@@ -58,6 +69,7 @@
         </template>),
         ...item.map(ele => h('view-component', {
           props: {
+            index: index,
             componentInfo: ele
           }
         }))

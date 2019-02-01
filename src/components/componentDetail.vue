@@ -32,7 +32,7 @@ export default {
         this.$store.commit({
           type: 'updateCurrentComponent',
           componentInfo: {...this.currentComponent, ...this.formValue},
-          index: 0
+          // index: 0
         })
       },
       deep: true
