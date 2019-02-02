@@ -21,6 +21,9 @@
           <operate />
           <sketchpad />
         </div>
+        <div class="stage__code">
+          <code-view />
+        </div>
         <div class="stage__detail">
           <component-detail />
         </div>
@@ -34,12 +37,14 @@ import ThemePicker from '@/components/ThemePicker'
 import asideMenu from '@/components/asideMenu'
 import operate from '@/components/operate'
 import sketchpad from '@/components/sketchpad'
+import codeView from '@/components/codeView'
 import componentDetail from '@/components/componentDetail'
 export default {
   components: {
     asideMenu,
     operate,
     sketchpad,
+    codeView,
     ThemePicker,
     componentDetail
   },
@@ -69,6 +74,7 @@ export default {
   }
   .main {
     height: 100%;
+    
     padding: 10px;
     background: #e7e7e7;
     .main__stage {
@@ -81,6 +87,10 @@ export default {
       .stage__sketchpad {
         padding: 10px;
         background: #fff;
+        flex: 1;
+      }
+      .stage__code {
+        margin-left: 4px;
         flex: 1;
       }
       .stage__detail {
