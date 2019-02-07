@@ -39,8 +39,15 @@ export default {
     }
   },
   methods: {
-    sync (prop, value) {
-      this.$set(this.formValue, prop, value)
+    sync (prop, value, index) {
+      if (index !== undefined) {
+        let arr = this.formValue[prop]
+        arr[index].label = value
+        this.$set(this.formValue, prop, arr)
+      } else {
+        this.$set(this.formValue, prop, value)
+      }
+
     }
   },
   render (h) {
@@ -55,7 +62,11 @@ export default {
           style: {
             width: '180px'
           }
-        }, this.formValue.innerText),
+        }, [this.currentComponent.childComponentName
+          ? h(this.currentComponent.childComponentName, {
+            props: {...this.formValue, ...this.currentComponent.childComponentArr[0]}
+          })
+          : this.formValue.innerText]),
         h('div', {
           style: {
             // lineHeight: '40px'
@@ -112,6 +123,18 @@ export default {
                       on-input={(e) => this.sync(item.name, e)}
                       value={this.formValue[item.name]}/>
                   </el-form-item>
+                )
+              }
+              if (item.type === 'inputArr') {
+                node = (
+                  <el-form-item label={item.desc}>
+                    { item.inputArr.map((ele, index) => (                    
+                      <el-input
+                        on-input={(e) => this.sync(item.name, e, index)}
+                        value={this.formValue[item.name][index].label}/>
+                      )
+                    )}
+                  </el-form-item>    
                 )
               }
               return node

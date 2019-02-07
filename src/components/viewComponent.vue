@@ -59,12 +59,16 @@ export default {
         '!click': this.handleClick
       }
     }, [h(this.componentInfo.componentName, {
-      props: {...this.componentInfo, ...this.newComponentInfo},
-      // attrs: this.componentInfo,
-      on: {
-        input: (e) => this.sync('value', e)
-      }
-    }, this.componentInfo.innerText)])
+        props: {...this.componentInfo, ...this.newComponentInfo},
+        // attrs: this.componentInfo,
+        on: {
+          input: (e) => this.sync('value', e)
+        }
+    }, this.componentInfo.childComponentName
+      ? this.componentInfo.childComponentArr.map(item => h(this.componentInfo.childComponentName, {
+        props: {...item, ...this.componentInfo}
+      }))
+      : this.componentInfo.innerText)])
   }
 }
 </script>
