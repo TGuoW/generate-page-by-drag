@@ -17,7 +17,14 @@ export default new Vuex.Store({
     },
     addComponent (state, payload) {
       // state.componentList[payload.index].push({...payload.componentInfo, id: state.componentList[payload.index].length})
+      if (payload.componentInfo.childComponentArr) {
+        payload.componentInfo.childComponentArr = [
+          { label: '备选项1' },
+          { label: '备选项2' }
+        ]
+      }
       state.componentList[state.currentComponentIndex].push({...payload.componentInfo, id: state.componentList[state.currentComponentIndex].length})
+      console.log(state.componentList)
     },
     updateCurrentComponentIndex (state, payload) {
       state.currentComponentIndex = payload.index

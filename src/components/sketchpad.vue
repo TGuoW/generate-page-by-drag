@@ -50,6 +50,9 @@
         },
         class: {
           row: this.currentComponentIndex === index
+        },
+        style: {
+          minHeight: '40px'
         }
       }, [(<template slot="label">
           {h('formItemTitle', {

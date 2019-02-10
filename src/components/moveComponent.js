@@ -68,6 +68,7 @@ export default {
     handleMouseUp () {
       if (this.isMove) {
         this.isMove = false
+        console.log(this.info)
         this.$store.commit({
           type: 'addComponent',
           componentInfo: this.info,

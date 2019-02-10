@@ -1,7 +1,7 @@
 export default {
   baseConfig: {
     name: 'Radio',
-    desc: '输入框',
+    desc: '单选框',
     options: [
       {
         name: 'componentNumber',
@@ -13,8 +13,8 @@ export default {
         desc: '组件选项',
         type: 'inputArr',
         inputArr: [
-          {label: '备选项1' },
-          {label: '备选项2' }
+          { label: '备选项1' },
+          { label: '备选项2' }
         ]
       },
       {

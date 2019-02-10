@@ -88,15 +88,18 @@ export default {
         padding: 10px;
         background: #fff;
         flex: 1;
+        overflow-y: scroll;
       }
       .stage__code {
         margin-left: 4px;
         flex: 1;
+        overflow-y: scroll;
       }
       .stage__detail {
         background: #fff;
         margin-left: 10px;
-        width: 320px;
+        width: 240px;
+        overflow-y: scroll;
       }
     }
   }

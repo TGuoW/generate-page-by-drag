@@ -20,6 +20,7 @@ export default {
           this.isFromVuex = true
           this.config = config[val.name].baseConfig
           this.formValue = Object.assign({}, config[val.name].formValue, val)
+          this.dealChildComponentArr()
         }
       }
     },
@@ -29,6 +30,7 @@ export default {
           this.isFromVuex = false
           return
         }
+        this.dealChildComponentArr()
         this.$store.commit({
           type: 'updateCurrentComponent',
           componentInfo: {...this.currentComponent, ...this.formValue},
@@ -39,6 +41,23 @@ export default {
     }
   },
   methods: {
+    dealChildComponentArr () {
+      if (this.formValue.componentNumber && this.formValue.componentNumber > 0) {
+        this.formValue.childComponentArr.length = Number(this.formValue.componentNumber)
+        for (let i = 0; i < this.formValue.childComponentArr.length; i++) {
+          if (this.formValue.childComponentArr[i] === undefined) {
+            this.formValue.childComponentArr[i] = {...this.formValue.childComponentArr[0]}
+            this.formValue.childComponentArr[i].label = '备选项' + (i + 1)
+          }
+        }
+        for (let j = 0; j < this.config.options.length; j++) {
+          let name = this.config.options[j].name
+          if (name === 'childComponentArr') {
+            this.config.options[j].inputArr = [...this.formValue.childComponentArr]
+          }
+        }
+      }
+    },
     sync (prop, value, index) {
       if (index !== undefined) {
         let arr = this.formValue[prop]

@@ -21,8 +21,8 @@ export default [
         "componentName": "el-radio-group",
         "childComponentName": "el-radio",
         "childComponentArr": [
-          { value: 1, label: '备选项1' },
-          { value: 2, label: '备选项2' }
+          { label: '备选项1' },
+          { label: '备选项2' }
         ],
         "innerText": "备选项"
       },

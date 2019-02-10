@@ -10,10 +10,11 @@ let Highlight = {};
 Highlight.install = function (Vue) {
   // 先绑定，后面会有数据更新，调用highlight
   Vue.directive('highlight', {
-    componentUpdated: function(el) {
+    update: function(el, binding) {
       let blocks = el.querySelectorAll('pre code')
       for (let i = 0; i < blocks.length; i++) {
-        const item = blocks[i]
+        let item = blocks[i]
+        item.innerText = binding.value
         Hljs.highlightBlock(item)
       }
     }

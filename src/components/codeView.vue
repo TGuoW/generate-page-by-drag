@@ -1,7 +1,7 @@
 <template>
   <div>
-    <pre v-highlight>
-      <code class="html">{{ code }}</code>
+    <pre v-highlight="code">
+      <code class="html"></code>
     </pre>
   </div>
 </template>
@@ -16,30 +16,53 @@ export default {
   },
   computed: {
     componentList () {
-      return this.$store.state.componentList
+      let componentList = this.$store.state.componentList
+      this.renderCode(componentList)
+      return componentList
     },
     titleList () {
-      return this.$store.state.titleList
+      let titleList = this.$store.state.titleList
+      // this.renderCode(titleList, this.componentList)
+      return titleList
     }
   },
   watch: {
     componentList: {
       handler () {
-        let code = '<el-form label-width="100px">\n'
-        this.componentList.forEach((item, index) => {
-          code += '  <el-form-item label="' + this.titleList[index] + '">\n'
-          item.forEach(ele => {
-            code += ele.componentName ? '    <' + ele.componentName + '/>\n' : ''
-          })
-          code += '  </el-form-item>\n'
-        })
-        code += '</el-form>'
-        this.code = code
-      }
+
+      },
+      deep: true
     }
   },
-  mounted () {
-
+  methods: {
+    renderCode (componentList) {
+      let code = '<template>\n<el-form label-width="100px">\n'
+      componentList.forEach((item, index) => {
+        code += '  <el-form-item label="' + this.titleList[index] + '">\n'
+        item.forEach(ele => {
+          if (ele.childComponentName) {
+            code += '    <' + ele.componentName + '>\n'
+            ele.childComponentArr.forEach(child => {
+              code += '      <' + ele.childComponentName + this.objToString(child) + '/>\n'
+            })
+            code += '    </' + ele.componentName + '>\n'
+          } else {
+            code += ele.componentName ? '    <' + ele.componentName + this.objToString(ele) + '/>\n' : ''
+          }
+        })
+        code += '  </el-form-item>\n'
+      })
+      code += '</el-form>\n</template>\n\n'
+      code += '<script>\n'
+      code += 'export defalut {\n'
+      code += '}\n'
+      this.code = code
+    },
+    objToString (obj) {
+      return Object.keys(obj).reduce((a, b) => {
+        return a + ' ' + b + '="' + obj[b] + '"'
+      }, '')
+    }
   }
 }
 </script>
