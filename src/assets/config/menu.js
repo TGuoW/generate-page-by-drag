@@ -52,17 +52,17 @@ export default [
           { label: '备选项2', value: 'test2', disabled: false }
         ],
         "value": ''
-      }
+      },
   //     {
   //       "name": "Cascader",
   //       "desc": "级联选择器",
   //       "componentName": "el-cascader"
   //     },
-  //     {
-  //       "name": "Switch",
-  //       "desc": "开关",
-  //       "componentName": "el-switch"
-  //     },
+      {
+        "name": "Switch",
+        "desc": "开关",
+        "componentName": "el-switch"
+      },
   //     {
   //       "name": "Slider",
   //       "desc": "滑块",

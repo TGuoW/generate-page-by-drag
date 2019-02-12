@@ -3,40 +3,41 @@ export default {
     name: 'Switch',
     desc: '开关',
     options: [
-      // {
-      //   name: 'multiple',
-      //   desc: '是否多选',
-      //   type: 'switch'
-      // },
       {
-        name: 'size',
-        desc: '尺寸',
-        type: 'select',
-        selectArr: [
-          {value: 'medium', label: 'medium'},
-          {value: 'small', label: 'small'},
-          {value: 'mini', label: 'mini'}
-        ]
+        name: 'width',
+        desc: '宽度',
+        type: 'input',
+        nativeType: 'Number'
       },
       {
         name: 'active-text',
-        desc: '默认文字',
+        desc: '开启text',
         type: 'input'
       },
       {
         name: 'inactive-text',
-        desc: '默认文字',
+        desc: '关闭text',
         type: 'input'
       },
       {
-        name: 'clearable',
-        desc: '是否可清空',
-        type: 'switch'
+        name: 'active-value',
+        desc: '开启value',
+        type: 'input'
       },
       {
-        name: 'placeholder',
-        desc: '默认文字',
+        name: 'inactive-value',
+        desc: '关闭value',
         type: 'input'
+      },
+      {
+        name: 'active-color',
+        desc: '开启color',
+        type: 'color'
+      },
+      {
+        name: 'inactive-color',
+        desc: '关闭color',
+        type: 'color'
       },
       {
         name: 'disabled',
@@ -46,15 +47,14 @@ export default {
     ]
   },
   formValue: {
-    componentNumber: 2,
-    childComponentArr: [
-      {label: '备选项1' },
-      {label: '备选项2' }
-    ],
+    width: 40,
+    'active-text': '',
+    'inactive-text': '',
+    'active-value': '',
+    'inactive-value': '',
+    'active-color': '',
+    'inactive-color': '',
     value: '',
-    multiple: false,
-    size: '',
-    border: false,
     disabled: false
   }
 }
