@@ -18,13 +18,19 @@ export default new Vuex.Store({
     addComponent (state, payload) {
       // state.componentList[payload.index].push({...payload.componentInfo, id: state.componentList[payload.index].length})
       if (payload.componentInfo.childComponentArr) {
-        payload.componentInfo.childComponentArr = [
-          { label: '备选项1' },
-          { label: '备选项2' }
-        ]
+        if (payload.componentInfo.name === 'Select') {
+          payload.componentInfo.childComponentArr = [
+            { label: '备选项1', value: 'test1', disabled: false },
+            { label: '备选项2', value: 'test2', disabled: false }
+          ]
+        } else {
+          payload.componentInfo.childComponentArr = [
+            { label: '备选项1', disabled: false },
+            { label: '备选项2', disabled: false }
+          ]
+        }
       }
-      state.componentList[state.currentComponentIndex].push({...payload.componentInfo, id: state.componentList[state.currentComponentIndex].length})
-      console.log(state.componentList)
+      state.componentList[state.currentComponentIndex].push({...payload.componentInfo, tid: state.componentList[state.currentComponentIndex].length})
     },
     updateCurrentComponentIndex (state, payload) {
       state.currentComponentIndex = payload.index
@@ -33,7 +39,7 @@ export default new Vuex.Store({
       // state.componentList[payload.index].splice(payload.componentInfo.id, 1, payload.componentInfo)
       state.currentComponentIndex = payload.index !== undefined ? payload.index : state.currentComponentIndex
       const index = payload.index !== undefined ? payload.index : state.currentComponentIndex
-      state.componentList[index].splice(payload.componentInfo.id, 1, payload.componentInfo)
+      state.componentList[index].splice(payload.componentInfo.tid, 1, payload.componentInfo)
       state.currentComponent = payload.componentInfo
     },
     updateTitleList (state, payload) {

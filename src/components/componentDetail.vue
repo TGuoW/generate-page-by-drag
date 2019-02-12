@@ -48,6 +48,12 @@ export default {
           if (this.formValue.childComponentArr[i] === undefined) {
             this.formValue.childComponentArr[i] = {...this.formValue.childComponentArr[0]}
             this.formValue.childComponentArr[i].label = '备选项' + (i + 1)
+            if (this.formValue.childComponentArr[0].disabled !== undefined) {
+              this.formValue.childComponentArr[i].disabled = false
+            }
+            if (this.formValue.childComponentArr[0].value !== undefined) {
+              this.formValue.childComponentArr[i].value = 'test' + (i + 1)
+            }
           }
         }
         for (let j = 0; j < this.config.options.length; j++) {
@@ -58,10 +64,10 @@ export default {
         }
       }
     },
-    sync (prop, value, index) {
+    sync (prop, value, ele, index) {
       if (index !== undefined) {
         let arr = this.formValue[prop]
-        arr[index].label = value
+        arr[index][ele] = value
         this.$set(this.formValue, prop, arr)
       } else {
         this.$set(this.formValue, prop, value)
@@ -72,25 +78,22 @@ export default {
   render (h) {
     const currentComponent = () => {
       return [
-        h(this.currentComponent.componentName, {
-          on: {
-            input: (e) => this.sync('value', e)
-          },
-          props: this.formValue,
-          attrs: this.formValue,
-          style: {
-            width: '180px'
-          }
-        }, [this.currentComponent.childComponentName
-          ? h(this.currentComponent.childComponentName, {
-            props: {...this.formValue, ...this.currentComponent.childComponentArr[0]}
-          })
-          : this.formValue.innerText]),
-        h('div', {
-          style: {
-            // lineHeight: '40px'
-          }
-        }, this.currentComponent.desc + ' ' + this.currentComponent.name)
+        // h(this.currentComponent.componentName, {
+        //   on: {
+        //     input: (e) => this.sync('value', e)
+        //   },
+        //   props: this.formValue,
+        //   attrs: this.formValue,
+        //   style: {
+        //     width: '180px'
+        //   }
+        // }),
+        // }, [this.currentComponent.childComponentName
+        //   ? h(this.currentComponent.childComponentName, {
+        //     props: {...this.formValue, ...this.currentComponent.childComponentArr[0]}
+        //   })
+        //   : this.formValue.innerText]),
+        h('div', this.currentComponent.desc + ' ' + this.currentComponent.name)
       ]
     }
     return (
@@ -139,7 +142,7 @@ export default {
                 node = (
                   <el-form-item label={item.desc}>
                     <el-input
-                      on-input={(e) => this.sync(item.name, e)}
+                      on-input={(e) => this.sync(item.name, item.nativeType === 'Number' ? Number(e) : e)}
                       value={this.formValue[item.name]}/>
                   </el-form-item>
                 )
@@ -147,13 +150,22 @@ export default {
               if (item.type === 'inputArr') {
                 node = (
                   <el-form-item label={item.desc}>
-                    { item.inputArr.map((ele, index) => (                    
-                      <el-input
-                        on-input={(e) => this.sync(item.name, e, index)}
-                        value={this.formValue[item.name][index].label}/>
-                      )
-                    )}
-                  </el-form-item>    
+                    { item.inputArr.map((ele, index) => (
+                      <el-form inline={true} class="inline-form">
+                        {Object.keys(ele).map(child =>
+                          child !== 'disabled' ?
+                          (<el-input
+                            class="input"
+                            on-input={(e) => this.sync(item.name, e, child, index)}
+                            value={this.formValue[item.name][index][child]} />
+                          ) :
+                          (<el-switch
+                            on-input={(e) => this.sync(item.name, e, child, index)}
+                            value={this.formValue[item.name][index][child]} />
+                        ))}
+                      </el-form>
+                    ))}
+                  </el-form-item>
                 )
               }
               return node
@@ -178,5 +190,14 @@ export default {
     display: flex;
     padding: 0 20px;
     justify-content: space-between;
+  }
+  .inline-form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .input {
+      min-width: 80px;
+      max-width: 120px;
+    }
   }
 </style>

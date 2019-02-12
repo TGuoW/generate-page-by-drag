@@ -20,22 +20,39 @@ export default [
         "desc": "单选框",
         "componentName": "el-radio-group",
         "childComponentName": "el-radio",
-        "childComponentArr": [
-          { label: '备选项1' },
-          { label: '备选项2' }
-        ],
+        "childComponentArr": [],
         "innerText": "备选项"
       },
-  //     {
-  //       "name": "CheckBox",
-  //       "desc": "多选框",
-  //       "componentName": "el-checkbox"
-  //     },
+      {
+        "name": "Checkbox",
+        "desc": "复选框",
+        "componentName": "el-checkbox-group",
+        "childComponentName": "el-checkbox",
+        "childComponentArr": [],
+        "value": []
+      },
       {
         "name": "Input",
         "desc": "输入框",
-        "componentName": "el-input"
+        "componentName": "el-input",
       },
+      {
+        "name": "InputNumber",
+        "desc": "计数器",
+        "componentName": "el-input-number",
+        "value": 0
+      },
+      {
+        "name": "Select",
+        "desc": "选择器",
+        "componentName": "el-select",
+        "childComponentName": "el-option",
+        "childComponentArr": [
+          { label: '备选项1', value: 'test1', disabled: false },
+          { label: '备选项2', value: 'test2', disabled: false }
+        ],
+        "value": ''
+      }
   //     {
   //       "name": "Cascader",
   //       "desc": "级联选择器",

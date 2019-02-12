@@ -74,7 +74,6 @@ export default {
   }
   .main {
     height: 100%;
-    
     padding: 10px;
     background: #e7e7e7;
     .main__stage {
@@ -98,7 +97,7 @@ export default {
       .stage__detail {
         background: #fff;
         margin-left: 10px;
-        width: 240px;
+        width: 320px;
         overflow-y: scroll;
       }
     }

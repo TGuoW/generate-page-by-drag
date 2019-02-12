@@ -1,7 +1,7 @@
 <template>
   <div>
     <pre v-highlight="code">
-      <code class="html"></code>
+      <code class="html" />
     </pre>
   </div>
 </template>

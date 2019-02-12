@@ -8,6 +8,13 @@
 * {
   margin: 0;
   padding: 0;
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  &::-webkit-scrollbar-thumb {
+      border-radius: 4px;
+      background-color: #e1e1e2;
+  }
 }
 html, body {
   width: 100%;

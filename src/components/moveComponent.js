@@ -40,7 +40,9 @@ export default {
               mousedown: this.handleMouseDown
             },
           },
-          [h(this.info.componentName, this.info.innerText)])
+          [h(this.info.componentName, {
+            props: this.info
+          }, this.info.innerText)])
       ])
   },
   mounted() {
@@ -68,7 +70,6 @@ export default {
     handleMouseUp () {
       if (this.isMove) {
         this.isMove = false
-        console.log(this.info)
         this.$store.commit({
           type: 'addComponent',
           componentInfo: this.info,

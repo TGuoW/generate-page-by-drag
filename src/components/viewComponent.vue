@@ -40,9 +40,9 @@ export default {
   },
   methods: {
     handleClick (e) {
-      if (e) {
-        e.stopPropagation()
-      }
+      // if (e) {
+      //   e.stopPropagation()
+      // }
       this.$store.commit({
         type:'updateCurrentComponent',
         componentInfo: {...this.componentInfo, ...this.newComponentInfo},
@@ -66,7 +66,7 @@ export default {
         }
     }, this.componentInfo.childComponentName
       ? this.componentInfo.childComponentArr.map(item => h(this.componentInfo.childComponentName, {
-        props: {...item, ...this.componentInfo}
+        props: item
       }))
       : this.componentInfo.innerText)])
   }
