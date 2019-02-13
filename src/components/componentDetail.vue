@@ -72,7 +72,6 @@ export default {
       } else {
         this.$set(this.formValue, prop, value)
       }
-
     }
   },
   render (h) {
@@ -144,6 +143,15 @@ export default {
                     <el-input
                       on-input={(e) => this.sync(item.name, item.nativeType === 'Number' ? Number(e) : e)}
                       value={this.formValue[item.name]}/>
+                  </el-form-item>
+                )
+              }
+              if (item.type === 'color') {
+                node = (
+                  <el-form-item label={item.desc}>
+                    <el-color-picker
+                      on-input={(e) => this.sync(item.name, e)}
+                      value={this.formValue[item.name]} />
                   </el-form-item>
                 )
               }

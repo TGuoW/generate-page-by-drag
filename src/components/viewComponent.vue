@@ -17,7 +17,8 @@ export default {
   data () {
     return {
       newComponentInfo: {},
-      isFromVuex: false
+      isFromVuex: false,
+      isShow: true
     }
   },
   watch: {
@@ -34,6 +35,18 @@ export default {
     componentInfo: {
       handler () {
         this.isFromVuex = true
+        // 监听特殊属性
+        const watchArr = ['width', 'height']
+        watchArr.forEach(item => {
+          if (this.componentInfo[item] !== undefined) {
+            if (this.componentInfo[item] !== this.newComponentInfo[item]) {
+              this.isShow = false
+              this.$nextTick(() => {
+                this.isShow = true
+              })
+            }
+          }
+        })
         this.newComponentInfo = {...this.componentInfo}
       }
     }
@@ -54,7 +67,7 @@ export default {
     }
   },
   render (h) {
-    return h('div', {
+    return this.isShow ? h('div', {
       on: {
         '!click': this.handleClick
       }
@@ -68,7 +81,7 @@ export default {
       ? this.componentInfo.childComponentArr.map(item => h(this.componentInfo.childComponentName, {
         props: item
       }))
-      : this.componentInfo.innerText)])
+      : this.componentInfo.innerText)]) : ''
   }
 }
 </script>

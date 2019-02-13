@@ -63,11 +63,11 @@ export default [
         "desc": "开关",
         "componentName": "el-switch"
       },
-  //     {
-  //       "name": "Slider",
-  //       "desc": "滑块",
-  //       "componentName": "el-slider"
-  //     },
+      {
+        "name": "Slider",
+        "desc": "滑块",
+        "componentName": "el-slider"
+      },
   //     {
   //       "name": "TimePicker",
   //       "desc": "时间选择器",
@@ -88,16 +88,16 @@ export default [
   //       "desc": "上传",
   //       "componentName": "el-upload"
   //     },
-  //     {
-  //       "name": "Rate",
-  //       "desc": "评分",
-  //       "componentName": "el-rate"
-  //     },
-  //     {
-  //       "name": "ColorPicker",
-  //       "desc": "颜色选择器",
-  //       "componentName": "el-color-picker"
-  //     },
+      {
+        "name": "Rate",
+        "desc": "评分",
+        "componentName": "el-rate"
+      },
+      {
+        "name": "ColorPicker",
+        "desc": "颜色选择器",
+        "componentName": "el-color-picker"
+      },
   //     {
   //       "name": "Transfer",
   //       "desc": "穿梭框",
