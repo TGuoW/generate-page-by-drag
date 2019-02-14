@@ -8,6 +8,7 @@ export default {
             desc: '尺寸',
             type: 'select',
             selectArr: [
+                {value: '', label: 'default'},
                 {value: 'medium', label: 'medium'},
                 {value: 'small', label: 'small'},
                 {value: 'mini', label: 'mini'}

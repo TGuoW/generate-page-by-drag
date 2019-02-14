@@ -68,26 +68,29 @@ export default [
         "desc": "滑块",
         "componentName": "el-slider"
       },
-  //     {
-  //       "name": "TimePicker",
-  //       "desc": "时间选择器",
-  //       "componentName": "el-time-picker"
-  //     },
-  //     {
-  //       "name": "DatePicker",
-  //       "desc": "日期选择器",
-  //       "componentName": "el-date-picker"
-  //     },
+      {
+        "name": "TimePicker",
+        "desc": "时间选择器",
+        "componentName": "el-time-picker",
+        "value": [],
+        'is-range': true,
+      },
+      {
+        "name": "DatePicker",
+        "desc": "日期选择器",
+        "componentName": "el-date-picker"
+      },
   //     {
   //       "name": "DateTimePicker",
   //       "desc": "时间日期选择器",
   //       "componentName": "el-date-picker"
   //     },
-  //     {
-  //       "name": "Upload",
-  //       "desc": "上传",
-  //       "componentName": "el-upload"
-  //     },
+      // {
+      //   "name": "Upload",
+      //   "desc": "上传",
+      //   "componentName": "el-upload",
+      //   "action": ""
+      // },
       {
         "name": "Rate",
         "desc": "评分",

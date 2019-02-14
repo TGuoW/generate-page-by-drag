@@ -4,40 +4,35 @@ export default {
     desc: '开关',
     options: [
       {
-        name: 'width',
-        desc: '宽度',
-        type: 'input',
-        nativeType: 'Number'
+        name: 'size',
+        desc: '尺寸',
+        type: 'select',
+        selectArr: [
+          {value: 'medium', label: 'medium'},
+          {value: 'small', label: 'small'},
+          {value: 'mini', label: 'mini'}
+        ]
       },
       {
-        name: 'active-text',
-        desc: '开启text',
-        type: 'input'
+        name: 'show-alpha',
+        desc: '透明度选择',
+        type: 'switch'
       },
       {
-        name: 'inactive-text',
-        desc: '关闭text',
-        type: 'input'
+        name: 'color-format',
+        desc: '颜色表示',
+        type: 'select',
+        selectArr: [
+          {value: 'hsl', label: 'hsl'},
+          {value: 'hsv', label: 'hsv'},
+          {value: 'hex', label: 'hex'},
+          {value: 'rgb', label: 'rgb'}
+        ]
       },
       {
-        name: 'activeValue',
-        desc: '开启value',
-        type: 'input'
-      },
-      {
-        name: 'inactiveValue',
-        desc: '关闭value',
-        type: 'input'
-      },
-      {
-        name: 'active-color',
-        desc: '开启color',
-        type: 'color'
-      },
-      {
-        name: 'inactive-color',
-        desc: '关闭color',
-        type: 'color'
+        name: 'predefine',
+        desc: '预定义颜色',
+        type: 'colorArr'
       },
       {
         name: 'disabled',
@@ -47,13 +42,9 @@ export default {
     ]
   },
   formValue: {
-    width: 40,
-    'active-text': '',
-    'inactive-text': '',
-    'activeValue': '',
-    'inactiveValue': '',
-    'active-color': '#409EFF',
-    'inactive-color': '#909399',
+    size: '',
+    'show-alpha': false,
+    'color-format': 'hex',
     value: '',
     disabled: false
   }
