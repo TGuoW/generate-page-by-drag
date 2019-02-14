@@ -30,12 +30,12 @@ yarn run build
 - [x] Slider --- to fix heihght
 - [x] TimePicker --- to fix
 - [x] DatePicker --- to fix
-- [] DateTimePicker
+- [ ] DateTimePicker
 - [x] Rate
 - [x] ColorPicker
-- [] 支持Tree
-- [] 代码生成优化
-- [] 页面优化
-- [] 代码缓存
-- [] 编辑代码
+- [ ] 支持Tree
+- [ ] 代码生成优化
+- [ ] 页面优化
+- [ ] 代码缓存
+- [ ] 编辑代码
 
