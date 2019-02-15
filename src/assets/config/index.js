@@ -1,4 +1,5 @@
 import Button from './Button'
+import Cascader from './Cascader'
 import Checkbox from './Checkbox'
 import ColorPicker from './ColorPicker'
 import DatePicker from './DatePicker'
@@ -14,6 +15,7 @@ import Upload from './Upload'
 
 export default {
     Button,
+    Cascader,
     Checkbox,
     ColorPicker,
     DatePicker,

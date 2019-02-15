@@ -36,7 +36,7 @@ export default {
       handler () {
         this.isFromVuex = true
         // 监听特殊属性
-        const watchArr = ['width', 'height']
+        const watchArr = ['width', 'height', 'is-range', 'type']
         watchArr.forEach(item => {
           if (this.componentInfo[item] !== undefined) {
             if (this.componentInfo[item] !== this.newComponentInfo[item]) {

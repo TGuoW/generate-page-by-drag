@@ -22,17 +22,18 @@ yarn run build
 
 - [x] Button
 - [x] Radio
+- [ ] Cascader
 - [x] Checkbox
 - [x] Input
 - [x] InputNumber
 - [x] Select
-- [x] Switch --- to fix width and active-value
-- [x] Slider --- to fix heihght
-- [x] TimePicker --- to fix
-- [x] DatePicker --- to fix
-- [ ] DateTimePicker
+- [x] Switch --- active-value
+- [x] Slider
+- [x] TimePicker
+- [x] DatePicker
 - [x] Rate
 - [x] ColorPicker
+- [ ] Transfer
 - [ ] 支持Tree
 - [ ] 代码生成优化
 - [ ] 页面优化

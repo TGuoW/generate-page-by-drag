@@ -60,11 +60,6 @@ export default {
         type: 'input'
       },
       {
-        name: 'is-range',
-        desc: '范围选择',
-        type: 'switch'
-      },
-      {
         name: 'arrow-control',
         desc: '箭头选择',
         type: 'switch'
@@ -89,9 +84,24 @@ export default {
         desc: '值的格式',
         type: 'select',
         selectArr: [
-          {value: 'left', label: 'left'},
-          {value: 'center', label: 'center'},
-          {value: 'right', label: 'right'}
+          {value: 'yyyy', label: 'yyyy'},
+          {value: 'M', label: 'M'},
+          {value: 'MM', label: 'MM'},
+          {value: 'W', label: 'W'},
+          {value: 'WW', label: 'WW'},
+          {value: 'd', label: 'd'},
+          {value: 'dd', label: 'dd'},
+          {value: 'H', label: 'H'},
+          {value: 'HH', label: 'HH'},
+          {value: 'h', label: 'h'},
+          {value: 'hh', label: 'hh'},
+          {value: 'm', label: 'm'},
+          {value: 'mm', label: 'mm'},
+          {value: 's', label: 's'},
+          {value: 'ss', label: 'ss'},
+          {value: 'A', label: 'A'},
+          {value: 'a', label: 'a'},
+          {value: 'timestamp', label: 'timestamp'}
         ]
       },
       {
@@ -114,7 +124,6 @@ export default {
     placeholder: '',
     'start-placeholder': '',
     'end-placeholder': '',
-    'is-range': true,
     'arrow-control': false,
     align: 'left',
     'range-separator': '-',

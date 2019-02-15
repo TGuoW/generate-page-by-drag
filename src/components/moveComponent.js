@@ -31,9 +31,10 @@ export default {
       }, [
         h('div', {
           on: {
-            'mousedown': this.handleMouseDown
+            mousedown: this.handleMouseDown
           },
         }, this.info.name + ' ' + this.info.desc),
+        this.isMove ?
         h('div', {
             style: this.isMove ? this.moveStyle : this.initialStyle,
             on: {
@@ -42,7 +43,7 @@ export default {
           },
           [h(this.info.componentName, {
             props: this.info
-          }, this.info.innerText)])
+          }, this.info.innerText)]) : ''
       ])
   },
   mounted() {

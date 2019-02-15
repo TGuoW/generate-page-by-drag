@@ -4,15 +4,15 @@ export default {
       desc: '输入框',
       options: [
         {
-            name: 'size',
-            desc: '尺寸',
-            type: 'select',
-            selectArr: [
-                {value: '', label: 'default'},
-                {value: 'medium', label: 'medium'},
-                {value: 'small', label: 'small'},
-                {value: 'mini', label: 'mini'}
-            ]
+          name: 'size',
+          desc: '尺寸',
+          type: 'select',
+          selectArr: [
+            {value: '', label: 'default'},
+            {value: 'medium', label: 'medium'},
+            {value: 'small', label: 'small'},
+            {value: 'mini', label: 'mini'}
+          ]
         },
         {
           name: 'placeholder',
@@ -25,9 +25,9 @@ export default {
           type: 'switch'
         },
         {
-            name: 'disabled',
-            desc: '是否禁用',
-            type: 'switch'
+          name: 'disabled',
+          desc: '是否禁用',
+          type: 'switch'
         }
       ]
     },
