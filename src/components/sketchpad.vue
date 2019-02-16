@@ -6,7 +6,7 @@
   画板：维护组件数组，
   */
   import viewComponent from './viewComponent.vue'
-  import formItemTitle from './FormItemTitle.vue'
+  import formItemTitle from './editText.vue'
   export default {
     components: {
       viewComponent,

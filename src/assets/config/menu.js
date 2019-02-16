@@ -28,7 +28,11 @@ export default [
         "desc": "复选框",
         "componentName": "el-checkbox-group",
         "childComponentName": "el-checkbox",
-        "childComponentArr": [],
+        "componentNumber": 2,
+        "childComponentArr": [
+          { label: '备选项1', disabled: false },
+          { label: '备选项2', disabled: false }
+        ],
         "value": []
       },
       {
@@ -57,6 +61,7 @@ export default [
         "name": "Cascader",
         "desc": "级联选择器",
         "componentName": "el-cascader",
+        "value": [],
         "options": [{
           value: 'zhinan',
           label: '指南',

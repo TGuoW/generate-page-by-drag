@@ -97,7 +97,7 @@ export default {
       .stage__detail {
         background: #fff;
         margin-left: 10px;
-        width: 320px;
+        width: 400px;
         overflow-y: scroll;
       }
     }

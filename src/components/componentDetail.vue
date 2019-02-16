@@ -1,6 +1,11 @@
 <script>
 import config from '@/assets/config/index'
+import editText from './editText'
+import deepClone from '@/assets/js/deepClone'
 export default {
+  components: {
+    editText
+  },
   data () {
     return {
       config: {},
@@ -19,7 +24,9 @@ export default {
         if (val.name) {
           this.isFromVuex = true
           this.config = config[val.name].baseConfig
-          this.formValue = Object.assign({}, config[val.name].formValue, val)
+          console.log(this.formValue.tid)
+          this.formValue = Object.assign({}, deepClone(config[val.name].formValue), deepClone(val))
+          console.log(this.formValue.tid)
           this.dealChildComponentArr()
         }
       }
@@ -31,6 +38,7 @@ export default {
           return
         }
         this.dealChildComponentArr()
+        // console.log(this.formValue, this.currentComponent)
         this.$store.commit({
           type: 'updateCurrentComponent',
           componentInfo: {...this.currentComponent, ...this.formValue},
@@ -72,6 +80,37 @@ export default {
       } else {
         this.$set(this.formValue, prop, value)
       }
+    },
+    renderContent(h, { node, data, store }) {
+      return (
+        <span class="custom-tree-node">
+          <span>
+            <editText
+              value={data}
+              on-input={(e) => this.changeTreeNode(node, data, e)}
+              height={19}
+              >
+            </editText>
+          </span>
+          <span>
+            <el-button size="mini" type="text" on-click={ () => this.append(data) }>Append</el-button>
+            <el-button size="mini" type="text" on-click={ () => this.removeTreeNode(node, data) }>Delete</el-button>
+          </span>
+        </span>
+      )
+    },
+    removeTreeNode (node, data) {
+      const parent = node.parent
+      const children = parent.data.children || parent.data
+      const index = children.findIndex(d => d.value === data.value)
+      children.splice(index, 1)
+    },
+    changeTreeNode (node, data, e) {
+      const parent = node.parent
+      const children = parent.data.children || parent.data
+      const index = children.findIndex(d => d.value === data.value)
+      children.splice(index, 1, e)
+      console.log(e)
     }
   },
   render (h) {
@@ -152,6 +191,19 @@ export default {
                     <el-color-picker
                       on-input={(e) => this.sync(item.name, e)}
                       value={this.formValue[item.name]} />
+                  </el-form-item>
+                )
+              }
+              if (item.type === 'tree') {
+                node = (
+                  <el-form-item label={item.desc}>
+                    <el-tree
+                      data={this.formValue[item.name]}
+                      node-key="id"
+                      default-expand-all
+                      expand-on-click-node={false}
+                      render-content={this.renderContent}>
+                    </el-tree>
                   </el-form-item>
                 )
               }

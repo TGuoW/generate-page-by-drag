@@ -34,7 +34,7 @@ export default {
         desc: '展开方式',
         type: 'select',
         selectArr: [
-          {value: '', label: 'click'},
+          {value: 'click', label: 'click'},
           {value: 'hover', label: 'hover'}
         ]
       },
@@ -59,10 +59,11 @@ export default {
     innerText: '输入框',
     size: '',
     options: [],
-    placeholder: '',
+    placeholder: '请选择',
     separator: '/',
-    value: '',
+    value: [],
     type: '',
+    'expand-trigger': 'click',
     'show-all-levels': true,
     clearable: false,
     disabled: false

@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
+import deepClone from './assets/js/deepClone'
 Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
@@ -18,17 +18,10 @@ export default new Vuex.Store({
     addComponent (state, payload) {
       // state.componentList[payload.index].push({...payload.componentInfo, id: state.componentList[payload.index].length})
       if (payload.componentInfo.childComponentArr) {
-        if (payload.componentInfo.name === 'Select') {
-          payload.componentInfo.childComponentArr = [
-            { label: '备选项1', value: 'test1', disabled: false },
-            { label: '备选项2', value: 'test2', disabled: false }
-          ]
-        } else {
-          payload.componentInfo.childComponentArr = [
-            { label: '备选项1', disabled: false },
-            { label: '备选项2', disabled: false }
-          ]
-        }
+        payload.componentInfo.childComponentArr = deepClone(payload.componentInfo.childComponentArr)
+      }
+      if (payload.componentInfo.options) {
+        payload.componentInfo.options = deepClone(payload.componentInfo.options)
       }
       state.componentList[state.currentComponentIndex].push({...payload.componentInfo, tid: state.componentList[state.currentComponentIndex].length})
     },
