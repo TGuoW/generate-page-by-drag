@@ -72,7 +72,8 @@ export default {
       this.$nextTick(() => {
         if (this.$refs.input) {
           this.$refs.input.focus()
-        } else {
+        }
+        if (this.$refs.input2) {
           this.$refs.input2.focus()
         }
       })

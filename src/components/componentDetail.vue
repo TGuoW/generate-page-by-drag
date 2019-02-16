@@ -10,10 +10,15 @@ export default {
     return {
       config: {},
       formValue: {},
-      isFromVuex: false
+      isFromVuex: true,
+      isShowTree: true,
+      currentComponentIndex: 0
     }
   },
   computed: {
+    // currentComponentIndex () {
+    //   return this.$store.state.currentComponentIndex
+    // },
     currentComponent () {
       return this.$store.state.currentComponent
     }
@@ -22,11 +27,15 @@ export default {
     currentComponent: {
       handler (val) {
         if (val.name) {
+          if (this.currentComponentIndex !== this.$store.state.currentComponentIndex || this.formValue.tid !== val.tid) {
+            this.isShowTree = false
+            this.$nextTick(() => {
+              this.isShowTree = true
+            })
+          }
           this.isFromVuex = true
           this.config = config[val.name].baseConfig
-          console.log(this.formValue.tid)
           this.formValue = Object.assign({}, deepClone(config[val.name].formValue), deepClone(val))
-          console.log(this.formValue.tid)
           this.dealChildComponentArr()
         }
       }
@@ -38,7 +47,6 @@ export default {
           return
         }
         this.dealChildComponentArr()
-        // console.log(this.formValue, this.currentComponent)
         this.$store.commit({
           type: 'updateCurrentComponent',
           componentInfo: {...this.currentComponent, ...this.formValue},
@@ -110,7 +118,6 @@ export default {
       const children = parent.data.children || parent.data
       const index = children.findIndex(d => d.value === data.value)
       children.splice(index, 1, e)
-      console.log(e)
     }
   },
   render (h) {
@@ -195,7 +202,7 @@ export default {
                 )
               }
               if (item.type === 'tree') {
-                node = (
+                node = this.isShowTree ? (
                   <el-form-item label={item.desc}>
                     <el-tree
                       data={this.formValue[item.name]}
@@ -205,7 +212,7 @@ export default {
                       render-content={this.renderContent}>
                     </el-tree>
                   </el-form-item>
-                )
+                ) : ''
               }
               if (item.type === 'inputArr') {
                 node = (

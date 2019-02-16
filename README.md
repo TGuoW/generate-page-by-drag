@@ -22,7 +22,7 @@ yarn run build
 
 - [x] Button
 - [x] Radio
-- [x] Cascader --- to fix
+- [x] Cascader
 - [x] Checkbox
 - [x] Input
 - [x] InputNumber
@@ -33,12 +33,12 @@ yarn run build
 - [x] DatePicker
 - [x] Rate
 - [x] ColorPicker
-- [ ] Transfer
-- [x] 支持Tree配置
-- [ ] 代码生成优化
+- [ ] Transfer --- todo
+- [x] 支持Tree
+- [ ] 代码生成优化 --- todo
 - [ ] 页面优化
 - [ ] SSR
-- [ ] 拖曳
+- [ ] 拖曳 --- todo
 - [ ] 骨架屏
 - [ ] 代码缓存
 - [ ] 编辑代码
