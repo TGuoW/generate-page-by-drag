@@ -34,7 +34,7 @@ yarn run build
 - [x] Rate
 - [x] ColorPicker
 - [ ] Transfer
-- [x] 支持Tree
+- [x] 支持Tree配置
 - [ ] 代码生成优化
 - [ ] 页面优化
 - [ ] SSR
