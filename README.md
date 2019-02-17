@@ -35,10 +35,10 @@ yarn run build
 - [x] ColorPicker
 - [x] Transfer
 - [x] 支持Tree
-- [x] 代码生成优化 --- todo
-- [ ] 页面优化
-- [ ] SSR
+- [x] 代码生成优化 --- to fix
+- [ ] 页面优化 --- todo
+- [ ] SSR --- todo
 - [ ] 拖曳 --- todo
-- [ ] 骨架屏
-- [ ] 代码缓存
+- [ ] 骨架屏 --- todo
+- [ ] 代码缓存 --- todo
 - [ ] 编辑代码
