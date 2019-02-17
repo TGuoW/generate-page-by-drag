@@ -1,60 +1,53 @@
 export default {
   baseConfig: {
-    name: 'Button',
-    desc: '按钮',
+    name: 'Radio',
+    desc: '单选框',
     options: [
       {
-        name: 'type',
-        desc: '按钮类型',
-        type: 'select',
-        selectArr: [
-          {value: '', label: '默认按钮'},
-          {value: 'primary', label: '主要按钮'},
-          {value: 'success', label: '成功按钮'},
-          {value: 'info', label: '信息按钮'},
-          {value: 'warning', label: '警告按钮'},
-          {value: 'danger', label: '危险按钮'},
-          {value: 'text', label: '文字按钮'}
-        ]
-      },
-      {
-        name: 'innerText',
-        desc: '按钮文字',
+        name: 'componentNumber',
+        desc: '组件数量',
         type: 'input'
       },
       {
-        name: 'plain',
-        desc: '朴素按钮',
-        type: 'switch'
+        name: 'childComponentArr',
+        desc: '组件选项',
+        type: 'inputArr',
+        inputArr: [
+          { label: '备选项1' },
+          { label: '备选项2' }
+        ]
       },
       {
-        name: 'round',
-        desc: '圆角',
-        type: 'switch'
+        name: 'size',
+        desc: '尺寸',
+        type: 'select',
+        selectArr: [
+            {value: 'medium', label: 'medium'},
+            {value: 'small', label: 'small'},
+            {value: 'mini', label: 'mini'}
+        ]
       },
       {
-        name: 'circle',
-        desc: '圆形',
+        name: 'border',
+        desc: '是否有边框',
         type: 'switch'
       },
       {
         name: 'disabled',
-        desc: '禁用',
-        type: 'switch'
-      },
-      {
-        name: 'autofocus',
-        desc: '默认聚焦',
+        desc: '是否禁用',
         type: 'switch'
       }
     ]
   },
   formValue: {
-    type: '',
-    plain: false,
-    round: false,
-    circle: false,
-    disabled: false,
-    autofocus: false
+    componentNumber: 2,
+    childComponentArr: [
+      {label: '备选项1' },
+      {label: '备选项2' }
+    ],
+    value: '',
+    size: '',
+    border: false,
+    disabled: false
   }
 }

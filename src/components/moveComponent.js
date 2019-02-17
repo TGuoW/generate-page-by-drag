@@ -43,7 +43,11 @@ export default {
           },
           [h(this.info.componentName, {
             props: this.info
-          }, this.info.innerText)]) : ''
+          }, this.info.childComponentName
+            ? this.info.childComponentArr.map(item => h(this.info.childComponentName, {
+              props: item
+            }))
+            : this.info.innerText)]) : ''
       ])
   },
   mounted() {

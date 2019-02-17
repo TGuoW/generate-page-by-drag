@@ -24,6 +24,7 @@ export default new Vuex.Store({
         payload.componentInfo.options = deepClone(payload.componentInfo.options)
       }
       state.componentList[state.currentComponentIndex].push({...payload.componentInfo, tid: state.componentList[state.currentComponentIndex].length})
+      state.currentComponent = payload.componentInfo
     },
     updateCurrentComponentIndex (state, payload) {
       state.currentComponentIndex = payload.index

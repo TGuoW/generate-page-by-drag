@@ -60,7 +60,6 @@ export default {
     dealChildComponentArr () {
       if (this.formValue.componentNumber && this.formValue.componentNumber > 0) {
         let source = this.formValue.childComponentArr ? 'childComponentArr' : 'data'
-        console.log(source, this.formValue[source])
         this.formValue[source].length = Number(this.formValue.componentNumber)
         for (let i = 0; i < this.formValue[source].length; i++) {
           if (this.formValue[source][i] === undefined) {

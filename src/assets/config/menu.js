@@ -20,7 +20,10 @@ export default [
         "desc": "单选框",
         "componentName": "el-radio-group",
         "childComponentName": "el-radio",
-        "childComponentArr": [],
+        "childComponentArr": [
+          { label: '备选项1', disabled: false },
+          { label: '备选项2', disabled: false }
+        ],
         "innerText": "备选项"
       },
       {
