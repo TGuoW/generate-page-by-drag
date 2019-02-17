@@ -300,11 +300,24 @@ export default [
         "desc": "颜色选择器",
         "componentName": "el-color-picker"
       },
-  //     {
-  //       "name": "Transfer",
-  //       "desc": "穿梭框",
-  //       "componentName": "el-transfer"
-  //     },
+      {
+        "name": "Transfer",
+        "desc": "穿梭框",
+        "componentName": "el-transfer",
+        "value": [],
+        "data": [
+          {
+            key: 0,
+            label: `备选项1`,
+            disabled: false
+          },
+          {
+            key: 1,
+            label: `备选项2`,
+            disabled: false
+          }
+        ]
+      },
   //     {
   //       "name": "Form",
   //       "desc": "表单",

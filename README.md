@@ -33,7 +33,7 @@ yarn run build
 - [x] DatePicker
 - [x] Rate
 - [x] ColorPicker
-- [ ] Transfer --- todo
+- [x] Transfer
 - [x] 支持Tree
 - [ ] 代码生成优化 --- todo
 - [ ] 页面优化

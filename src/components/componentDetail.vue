@@ -59,16 +59,21 @@ export default {
   methods: {
     dealChildComponentArr () {
       if (this.formValue.componentNumber && this.formValue.componentNumber > 0) {
-        this.formValue.childComponentArr.length = Number(this.formValue.componentNumber)
-        for (let i = 0; i < this.formValue.childComponentArr.length; i++) {
-          if (this.formValue.childComponentArr[i] === undefined) {
-            this.formValue.childComponentArr[i] = {...this.formValue.childComponentArr[0]}
-            this.formValue.childComponentArr[i].label = '备选项' + (i + 1)
-            if (this.formValue.childComponentArr[0].disabled !== undefined) {
-              this.formValue.childComponentArr[i].disabled = false
+        let source = this.formValue.childComponentArr ? 'childComponentArr' : 'data'
+        console.log(source, this.formValue[source])
+        this.formValue[source].length = Number(this.formValue.componentNumber)
+        for (let i = 0; i < this.formValue[source].length; i++) {
+          if (this.formValue[source][i] === undefined) {
+            this.formValue[source][i] = {...this.formValue[source][0]}
+            this.formValue[source][i].label = '备选项' + (i + 1)
+            if (this.formValue[source][0].key !== undefined) {
+              this.formValue[source][i].key = i
             }
-            if (this.formValue.childComponentArr[0].value !== undefined) {
-              this.formValue.childComponentArr[i].value = 'test' + (i + 1)
+            if (this.formValue[source][0].disabled !== undefined) {
+              this.formValue[source][i].disabled = false
+            }
+            if (this.formValue[source][0].value !== undefined) {
+              this.formValue[source][i].value = 'test' + (i + 1)
             }
           }
         }
@@ -76,6 +81,8 @@ export default {
           let name = this.config.options[j].name
           if (name === 'childComponentArr') {
             this.config.options[j].inputArr = [...this.formValue.childComponentArr]
+          } else if (name === 'data') {
+            this.config.options[j].inputArr = [...this.formValue.data]
           }
         }
       }

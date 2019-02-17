@@ -11,6 +11,7 @@ import Select from './Select'
 import Slider from './Slider'
 import Switch from './Switch'
 import TimePicker from './TimePicker'
+import Transfer from './Transfer'
 import Upload from './Upload'
 
 export default {
@@ -27,5 +28,6 @@ export default {
     Slider,
     Switch,
     TimePicker,
+    Transfer,
     Upload
 }

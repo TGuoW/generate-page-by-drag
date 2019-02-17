@@ -14,22 +14,22 @@
     <el-input
       v-if="visble && inputValue.value"
       ref="input2"
-      style="width: 80px"
       v-model="inputValue.label"
+      style="width: 80px"
       size="mini"
       @blur="hideInput"
     />
     <el-input
       v-if="visble && inputValue.value"
       ref="input3"
-      style="width: 80px"
       v-model="inputValue.value"
+      style="width: 80px"
       size="mini"
       @blur="hideInput"
     />
     <span
-      @click.self="showInput"
       v-show="!visble"
+      @click.self="showInput"
     >
       {{ value.label || value }}
     </span>
