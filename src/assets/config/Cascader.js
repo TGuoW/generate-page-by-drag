@@ -56,7 +56,6 @@ export default {
     ]
   },
   formValue: {
-    innerText: '输入框',
     size: '',
     options: [],
     placeholder: '请选择',

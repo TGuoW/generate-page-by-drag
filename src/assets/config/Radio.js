@@ -50,7 +50,6 @@ export default {
     ]
   },
   formValue: {
-    innerText: '按钮',
     type: '',
     plain: false,
     round: false,
