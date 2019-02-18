@@ -17,8 +17,27 @@ export default {
   data () {
     return {
       newComponentInfo: {},
+      pos: [],
       isFromVuex: false,
-      isShow: true
+      isShow: true,
+      isMove: false,
+      canMove: false,
+      initialStyle: {
+        position: 'absolute',
+        left: '0',
+        top: '0'
+      }
+    }
+  },
+  computed: {
+    moveStyle () {
+      return {
+        position: 'fixed',
+        opacity: '1',
+        left: this.pos[0] + 'px',
+        top: this.pos[1] + 'px',
+        transform: 'translateX(-50%) translateY(-50%)'
+      }
     }
   },
   watch: {
@@ -62,14 +81,35 @@ export default {
         index: this.index
       })
     },
+    handleMousedown ({pageX, pageY}) {
+      event.stopPropagation()
+      this.isMove = true
+      this.pos = [pageX, pageY]
+    },
+    handleMousemove ({pageX, pageY}) {
+      if (this.isMove && !this.canMove && (Math.abs(this.pos[0] - pageX) > 20 || Math.abs(this.pos[1] - pageY) > 20)) {
+        this.canMove = true
+      }
+      if (this.isMove && this.canMove) {
+        this.pos = [pageX, pageY]
+      }
+    },
+    handleMouseup () {
+      this.isMove = false
+      this.canMove = false
+    },
     sync (prop, value) {
       this.$set(this.newComponentInfo, prop, value)
     }
   },
   render (h) {
     return this.isShow ? h('div', {
+      style: this.canMove ? this.moveStyle : this.initialStyle,
       on: {
-        '!click': this.handleClick
+        '!click': this.handleClick,
+        '!mousedown': this.handleMousedown,
+        '!mousemove': this.handleMousemove,
+        '!mouseup': this.handleMouseup
       }
     }, [h(this.componentInfo.componentName, {
         props: {...this.componentInfo, ...this.newComponentInfo},

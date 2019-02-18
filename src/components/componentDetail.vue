@@ -95,7 +95,7 @@ export default {
         this.$set(this.formValue, prop, value)
       }
     },
-    renderContent(h, { node, data, store }) {
+    renderContent(h, { node, data }) {
       return (
         <span class="custom-tree-node">
           <span>
@@ -144,7 +144,7 @@ export default {
         //     props: {...this.formValue, ...this.currentComponent.childComponentArr[0]}
         //   })
         //   : this.formValue.innerText]),
-        h('div', this.currentComponent.desc + ' ' + this.currentComponent.name)
+        h('div', this.currentComponent.name ? this.currentComponent.desc + ' ' + this.currentComponent.name : '')
       ]
     }
     return (

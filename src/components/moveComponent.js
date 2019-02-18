@@ -62,13 +62,17 @@ export default {
     },
     handleMouseMove (e) {
       if (this.isMove) {
-        // if (e.target.__vue__) {
-        //   const index = e.target.__vue__.$attrs.index
-        //   this.$store.commit({
-        //     type: 'updateCurrentComponentIndex',
-        //     index: index
-        //   })
-        // }
+        if (e.target.__vue__) {
+          let index = e.target.__vue__.$attrs.index
+
+          // while (e.target.parent && )
+          if (index !== undefined) {
+            this.$store.commit({
+              type: 'updateCurrentComponentIndex',
+              index: index
+            })
+          }
+        }
         this.pos = [e.pageX, e.pageY]
       }
     },

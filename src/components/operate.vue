@@ -3,6 +3,9 @@ export default {
   methods: {
     addFormItem () {
       this.$store.commit('addFormItem')
+    },
+    deleteComponent () {
+      // document.body.style.cursor = 'no-drop'
     }
   },
   render () {
@@ -13,6 +16,12 @@ export default {
           type="primary"
           icon="el-icon-plus"
           onClick={this.addFormItem}>
+        </el-button>
+        <el-button
+          class="btn"
+          type="danger"
+          icon="el-icon-delete"
+          onClick={this.deleteComponent}>
         </el-button>
       </div>
     )
@@ -27,5 +36,6 @@ export default {
   }
   .btn {
     float: right;
+    margin-left: 10px;
   }
 </style>

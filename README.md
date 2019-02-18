@@ -34,11 +34,11 @@ yarn run build
 - [x] Rate
 - [x] ColorPicker
 - [x] Transfer
-- [x] 支持Tree
-- [x] 代码生成优化 --- to fix
-- [ ] 页面优化 --- todo
+- [x] 支持Tree --- to fix
+- [x] 代码生成优化
+- [x] 页面优化
 - [ ] SSR --- todo
-- [ ] 拖曳 --- todo
+- [ ] 拖曳 --- to fix
 - [ ] 骨架屏 --- todo
 - [ ] 代码缓存 --- todo
 - [ ] 编辑代码

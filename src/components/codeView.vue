@@ -60,14 +60,19 @@ export default {
             dataOther[name] = ele.childComponentArr || ele.data || ele.options
           }
           if (ele.childComponentName) {
-            code += '    <' + ele.componentName + '\n      v-model=formValue."' + name + '"' + this.objToString(ele, '    ', name) + '>\n'
-            // ele.childComponentArr.forEach(child => {
-            //   code += '      <' + ele.childComponentName + this.objToString(child, '      ') + '/>\n'
-            // })
-            code += '      <' + ele.childComponentName + '\n        v-for="(item, index) in options"\n        :key="index"' + this.objToStringChild(ele.childComponentArr[0], '      ') + '/>\n'
+            code += '    <' + ele.componentName + '\n' +
+                    '      v-model="formValue.' + name + '"' +
+                    this.objToString(ele, '    ', name) + '>\n'
+            code += '      <' + ele.childComponentName + '\n' +
+                    '        v-for="(item, index) in options"\n' +
+                    '        :key="index"' + this.objToStringChild(ele.childComponentArr[0], '      ') + '/>\n'
             code += '    </' + ele.componentName + '>\n'
           } else {
-            code += ele.componentName ? '    <' + ele.componentName + '\n      v-model="formValue.' + name + '"' + this.objToString(ele, '    ', name) + '/>\n' : ''
+            code += ele.componentName
+                    ? '    <' + ele.componentName + '\n' +
+                      '      v-model="formValue.' + name + '"' +
+                      this.objToString(ele, '    ', name) + '/>\n'
+                    : ''
           }
         })
         code += '  </el-form-item>\n'
@@ -123,7 +128,9 @@ export default {
         }
         return res
       } else {
-        return typeof(tmp) === 'string' ? '"' + tmp + '",\n' : tmp + ',\n'
+        return tmp !== undefined
+              ? typeof(tmp) === 'string' ? '"' + tmp + '",\n' : tmp + ',\n'
+              : '"",\n'
       }
     },
     renderData (dataObj) {

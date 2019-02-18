@@ -91,6 +91,7 @@ export default {
       }
       .stage__code {
         margin-left: 4px;
+        background: #23241f;
         flex: 1;
         overflow-y: scroll;
       }
