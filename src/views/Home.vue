@@ -7,10 +7,10 @@
           alt=""
         >
       </div>
-      <p class="header__p">
+      <div class="header__p">
         <theme-picker />
         HELLO, USERNAME
-      </p>
+      </div>
     </el-header>
     <el-container class="main">
       <el-aside width="280px">

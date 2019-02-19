@@ -23,7 +23,7 @@ export default {
       isMove: false,
       canMove: false,
       initialStyle: {
-        position: 'absolute',
+        position: 'relative',
         left: '0',
         top: '0'
       }
@@ -70,6 +70,9 @@ export default {
       }
     }
   },
+  created () {
+
+  },
   methods: {
     handleClick (e) {
       // if (e) {
@@ -108,7 +111,7 @@ export default {
       on: {
         '!click': this.handleClick,
         '!mousedown': this.handleMousedown,
-        '!mousemove': this.handleMousemove,
+        // '!mousemove': this.handleMousemove,
         '!mouseup': this.handleMouseup
       }
     }, [h(this.componentInfo.componentName, {
