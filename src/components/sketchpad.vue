@@ -18,6 +18,9 @@
       }
     },
     computed: {
+      pos () {
+        return this.$store.state.pos
+      },
       componentList () {
         return this.$store.state.componentList
       },
@@ -26,6 +29,17 @@
       },
       titleList () {
         return this.$store.state.titleList
+      }
+    },
+    watch: {
+      pos: {
+        handler (val) {
+          const [x, y] = val
+          let index = (y - 130) / 50
+          while (true) {
+            this.setCurrentIndex(index)
+          }
+        }
       }
     },
     methods: {
@@ -51,6 +65,7 @@
         class: {
           row: this.currentComponentIndex === index
         },
+        ref: 'row' + index,
         style: {
           minHeight: '40px'
         }

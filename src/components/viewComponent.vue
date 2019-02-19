@@ -110,9 +110,9 @@ export default {
       style: this.canMove ? this.moveStyle : this.initialStyle,
       on: {
         '!click': this.handleClick,
-        '!mousedown': this.handleMousedown,
-        // '!mousemove': this.handleMousemove,
-        '!mouseup': this.handleMouseup
+        'mousedown': this.handleMousedown,
+        'mousemove': this.handleMousemove,
+        'mouseup': this.handleMouseup
       }
     }, [h(this.componentInfo.componentName, {
         props: {...this.componentInfo, ...this.newComponentInfo},

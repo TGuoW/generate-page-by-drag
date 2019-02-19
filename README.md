@@ -37,7 +37,7 @@ yarn run build
 - [x] 支持Tree --- to fix
 - [x] 代码生成优化
 - [x] 页面优化
-- [ ] SSR --- todo
+- [x] SSR
 - [ ] 拖曳 --- to fix
 - [ ] 骨架屏 --- todo
 - [ ] 代码缓存 --- todo

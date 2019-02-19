@@ -1,3 +1,4 @@
+const path = require('path')
 const VueSSRServerPlugin = require('vue-server-renderer/server-plugin')
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin')
 const nodeExternals = require('webpack-node-externals')
@@ -5,7 +6,9 @@ const merge = require('lodash.merge')
 const TARGET_NODE = process.env.WEBPACK_TARGET === 'node'
 const target = TARGET_NODE ? 'server' : 'client'
 const isDev = process.env.NODE_ENV !== 'production'
-
+function resolve(dir) {
+  return path.join(__dirname, '..', dir)
+}
 module.exports = {
   baseUrl: isDev ? 'http://127.0.0.1:8080' : '',
   devServer: {
@@ -37,29 +40,40 @@ module.exports = {
       })
       : undefined,
     optimization: {
-      splitChunks: undefined
+      splitChunks: {
+        chunks: 'all',
+        cacheGroups: {
+          libs: {
+            name: 'chunk-libs',
+            test: /[\\/]node_modules[\\/]/,
+            priority: 10,
+            chunks: 'initial' // 只打包初始时依赖的第三方
+          },
+          elementUI: {
+            name: 'chunk-elementUI', // 单独将 elementUI 拆包
+            priority: 40, // 权重要大于 libs 和 app 不然会被打包进 libs 或者 app
+            test: /[\\/]node_modules[\\/]element-ui[\\/]/
+          },
+          elementUICss: {
+            name: 'chunk-elementUICss', // 单独将 elementUI 拆包
+            priority: 60, // 权重要大于 libs 和 app 不然会被打包进 libs 或者 app
+            test: /[\\/]node_modules[\\/]element-ui[\\/]lib[\\/]theme-chalk[\\/]/
+          },
+          highlight: {
+            name: 'chunk-highlight', // 单独将 elementUI 拆包
+            priority: 30, // 权重要大于 libs 和 app 不然会被打包进 libs 或者 app
+            test: /[\\/]node_modules[\\/]highlight\.js[\\/]/
+          },
+          commons: {
+            name: 'chunk-commons',
+            test: resolve('src/components'), // 可自定义拓展你的规则
+            minChunks: 3, // 最小公用次数
+            priority: 5,
+            reuseExistingChunk: true
+          }
+        }
+      },
     },
-    // optimization: {
-    //   splitChunks: {
-    //     chunks: "async",
-    //     minSize: 30000,
-    //     minChunks: 2,
-    //     maxAsyncRequests: 5,
-    //     maxInitialRequests: 3
-    //     // name: true,
-    //     // cacheGroups: {
-    //     //   default: {
-    //     //     minChunks: 1,
-    //     //     priority: -20,
-    //     //     reuseExistingChunk: true,
-    //     //   },
-    //     //   vendors: {
-    //     //     test: /[\\/]node_modules[\\/]/,
-    //     //     priority: -10
-    //     //   }
-    //     // }
-    //   }
-    // },
     plugins: [TARGET_NODE ? new VueSSRServerPlugin() : new VueSSRClientPlugin()]
   }),
   chainWebpack: config => {

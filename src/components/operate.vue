@@ -21,6 +21,7 @@ export default {
           class="btn"
           type="danger"
           icon="el-icon-delete"
+          v-show={false}
           onClick={this.deleteComponent}>
         </el-button>
       </div>

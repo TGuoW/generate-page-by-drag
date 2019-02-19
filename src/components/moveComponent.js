@@ -61,7 +61,6 @@ export default {
       this.pos = [pageX, pageY]
     },
     handleMouseMove (e) {
-      console.log(e.target)
       if (this.isMove) {
         if (e.target.__vue__) {
           let index = e.target.__vue__.$attrs.index

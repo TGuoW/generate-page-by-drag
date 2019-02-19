@@ -6,6 +6,7 @@ export function createStore () {
   return new Vuex.Store({
     state: {
       componentList: [[]],
+      pos: [0, 0],
       titleList: ['默认标题'],
       currentComponentIndex: 0,
       currentComponent: {}
