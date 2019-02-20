@@ -3,7 +3,7 @@ import App from './App.vue'
 import { createRouter } from './router'
 import { createStore } from './store'
 import elementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css';
+// import 'element-ui/lib/theme-chalk/index.css';
 import Hljs from 'highlight.js'
 import 'highlight.js/styles/monokai-sublime.css'
 let Highlight = {};

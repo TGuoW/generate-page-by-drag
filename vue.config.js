@@ -10,7 +10,7 @@ function resolve(dir) {
   return path.join(__dirname, '..', dir)
 }
 module.exports = {
-  baseUrl: isDev ? 'http://127.0.0.1:8080' : '',
+  publicPath: isDev ? 'http://127.0.0.1:8080' : '',
   devServer: {
     headers: {'Access-Control-Allow-Origin': '*'}
   },
@@ -40,7 +40,8 @@ module.exports = {
       })
       : undefined,
     optimization: {
-      splitChunks: {
+      // splitChunks: undefined
+      splitChunks: isDev ? undefined : {
         chunks: 'all',
         cacheGroups: {
           libs: {

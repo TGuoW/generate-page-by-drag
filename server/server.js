@@ -31,7 +31,7 @@ const handleRequest = async (ctx, next) => {
 
   const url = ctx.path
 
-  if (/\w+.[js|css|jpg|jpeg|png|gif|map]/.test(url)) {
+  if (/.(js|css|jpg|jpeg|png|gif|map)$/.test(url)) {
     console.log(`proxy ${url}`)
     return await send(ctx, url, {root: path.resolve(__dirname,'../dist')})
   }

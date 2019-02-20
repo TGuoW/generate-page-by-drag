@@ -78,7 +78,7 @@ export default {
         code += '  </el-form-item>\n'
       })
       code += '</el-form>\n</template>\n\n'
-      code += '<script>\n'
+      code += '<>\n'
       code += 'export defalut {\n'
       code += '  data () {\n'
       code += '    return {\n'
@@ -87,6 +87,7 @@ export default {
       code += '\n    }\n'
       code += '  }\n'
       code += '}\n'
+      code += '</' + 'script>\n'
       this.code = code
     },
     objToStringChild (obj, space) {
