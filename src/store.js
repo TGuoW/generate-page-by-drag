@@ -12,6 +12,13 @@ export function createStore () {
       currentComponent: {}
     },
     mutations: {
+      updatePos (state, payload) {
+        state.pos = payload.pos
+      },
+      updateComponentList (state, payload) {
+        state.componentList = payload.componentList
+        state.titleList = payload.titleList
+      },
       addFormItem (state) {
         state.componentList.push([])
         state.titleList.push('默认标题')
@@ -27,6 +34,14 @@ export function createStore () {
         }
         state.componentList[state.currentComponentIndex].push({...payload.componentInfo, tid: state.componentList[state.currentComponentIndex].length})
         state.currentComponent = payload.componentInfo
+      },
+      spliceComponent (state, payload) {
+        const component = state.componentList[payload.prevIndex].splice(payload.tid, 1)[0]
+        for (let i = payload.tid; i < state.componentList[payload.prevIndex].length; i++) {
+          state.componentList[payload.prevIndex][i].tid--
+        }
+        component.tid = state.componentList[state.currentComponentIndex].length
+        state.componentList[state.currentComponentIndex].splice(component.tid, 0, component)
       },
       updateCurrentComponentIndex (state, payload) {
         state.currentComponentIndex = payload.index

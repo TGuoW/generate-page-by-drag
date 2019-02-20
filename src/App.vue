@@ -4,6 +4,47 @@
   </div>
 </template>
 
+<script>
+const throttle = (func, wait) => {
+  let pre = 0;
+  return function(e){
+    const context = this;
+    let now = Date.now();
+    if (now - pre >= wait){
+       func.call(context, e);
+       pre = Date.now();
+    }
+  }
+}
+
+export default {
+  mounted () {
+    const componentList = localStorage.getItem('componentList')
+    const titleList = localStorage.getItem('titleList')
+    if (componentList) {
+      this.$store.commit({
+        type: 'updateComponentList',
+        componentList: JSON.parse(componentList),
+        titleList: JSON.parse(titleList)
+      })
+    }
+    window.addEventListener('mousemove', throttle(this.handleMouseMove, 14))
+    window.onbeforeunload = () => {
+      localStorage.setItem('componentList', JSON.stringify(this.$store.state.componentList))
+      localStorage.setItem('titleList', JSON.stringify(this.$store.state.titleList))
+    }
+  },
+  methods: {
+    handleMouseMove ({ pageX, pageY }) {
+      this.$store.commit({
+        type: 'updatePos',
+        pos: [pageX, pageY]
+      })
+    }
+  }
+}
+</script>
+
 <style lang="scss">
 * {
   margin: 0;

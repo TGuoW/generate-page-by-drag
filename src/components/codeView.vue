@@ -78,7 +78,7 @@ export default {
         code += '  </el-form-item>\n'
       })
       code += '</el-form>\n</template>\n\n'
-      code += '<>\n'
+      code += '<script>\n'
       code += 'export defalut {\n'
       code += '  data () {\n'
       code += '    return {\n'

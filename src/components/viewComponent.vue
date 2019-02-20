@@ -17,7 +17,7 @@ export default {
   data () {
     return {
       newComponentInfo: {},
-      pos: [],
+      currentPos: [],
       isFromVuex: false,
       isShow: true,
       isMove: false,
@@ -30,6 +30,9 @@ export default {
     }
   },
   computed: {
+    pos () {
+      return this.$store.state.pos
+    },
     moveStyle () {
       return {
         position: 'fixed',
@@ -41,6 +44,11 @@ export default {
     }
   },
   watch: {
+    pos () {
+      if (this.isMove && !this.canMove && (Math.abs(this.pos[0] - this.currentPos[0]) > 20 || Math.abs(this.pos[1] - this.currentPos[1]) > 20)) {
+        this.canMove = true
+      }
+    },
     newComponentInfo: {
       handler () {
         if (this.isFromVuex) {
@@ -74,7 +82,7 @@ export default {
 
   },
   methods: {
-    handleClick (e) {
+    handleClick () {
       // if (e) {
       //   e.stopPropagation()
       // }
@@ -87,19 +95,30 @@ export default {
     handleMousedown ({pageX, pageY}) {
       event.stopPropagation()
       this.isMove = true
-      this.pos = [pageX, pageY]
+      this.currentPos = [pageX, pageY]
     },
-    handleMousemove ({pageX, pageY}) {
-      if (this.isMove && !this.canMove && (Math.abs(this.pos[0] - pageX) > 20 || Math.abs(this.pos[1] - pageY) > 20)) {
-        this.canMove = true
-      }
-      if (this.isMove && this.canMove) {
-        this.pos = [pageX, pageY]
-      }
-    },
-    handleMouseup () {
-      this.isMove = false
+    // handleMousemove ({pageX, pageY}) {
+    //   if (this.isMove && !this.canMove && (Math.abs(this.pos[0] - pageX) > 20 || Math.abs(this.pos[1] - pageY) > 20)) {
+    //     this.canMove = true
+    //   }
+    //   if (this.isMove && this.canMove) {
+    //     this.pos = [pageX, pageY]
+    //   }
+    // },
+    handleMouseup (e) {
+      e=e || window.event;
+      if(e.stopPropagation) e.stopPropagation();
+      if(e.preventDefault) e.preventDefault();
       this.canMove = false
+      this.isMove = false
+      if (this.index === this.$store.state.currentComponentIndex) {
+        return
+      }
+      this.$store.commit({
+        type: 'spliceComponent',
+        prevIndex: this.index,
+        tid: this.newComponentInfo.tid
+      })
     },
     sync (prop, value) {
       this.$set(this.newComponentInfo, prop, value)
@@ -110,8 +129,8 @@ export default {
       style: this.canMove ? this.moveStyle : this.initialStyle,
       on: {
         '!click': this.handleClick,
-        'mousedown': this.handleMousedown,
-        'mousemove': this.handleMousemove,
+        '!mousedown': this.handleMousedown,
+        // 'mousemove': this.handleMousemove,
         'mouseup': this.handleMouseup
       }
     }, [h(this.componentInfo.componentName, {

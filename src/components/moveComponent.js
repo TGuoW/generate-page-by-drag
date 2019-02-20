@@ -3,7 +3,6 @@ export default {
   data () {
     return {
       isMove: false,
-      pos: [0, 0],
       initialStyle: {
         position: 'absolute',
         opacity: '0',
@@ -13,6 +12,9 @@ export default {
     }
   },
   computed: {
+    pos () {
+      return this.$store.state.pos
+    },
     moveStyle () {
       return {
         position: 'fixed',
@@ -51,30 +53,12 @@ export default {
       ])
   },
   mounted() {
-    window.addEventListener('mousemove', this.handleMouseMove)
     window.addEventListener('mouseup', this.handleMouseUp)
   },
   methods: {
-    handleMouseDown ({pageX, pageY}) {
+    handleMouseDown () {
       event.stopPropagation()
       this.isMove = true
-      this.pos = [pageX, pageY]
-    },
-    handleMouseMove (e) {
-      if (this.isMove) {
-        if (e.target.__vue__) {
-          let index = e.target.__vue__.$attrs.index
-
-          // while (e.target.parent && )
-          if (index !== undefined) {
-            this.$store.commit({
-              type: 'updateCurrentComponentIndex',
-              index: index
-            })
-          }
-        }
-        this.pos = [e.pageX, e.pageY]
-      }
     },
     handleMouseUp () {
       if (this.isMove) {

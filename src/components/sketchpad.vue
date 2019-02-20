@@ -35,8 +35,33 @@
       pos: {
         handler (val) {
           const [x, y] = val
-          let index = (y - 130) / 50
-          while (true) {
+          let index = Math.floor((y - 132) / 62)
+          let targetRef = this.$refs['row' + index]
+          if (!targetRef) {
+            return
+          }
+          let { offsetHeight, offsetTop, offsetLeft, offsetWidth } = targetRef.$el
+          while (y > offsetHeight + offsetTop || y < offsetTop) {
+            if (y > offsetHeight + offsetTop) {
+              console.log(2)
+              index--
+            }
+            if (y < offsetTop) {
+              console.log(1)
+              index++
+            }
+            targetRef = this.$refs['row' + index]
+            if (!targetRef) {
+              return
+            }
+            ({ offsetHeight, offsetTop, offsetLeft, offsetWidth } = targetRef.$el)
+          }
+          if (
+            x > offsetLeft &&
+            x < offsetLeft + offsetWidth &&
+            y > offsetTop &&
+            y < offsetTop + offsetHeight
+          ) {
             this.setCurrentIndex(index)
           }
         }
@@ -56,9 +81,6 @@
           'label-width': '100px'
         }
       }, this.componentList.map((item, index) => h('el-form-item', {
-        nativeOn: {
-          click: () => this.setCurrentIndex(index)
-        },
         attrs: {
           index: index + 1
         },
