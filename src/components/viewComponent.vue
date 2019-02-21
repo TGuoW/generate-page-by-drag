@@ -117,7 +117,7 @@ export default {
       this.$store.commit({
         type: 'spliceComponent',
         prevIndex: this.index,
-        tid: this.newComponentInfo.tid
+        tid: this.componentInfo.tid
       })
     },
     sync (prop, value) {

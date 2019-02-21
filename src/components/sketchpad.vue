@@ -7,6 +7,18 @@
   */
   import viewComponent from './viewComponent.vue'
   import formItemTitle from './editText.vue'
+  let pre = 0
+  const throttle = (func, wait) => {
+    return function(e){
+      // console.log(pre)
+      const context = this;
+      let now = Date.now();
+      if (now - pre >= wait){
+        func.call(context, e);
+        pre = Date.now();
+      }
+    }
+  }
   export default {
     components: {
       viewComponent,
@@ -34,40 +46,50 @@
     watch: {
       pos: {
         handler (val) {
-          const [x, y] = val
-          let index = Math.floor((y - 132) / 62)
-          let targetRef = this.$refs['row' + index]
-          if (!targetRef) {
-            return
-          }
-          let { offsetHeight, offsetTop, offsetLeft, offsetWidth } = targetRef.$el
-          while (y > offsetHeight + offsetTop || y < offsetTop) {
-            if (y > offsetHeight + offsetTop) {
-              console.log(2)
-              index--
-            }
-            if (y < offsetTop) {
-              console.log(1)
-              index++
-            }
-            targetRef = this.$refs['row' + index]
-            if (!targetRef) {
-              return
-            }
-            ({ offsetHeight, offsetTop, offsetLeft, offsetWidth } = targetRef.$el)
-          }
-          if (
-            x > offsetLeft &&
-            x < offsetLeft + offsetWidth &&
-            y > offsetTop &&
-            y < offsetTop + offsetHeight
-          ) {
-            this.setCurrentIndex(index)
-          }
+          throttle(this.updatePos, 100)()
         }
       }
     },
     methods: {
+      updatePos () {
+        const [x, y] = this.pos
+        let index = Math.floor((y - 132) / 62)
+        let targetRef = this.$refs['row' + index]
+        while (!targetRef && index >= 0) {
+          index--
+          targetRef = this.$refs['row' + index]
+        }
+        if (index < 0) {
+          return
+        }
+        let { offsetHeight, offsetTop, offsetLeft, offsetWidth } = targetRef.$el
+        let i = 0
+        while ((y > offsetHeight + offsetTop || y < offsetTop) && i < 20) {
+          i++
+          if (y > offsetHeight + offsetTop) {
+            index++
+          }
+          if (y < offsetTop) {
+            index--
+          }
+          targetRef = this.$refs['row' + index]
+          if (!targetRef) {
+            return
+          }
+          ({ offsetHeight, offsetTop, offsetLeft, offsetWidth } = targetRef.$el)
+        }
+        if (i === 20) {
+          return
+        }
+        if (
+          x > offsetLeft &&
+          x < offsetLeft + offsetWidth &&
+          y > offsetTop &&
+          y < offsetTop + offsetHeight
+        ) {
+          this.setCurrentIndex(index)
+        }
+      },
       setCurrentIndex (index) {
         this.$store.commit({
           type: 'updateCurrentComponentIndex',

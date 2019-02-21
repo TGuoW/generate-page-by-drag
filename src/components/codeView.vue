@@ -1,7 +1,7 @@
 <template>
   <div>
     <pre v-highlight="code">
-      <code class="html" />
+      <code class="html xml hljs" />
     </pre>
   </div>
 </template>
@@ -45,12 +45,19 @@ export default {
       deep: true
     }
   },
+  mounted () {
+    setTimeout(() => {
+      this.renderCode(this.componentList)
+    }, 1000)
+
+  },
   methods: {
     renderCode (componentList) {
       const formValueObj = {}
       const dataOther = {}
       let dataIndex = 1
       let code = '<template>\n<el-form label-width="100px">\n'
+      console.log(code)
       componentList.forEach((item, index) => {
         code += '  <el-form-item label="' + this.titleList[index] + '">\n'
         item.forEach(ele => {
@@ -84,7 +91,8 @@ export default {
       code += '    return {\n'
       code += this.renderData(formValueObj)
       code += this.renderOther(dataOther, '      ')
-      code += '\n    }\n'
+      code = code.substr(0, code.length - 2)
+      code += '}\n'
       code += '  }\n'
       code += '}\n'
       code += '</' + 'script>\n'
