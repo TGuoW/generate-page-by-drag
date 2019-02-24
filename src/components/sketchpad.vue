@@ -10,7 +10,6 @@
   let pre = 0
   const throttle = (func, wait) => {
     return function(e){
-      // console.log(pre)
       const context = this;
       let now = Date.now();
       if (now - pre >= wait){
@@ -113,7 +112,8 @@
         style: {
           minHeight: '40px'
         }
-      }, [(<template slot="label">
+      }, [
+        (<template slot="label">
           {h('formItemTitle', {
             on: {
               input: (e) => {

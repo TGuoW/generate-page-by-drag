@@ -37,6 +37,7 @@ export default {
       return {
         position: 'fixed',
         opacity: '1',
+        zIndex: 1000,
         left: this.pos[0] + 'px',
         top: this.pos[1] + 'px',
         transform: 'translateX(-50%) translateY(-50%)'
@@ -98,15 +99,16 @@ export default {
       this.currentPos = [pageX, pageY]
     },
     // handleMousemove ({pageX, pageY}) {
-    //   if (this.isMove && !this.canMove && (Math.abs(this.pos[0] - pageX) > 20 || Math.abs(this.pos[1] - pageY) > 20)) {
-    //     this.canMove = true
-    //   }
-    //   if (this.isMove && this.canMove) {
-    //     this.pos = [pageX, pageY]
-    //   }
+    //   console.log(2)
+    //   // if (this.isMove && !this.canMove && (Math.abs(this.pos[0] - pageX) > 20 || Math.abs(this.pos[1] - pageY) > 20)) {
+    //   //   this.canMove = true
+    //   // }
+    //   // if (this.isMove && this.canMove) {
+    //   //   this.pos = [pageX, pageY]
+    //   // }
     // },
     handleMouseup (e) {
-      e=e || window.event;
+      e = e || window.event;
       if(e.stopPropagation) e.stopPropagation();
       if(e.preventDefault) e.preventDefault();
       this.canMove = false

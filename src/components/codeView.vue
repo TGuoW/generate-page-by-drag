@@ -57,7 +57,6 @@ export default {
       const dataOther = {}
       let dataIndex = 1
       let code = '<template>\n<el-form label-width="100px">\n'
-      console.log(code)
       componentList.forEach((item, index) => {
         code += '  <el-form-item label="' + this.titleList[index] + '">\n'
         item.forEach(ele => {
