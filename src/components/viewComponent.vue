@@ -26,7 +26,8 @@ export default {
         position: 'relative',
         left: '0',
         top: '0'
-      }
+      },
+      hasDelete: false
     }
   },
   computed: {
@@ -42,6 +43,9 @@ export default {
         top: this.pos[1] + 'px',
         transform: 'translateX(-50%) translateY(-50%)'
       }
+    },
+    mode () {
+      return this.$store.state.mode
     }
   },
   watch: {
@@ -56,7 +60,11 @@ export default {
           this.isFromVuex = false
           return
         }
-        this.handleClick()
+        // this.$store.commit({
+        //   type:'updateCurrentComponent',
+        //   componentInfo: {...this.componentInfo, ...this.newComponentInfo},
+        //   index: this.index
+        // })
       },
       deep: true
     },
@@ -87,11 +95,22 @@ export default {
       // if (e) {
       //   e.stopPropagation()
       // }
-      this.$store.commit({
-        type:'updateCurrentComponent',
-        componentInfo: {...this.componentInfo, ...this.newComponentInfo},
-        index: this.index
-      })
+      if (this.mode === 'delete' && !this.hasDelete) {
+        this.hasDelete = true
+        this.$store.commit({
+          type: 'deleteComponent',
+          index: this.index,
+          tid: this.componentInfo.tid
+        })
+      }
+      if (!this.hasDelete) {
+        console.log(1)
+        this.$store.commit({
+          type:'updateCurrentComponent',
+          componentInfo: {...this.componentInfo, ...this.newComponentInfo},
+          index: this.index
+        })
+      }
     },
     handleMousedown ({pageX, pageY}) {
       event.stopPropagation()
@@ -108,9 +127,6 @@ export default {
     //   // }
     // },
     handleMouseup (e) {
-      e = e || window.event;
-      if(e.stopPropagation) e.stopPropagation();
-      if(e.preventDefault) e.preventDefault();
       this.canMove = false
       this.isMove = false
       if (this.index === this.$store.state.currentComponentIndex) {

@@ -1,11 +1,26 @@
 <script>
 export default {
+  computed: {
+    mode () {
+      return this.$store.state.mode
+    }
+  },
   methods: {
     addFormItem () {
       this.$store.commit('addFormItem')
     },
     deleteComponent () {
-      // document.body.style.cursor = 'no-drop'
+      if (this.mode === 'delete') {
+        this.$store.commit({
+          type: 'changeMode',
+          mode: 'move'
+        })
+      } else {
+        this.$store.commit({
+          type: 'changeMode',
+          mode: 'delete'
+        })
+      }
     }
   },
   render () {
@@ -20,8 +35,8 @@ export default {
         <el-button
           class="btn"
           type="danger"
-          icon="el-icon-delete"
           onClick={this.deleteComponent}>
+          {this.mode === 'delete' ? '取消' : '删除'}
         </el-button>
       </div>
     )

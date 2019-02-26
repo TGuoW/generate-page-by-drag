@@ -41,6 +41,16 @@ export default {
         pos: [pageX, pageY]
       })
     }
+  },
+  watch: {
+    '$store.state.mode' (val) {
+      if (val === 'delete') {
+        console.log(val)
+        document.body.style.cursor = 'no-drop'
+      } else {
+        document.body.style.cursor = ''
+      }
+    }
   }
 }
 </script>

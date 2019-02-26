@@ -5,6 +5,7 @@ Vue.use(Vuex)
 export function createStore () {
   return new Vuex.Store({
     state: {
+      mode: 'move',
       componentList: [[]],
       pos: [0, 0],
       titleList: ['默认标题'],
@@ -12,6 +13,9 @@ export function createStore () {
       currentComponent: {}
     },
     mutations: {
+      changeMode (state, payload) {
+        state.mode = payload.mode
+      },
       updatePos (state, payload) {
         state.pos = payload.pos
       },
@@ -55,6 +59,12 @@ export function createStore () {
       },
       updateTitleList (state, payload) {
         state.titleList.splice(payload.index, 1, payload.title)
+      },
+      deleteComponent (state, payload) {
+        state.componentList[payload.index].splice(payload.tid, 1)
+        for (let i = payload.tid; i < state.componentList[payload.index].length; i++) {
+          state.componentList[payload.index][i].tid--
+        }
       }
     },
     actions: {

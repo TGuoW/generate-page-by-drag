@@ -130,6 +130,7 @@
           })}
         </template>),
         ...item.map(ele => h('view-component', {
+          key: Math.random(),
           props: {
             index: index,
             componentInfo: ele
