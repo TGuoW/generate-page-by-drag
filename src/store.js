@@ -36,7 +36,7 @@ export function createStore () {
         if (payload.componentInfo.options) {
           payload.componentInfo.options = deepClone(payload.componentInfo.options)
         }
-        state.componentList[state.currentComponentIndex].push({...payload.componentInfo, tid: state.componentList[state.currentComponentIndex].length})
+        state.componentList[state.currentComponentIndex].push({...payload.componentInfo, tid: state.componentList[state.currentComponentIndex].length, tkey: Math.random()})
         state.currentComponent = payload.componentInfo
       },
       spliceComponent (state, payload) {

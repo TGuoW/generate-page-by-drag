@@ -60,11 +60,11 @@ export default {
           this.isFromVuex = false
           return
         }
-        // this.$store.commit({
-        //   type:'updateCurrentComponent',
-        //   componentInfo: {...this.componentInfo, ...this.newComponentInfo},
-        //   index: this.index
-        // })
+        this.$store.commit({
+          type:'updateCurrentComponent',
+          componentInfo: {...this.componentInfo, ...this.newComponentInfo},
+          index: this.index
+        })
       },
       deep: true
     },
@@ -104,7 +104,6 @@ export default {
         })
       }
       if (!this.hasDelete) {
-        console.log(1)
         this.$store.commit({
           type:'updateCurrentComponent',
           componentInfo: {...this.componentInfo, ...this.newComponentInfo},
@@ -117,15 +116,6 @@ export default {
       this.isMove = true
       this.currentPos = [pageX, pageY]
     },
-    // handleMousemove ({pageX, pageY}) {
-    //   console.log(2)
-    //   // if (this.isMove && !this.canMove && (Math.abs(this.pos[0] - pageX) > 20 || Math.abs(this.pos[1] - pageY) > 20)) {
-    //   //   this.canMove = true
-    //   // }
-    //   // if (this.isMove && this.canMove) {
-    //   //   this.pos = [pageX, pageY]
-    //   // }
-    // },
     handleMouseup (e) {
       this.canMove = false
       this.isMove = false
@@ -146,8 +136,8 @@ export default {
     return this.isShow ? h('div', {
       style: this.canMove ? this.moveStyle : this.initialStyle,
       on: {
-        '!click': this.handleClick,
-        '!mousedown': this.handleMousedown,
+        'click': this.handleClick,
+        'mousedown': this.handleMousedown,
         // 'mousemove': this.handleMousemove,
         'mouseup': this.handleMouseup
       }
