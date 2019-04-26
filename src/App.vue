@@ -18,6 +18,15 @@ const throttle = (func, wait) => {
 }
 
 export default {
+  watch: {
+    '$store.state.mode' (val) {
+      if (val === 'delete') {
+        document.body.style.cursor = 'no-drop'
+      } else {
+        document.body.style.cursor = ''
+      }
+    }
+  },
   mounted () {
     const componentList = localStorage.getItem('componentList')
     const titleList = localStorage.getItem('titleList')
@@ -40,16 +49,6 @@ export default {
         type: 'updatePos',
         pos: [pageX, pageY]
       })
-    }
-  },
-  watch: {
-    '$store.state.mode' (val) {
-      if (val === 'delete') {
-        console.log(val)
-        document.body.style.cursor = 'no-drop'
-      } else {
-        document.body.style.cursor = ''
-      }
     }
   }
 }

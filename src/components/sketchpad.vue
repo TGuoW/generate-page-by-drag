@@ -44,7 +44,7 @@
     },
     watch: {
       pos: {
-        handler (val) {
+        handler () {
           throttle(this.updatePos, 100)()
         }
       }
@@ -130,7 +130,8 @@
           })}
         </template>),
         ...item.map(ele => h('view-component', {
-          key: Math.random(),
+          // key: Math.random(),
+          key: ele.uid,
           props: {
             index: index,
             componentInfo: ele

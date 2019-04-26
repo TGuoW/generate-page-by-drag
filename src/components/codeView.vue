@@ -17,12 +17,13 @@ const filterAttr = [
   'childComponentArr',
   'innerText',
   'tid',
+  'uid',
   'value'
 ]
 export default {
   data () {
     return {
-      code: ''
+      code: '',
     }
   },
   computed: {
@@ -120,7 +121,7 @@ export default {
       }, '')
     },
     renderDataCode (tmp, space) { // 只支持Array
-      if (typeof(tmp) === 'object') {
+      if (typeof(tmp) === 'object' && tmp !== null) {
         let res = '['
         tmp.forEach(item => {
           if (typeof(item) !== 'object') {

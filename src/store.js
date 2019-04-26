@@ -13,6 +13,10 @@ export function createStore () {
       currentComponent: {}
     },
     mutations: {
+      clearForm (state) {
+        state.componentList = [[]]
+        state.titleList = ['默认标题']
+      },
       changeMode (state, payload) {
         state.mode = payload.mode
       },
@@ -36,7 +40,7 @@ export function createStore () {
         if (payload.componentInfo.options) {
           payload.componentInfo.options = deepClone(payload.componentInfo.options)
         }
-        state.componentList[state.currentComponentIndex].push({...payload.componentInfo, tid: state.componentList[state.currentComponentIndex].length})
+        state.componentList[state.currentComponentIndex].push({...payload.componentInfo, tid: state.componentList[state.currentComponentIndex].length, uid: Math.random()})
         state.currentComponent = payload.componentInfo
       },
       spliceComponent (state, payload) {

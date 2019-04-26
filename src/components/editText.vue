@@ -40,7 +40,7 @@
 export default {
   props: {
     value: {
-      type: String | Object,
+      type: null,
       default () {
         return ''
       }
