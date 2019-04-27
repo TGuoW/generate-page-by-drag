@@ -71,6 +71,7 @@ export default {
       this.$message('复制失败！')
     },
     renderCode (componentList) {
+      /* fuck, 谁看懂这个垃圾代码我给他10块钱, 我是已经看不懂了 */
       const formValueObj = {}
       const dataOther = {}
       let dataIndex = 1

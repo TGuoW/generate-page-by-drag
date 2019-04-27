@@ -13,7 +13,7 @@
       </div>
     </el-header>
     <el-container class="main">
-      <el-aside width="280px">
+      <el-aside width="240px">
         <aside-menu />
       </el-aside>
       <el-main class="main__stage">
@@ -85,11 +85,13 @@ export default {
       display: flex;
       .stage__sketchpad {
         padding: 10px;
+        min-width: 360px;
         background: #fff;
         flex: 1;
         overflow-y: scroll;
       }
       .stage__code {
+        min-width: 360px;
         margin-left: 4px;
         background: #23241f;
         flex: 1;
@@ -98,6 +100,7 @@ export default {
       .stage__detail {
         background: #fff;
         margin-left: 10px;
+        min-width: 400px;
         width: 400px;
         overflow-y: scroll;
       }
