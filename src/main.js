@@ -6,6 +6,9 @@ import elementUI from 'element-ui'
 // import 'element-ui/lib/theme-chalk/index.css';
 import Hljs from 'highlight.js'
 import 'highlight.js/styles/monokai-sublime.css'
+import VueClipboard from 'vue-clipboard2'
+
+Vue.use(VueClipboard)
 let Highlight = {};
 Highlight.install = function (Vue) {
   // 先绑定，后面会有数据更新，调用highlight

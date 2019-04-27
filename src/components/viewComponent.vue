@@ -95,9 +95,7 @@ export default {
       // if (e) {
       //   e.stopPropagation()
       // }
-      console.log(1)
       if (this.mode === 'delete' && !this.hasDelete) {
-        console.log(2)
         this.hasDelete = true
         this.$store.commit({
           type: 'deleteComponent',
@@ -114,18 +112,15 @@ export default {
       }
     },
     handleMousedown ({pageX, pageY}) {
+      if (event.target.className.includes('el-slider__button')) { // 对Slider特殊处理
+        return
+      }
       event.stopPropagation()
       this.isMove = true
       this.currentPos = [pageX, pageY]
     },
     // handleMousemove ({pageX, pageY}) {
-    //   console.log(2)
-    //   // if (this.isMove && !this.canMove && (Math.abs(this.pos[0] - pageX) > 20 || Math.abs(this.pos[1] - pageY) > 20)) {
-    //   //   this.canMove = true
-    //   // }
-    //   // if (this.isMove && this.canMove) {
-    //   //   this.pos = [pageX, pageY]
-    //   // }
+
     // },
     handleMouseup () {
       this.canMove = false

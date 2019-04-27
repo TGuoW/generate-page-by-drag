@@ -1,5 +1,13 @@
 <template>
   <div>
+    <el-button
+      class="btn"
+      size="mini"
+      v-clipboard:copy="code"
+      v-clipboard:success="onCopy"
+      v-clipboard:error="onError">
+      Copy!
+    </el-button>
     <pre v-highlight="code">
       <code class="html xml hljs" />
     </pre>
@@ -53,6 +61,15 @@ export default {
 
   },
   methods: {
+    onCopy: function (e) {
+      this.$message({
+        message: '复制成功！',
+        type: 'success'
+      })
+    },
+    onError: function (e) {
+      this.$message('复制失败！')
+    },
     renderCode (componentList) {
       const formValueObj = {}
       const dataOther = {}
@@ -169,6 +186,9 @@ export default {
     width: 100%;
     height: 100%;
     background: #23241f;
+  }
+  .btn {
+    margin: 12px 0 0 12px;
   }
 </style>
 
