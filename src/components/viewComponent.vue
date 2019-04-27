@@ -95,7 +95,9 @@ export default {
       // if (e) {
       //   e.stopPropagation()
       // }
+      console.log(1)
       if (this.mode === 'delete' && !this.hasDelete) {
+        console.log(2)
         this.hasDelete = true
         this.$store.commit({
           type: 'deleteComponent',
@@ -116,7 +118,16 @@ export default {
       this.isMove = true
       this.currentPos = [pageX, pageY]
     },
-    handleMouseup (e) {
+    // handleMousemove ({pageX, pageY}) {
+    //   console.log(2)
+    //   // if (this.isMove && !this.canMove && (Math.abs(this.pos[0] - pageX) > 20 || Math.abs(this.pos[1] - pageY) > 20)) {
+    //   //   this.canMove = true
+    //   // }
+    //   // if (this.isMove && this.canMove) {
+    //   //   this.pos = [pageX, pageY]
+    //   // }
+    // },
+    handleMouseup () {
       this.canMove = false
       this.isMove = false
       if (this.index === this.$store.state.currentComponentIndex) {
@@ -130,28 +141,29 @@ export default {
     },
     sync (prop, value) {
       this.$set(this.newComponentInfo, prop, value)
-    }
+    },
   },
   render (h) {
-    return this.isShow ? h('div', {
-      style: this.canMove ? this.moveStyle : this.initialStyle,
+    const vnode = h(this.componentInfo.componentName, {
+      props: {...this.componentInfo, ...this.newComponentInfo},
+      attrs: this.componentInfo,
       on: {
-        'click': this.handleClick,
-        'mousedown': this.handleMousedown,
-        // 'mousemove': this.handleMousemove,
-        'mouseup': this.handleMouseup
+        input: (e) => this.sync('value', e)
       }
-    }, [h(this.componentInfo.componentName, {
-        props: {...this.componentInfo, ...this.newComponentInfo},
-        // attrs: this.componentInfo,
-        on: {
-          input: (e) => this.sync('value', e)
-        }
     }, this.componentInfo.childComponentName
       ? this.componentInfo.childComponentArr.map(item => h(this.componentInfo.childComponentName, {
         props: item
       }))
-      : this.componentInfo.innerText)]) : ''
+      : this.componentInfo.innerText)
+    return this.isShow ? h('div', {
+      style: this.canMove ? this.moveStyle : this.initialStyle,
+      on: {
+        '!click': this.handleClick,
+        'mousedown': this.handleMousedown,
+        // 'mousemove': this.handleMousemove,
+        'mouseup': this.handleMouseup
+      }
+    }, [vnode]) : ''
   }
 }
 </script>

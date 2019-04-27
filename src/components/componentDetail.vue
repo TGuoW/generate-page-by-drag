@@ -100,6 +100,7 @@ export default {
         <span class="custom-tree-node">
           <span>
             <editText
+              key={data.value}
               value={data}
               on-input={(e) => this.changeTreeNode(node, data, e)}
               height={19}

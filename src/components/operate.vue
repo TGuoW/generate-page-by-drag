@@ -21,6 +21,9 @@ export default {
           mode: 'delete'
         })
       }
+    },
+    clearForm () {
+      this.$store.commit('clearForm')
     }
   },
   render () {
@@ -37,6 +40,12 @@ export default {
           type="danger"
           onClick={this.deleteComponent}>
           {this.mode === 'delete' ? '取消' : '删除'}
+        </el-button>
+        <el-button
+          class="btn"
+          type="danger"
+          onClick={this.clearForm}>
+          清空
         </el-button>
       </div>
     )

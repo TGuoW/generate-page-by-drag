@@ -27,7 +27,7 @@ yarn run build
 - [x] Input
 - [x] InputNumber
 - [x] Select
-- [x] Switch --- active-value
+- [x] Switch
 - [x] Slider
 - [x] TimePicker
 - [x] DatePicker
@@ -41,3 +41,4 @@ yarn run build
 - [x] 拖曳
 - [x] 代码缓存
 - [ ] 编辑代码
+- [ ] 复制

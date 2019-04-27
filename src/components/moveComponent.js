@@ -55,6 +55,9 @@ export default {
   mounted() {
     window.addEventListener('mouseup', this.handleMouseUp)
   },
+  beforeDestroy() {
+    window.removeEventListener('mouseup', this.handleMouseUp)
+  },
   methods: {
     handleMouseDown () {
       event.stopPropagation()
