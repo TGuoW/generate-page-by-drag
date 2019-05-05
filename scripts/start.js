@@ -1,8 +1,6 @@
 const app = require("../server/ssr");
-
-const port = process.env.PORT || 3000;
-
-console.log('port', port);
-app.listen(port, () => {
-  console.log(`server started at localhost:${port}`);
+const serverPort = require("../server/ssr").serverPort;
+console.log('port', serverPort);
+app.listen(serverPort, () => {
+  console.log(`server started at localhost:${serverPort}`);
 });
