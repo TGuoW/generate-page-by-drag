@@ -274,8 +274,7 @@ export default [
       {
         "name": "TimePicker",
         "desc": "时间选择器",
-        "componentName": "el-time-picker",
-        "value": [0 ,0]
+        "componentName": "el-time-picker"
       },
       {
         "name": "DatePicker",

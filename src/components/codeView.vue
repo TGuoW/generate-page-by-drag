@@ -139,7 +139,7 @@ export default {
       }, '')
     },
     renderDataCode (tmp, space) { // 只支持Array
-      if (typeof(tmp) === 'object' && tmp !== null) {
+      if (Object.prototype.toString.call(tmp) === '[object Object]') {
         let res = '['
         tmp.forEach(item => {
           if (typeof(item) !== 'object') {
@@ -156,7 +156,7 @@ export default {
         return res
       } else {
         return tmp !== undefined
-              ? typeof(tmp) === 'string' ? '"' + tmp + '",\n' : tmp + ',\n'
+              ? typeof(tmp) === 'string' || Object.prototype.toString.call(tmp) === '[object Date]' ? '"' + tmp + '",\n' : tmp + ',\n'
               : '"",\n'
       }
     },

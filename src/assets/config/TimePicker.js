@@ -114,12 +114,12 @@ export default {
     placeholder: '',
     'start-placeholder': '',
     'end-placeholder': '',
-    'is-range': true,
+    'is-range': false,
     'arrow-control': false,
     align: 'left',
     'range-separator': '-',
     'value-format': '',
-    value: [],
+    value: '',
     disabled: false
   }
 }

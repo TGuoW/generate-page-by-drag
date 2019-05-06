@@ -92,6 +92,9 @@ export default {
         arr[index][ele] = value
         this.$set(this.formValue, prop, arr)
       } else {
+        if (prop === 'is-range') {
+          this.$set(this.formValue, 'value', value ? [new Date(), new Date()] : '')
+        }
         this.$set(this.formValue, prop, value)
       }
     },
