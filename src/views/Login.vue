@@ -18,19 +18,13 @@
           登录
         </el-button>
       </el-form-item>
-      <test />
     </el-form>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import test from '@/components/test'
 export default {
   name: 'Login',
-  components: {
-    test
-  },
   methods: {
     login () {
       this.$router.push({ name: 'home' })

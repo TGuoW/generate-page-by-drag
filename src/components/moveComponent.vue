@@ -1,3 +1,4 @@
+<script>
 export default {
   props: ['info'],
   data () {
@@ -75,3 +76,4 @@ export default {
     }
   },
 }
+</script>
