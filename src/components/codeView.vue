@@ -45,6 +45,9 @@ export default {
       let titleList = this.$store.state.titleList
       // this.renderCode(titleList, this.componentList)
       return titleList
+    },
+    formName () {
+      return this.$store.state.formName
     }
   },
   watch: {
@@ -73,10 +76,11 @@ export default {
     },
     renderCode (componentList) {
       /* fuck, 谁看懂这个垃圾代码我给他10块钱, 我是已经看不懂了 */
+      const { formName } = this
       const formValueObj = {}
       const dataOther = {}
       let dataIndex = 1
-      let code = '<template>\n<el-form label-width="100px">\n'
+      let code = '<template>\n<el-form :model="' + formName + '" label-width="100px">\n'
       componentList.forEach((item, index) => {
         code += '  <el-form-item label="' + this.titleList[index] + '">\n'
         item.forEach(ele => {
@@ -87,7 +91,7 @@ export default {
           }
           if (ele.childComponentName) {
             code += '    <' + ele.componentName + '\n' +
-                    '      v-model="formValue.' + name + '"' +
+                    '      v-model="' + formName + '.' + name + '"' +
                     this.objToString(ele, '    ', name) + '>\n'
             code += '      <' + ele.childComponentName + '\n' +
                     '        v-for="(item, index) in options"\n' +
@@ -96,7 +100,7 @@ export default {
           } else {
             code += ele.componentName
                     ? '    <' + ele.componentName + '\n' +
-                      '      v-model="formValue.' + name + '"' +
+                      '      v-model="' + formName + '.' + name + '"' +
                       this.objToString(ele, '    ', name) + '/>\n'
                     : ''
           }
@@ -165,7 +169,7 @@ export default {
     renderData (dataObj) {
       const space = '      '
       const space1 = '        '
-      let code = space + 'formValue: {\n'
+      let code = space + this.formName + ': {\n'
       Object.keys(dataObj).forEach(item => {
         code += '' + space1 + item + ':' + this.renderDataCode(dataObj[item], space1)
       })
