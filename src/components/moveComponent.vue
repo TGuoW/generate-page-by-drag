@@ -1,6 +1,13 @@
 <script>
 export default {
-  props: ['info'],
+  props: {
+    info: {
+      type: Object,
+      default () {
+        return {}
+      }
+    }
+  },
   data () {
     return {
       isMove: false,
@@ -23,6 +30,28 @@ export default {
         left: this.pos[0] + 'px',
         top: this.pos[1] + 'px',
         transform: 'translateX(-50%) translateY(-50%)'
+      }
+    }
+  },
+  mounted() {
+    window.addEventListener('mouseup', this.handleMouseUp)
+  },
+  beforeDestroy() {
+    window.removeEventListener('mouseup', this.handleMouseUp)
+  },
+  methods: {
+    handleMouseDown () {
+      event.stopPropagation()
+      this.isMove = true
+    },
+    handleMouseUp () {
+      if (this.isMove) {
+        this.isMove = false
+        this.$store.commit({
+          type: 'addComponent',
+          componentInfo: this.info,
+          // index: 0
+        })
       }
     }
   },
@@ -52,28 +81,6 @@ export default {
             }))
             : this.info.innerText)]) : ''
       ])
-  },
-  mounted() {
-    window.addEventListener('mouseup', this.handleMouseUp)
-  },
-  beforeDestroy() {
-    window.removeEventListener('mouseup', this.handleMouseUp)
-  },
-  methods: {
-    handleMouseDown () {
-      event.stopPropagation()
-      this.isMove = true
-    },
-    handleMouseUp () {
-      if (this.isMove) {
-        this.isMove = false
-        this.$store.commit({
-          type: 'addComponent',
-          componentInfo: this.info,
-          // index: 0
-        })
-      }
-    }
-  },
+  }
 }
 </script>

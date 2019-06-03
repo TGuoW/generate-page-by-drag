@@ -5,7 +5,7 @@ import Login from './views/Login.vue'
 Vue.use(Router)
 
 export function createRouter () {
-  return new Router({
+  const router = new Router({
     // mode: 'history',
     routes: [
       {
@@ -25,4 +25,5 @@ export function createRouter () {
       }
     ]
   })
+  return router
 }

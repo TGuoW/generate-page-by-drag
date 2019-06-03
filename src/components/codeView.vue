@@ -1,11 +1,12 @@
 <template>
   <div>
     <el-button
-      class="btn"
-      size="mini"
       v-clipboard:copy="code"
       v-clipboard:success="onCopy"
-      v-clipboard:error="onError">
+      v-clipboard:error="onError"
+      class="btn"
+      size="mini"
+    >
       Copy!
     </el-button>
     <pre v-highlight="code">
@@ -61,13 +62,13 @@ export default {
 
   },
   methods: {
-    onCopy: function (e) {
+    onCopy: function () {
       this.$message({
         message: '复制成功！',
         type: 'success'
       })
     },
-    onError: function (e) {
+    onError: function () {
       this.$message('复制失败！')
     },
     renderCode (componentList) {
