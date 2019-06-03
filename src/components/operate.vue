@@ -4,10 +4,14 @@ export default {
     return {
       dialogVisible: false,
       formValue: {
-        formName: 'formValue'
+        formName: 'formValue',
+        labelWidth: '80px'
       },
       rules: {
         formName: [
+          {min: 1, required: true, message: '请输入', trigger: 'blur'}
+        ],
+        labelWidth: [
           {min: 1, required: true, message: '请输入', trigger: 'blur'}
         ]
       }
@@ -46,7 +50,8 @@ export default {
           if (valid) {
             this.$store.commit({
               type: 'updateConfig',
-              formName: this.formValue.formName
+              formName: this.formValue.formName,
+              labelWidth: this.formValue.labelWidth
             })
             this.dialogVisible = false
           } else {
@@ -103,6 +108,14 @@ export default {
               <el-input
                 value={formValue.formName}
                 onInput={(e) => formValue.formName = e}>
+              </el-input>
+            </el-form-item>
+            <el-form-item
+              label="标题宽度"
+              prop="labelWidth">
+              <el-input
+                value={formValue.labelWidth}
+                onInput={(e) => formValue.labelWidth = e}>
               </el-input>
             </el-form-item>
           </el-form>

@@ -40,6 +40,9 @@
       },
       titleList () {
         return this.$store.state.titleList
+      },
+      settings () {
+        return this.$store.state.settings
       }
     },
     watch: {
@@ -99,7 +102,7 @@
     render(h) {
       return h('el-form', {
         props: {
-          'label-width': '100px'
+          'label-width': this.settings.labelWidth
         }
       }, this.componentList.map((item, index) => h('el-form-item', {
         attrs: {

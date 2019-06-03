@@ -47,7 +47,7 @@ export default {
       return titleList
     },
     formName () {
-      return this.$store.state.formName
+      return this.$store.state.settings.formName
     }
   },
   watch: {

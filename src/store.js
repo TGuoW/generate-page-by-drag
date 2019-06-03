@@ -9,13 +9,16 @@ export function createStore () {
       componentList: [[]],
       pos: [0, 0],
       titleList: ['默认标题'],
-      formName: 'formValue',
+      settings: {
+        formName: 'formValue',
+        labelWidth: '100px'
+      },
       currentComponentIndex: 0,
       currentComponent: {}
     },
     mutations: {
       updateConfig (state, payload) {
-        state.formName = payload.formName
+        state.settings = {...state.settings, ...payload}
       },
       clearForm (state) {
         state.componentList = [[]]
