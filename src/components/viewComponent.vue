@@ -150,8 +150,10 @@ export default {
         props: item
       }))
       : this.componentInfo.innerText)
+
     return this.isShow ? h('div', {
       style: this.canMove ? this.moveStyle : this.initialStyle,
+      class: 'view',
       on: {
         '!click': this.handleClick,
         'mousedown': this.handleMousedown,

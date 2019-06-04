@@ -25,7 +25,17 @@
     },
     data() {
       return {
-        title: ''
+        title: '',
+        dialogVisible: false,
+        formValue: {
+          type: '',
+          method: '',
+          required: false,
+          min: '',
+          max: '',
+          length: '',
+          trigger: 'change'
+        }
       }
     },
     computed: {
@@ -97,12 +107,25 @@
           type: 'updateCurrentComponentIndex',
           index: index
         })
+      },
+      showRuleSetting (name) {
+        this.dialogVisible = true
       }
     },
     render(h) {
-      return h('el-form', {
+      const ruleSetting = (name) => {
+        return (
+          <div
+            class="setting"
+            onClick={this.showRuleSetting(name)}>
+            <i class="el-icon-setting"></i>
+          </div>
+        )
+      }
+      return h('div', [h('el-form', {
         props: {
-          'label-width': this.settings.labelWidth
+          'label-width': this.settings.labelWidth,
+          inline: this.settings.inline
         }
       }, this.componentList.map((item, index) => h('el-form-item', {
         attrs: {
@@ -139,8 +162,42 @@
             index: index,
             componentInfo: ele
           }
-        }))
-      ])))
+        })),
+        ruleSetting
+      ]))),
+      <el-dialog
+        class="dialog"
+        title="全局配置"
+        visible={this.dialogVisible}
+        {...{on:{'update:visible': () => this.dialogVisible = false}}}>
+        <el-form
+          onInput={console.log}
+          ref="ruleForm"
+          labelWidth="140px"
+          {...{props:{model: formValue}}}>
+          <el-form-item
+            label="表单对象名称"
+            prop="formName">
+            <el-input
+              value={formValue.formName}
+              onInput={(e) => formValue.formName = e}>
+            </el-input>
+          </el-form-item>
+          <el-form-item
+            label="标题宽度"
+            prop="labelWidth">
+            <el-input
+              value={formValue.labelWidth}
+              onInput={(e) => formValue.labelWidth = e}>
+              <template slot="append">px</template>
+            </el-input>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button onClick={() => this.dialogVisible = false}>取 消</el-button>
+          <el-button type="primary" onClick={checkForm}>确 定</el-button>
+        </div>
+      </el-dialog>])
     },
   }
 </script>
@@ -148,5 +205,14 @@
 <style lang="scss" scoped>
   .row {
     box-shadow: 0 0 6px rgb(39, 185, 243);
+  }
+  .setting {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    cursor: pointer;
+  }
+  .setting:hover {
+    color: rgb(185, 185, 185);
   }
 </style>

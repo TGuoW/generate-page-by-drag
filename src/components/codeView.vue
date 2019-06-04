@@ -95,7 +95,7 @@ export default {
                     this.objToString(ele, '    ', name) + '>\n'
             code += '      <' + ele.childComponentName + '\n' +
                     '        v-for="(item, index) in options"\n' +
-                    '        :key="index"' + this.objToStringChild(ele.childComponentArr[0], '      ') + '/>\n'
+                    '        :key="item"' + this.objToStringChild(ele.childComponentArr[0], '      ') + '/>\n'
             code += '    </' + ele.componentName + '>\n'
           } else {
             code += ele.componentName

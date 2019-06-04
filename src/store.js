@@ -11,7 +11,8 @@ export function createStore () {
       titleList: ['默认标题'],
       settings: {
         formName: 'formValue',
-        labelWidth: '100px'
+        labelWidth: '100px',
+        inline: false
       },
       currentComponentIndex: 0,
       currentComponent: {}

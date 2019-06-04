@@ -5,7 +5,8 @@ export default {
       dialogVisible: false,
       formValue: {
         formName: 'formValue',
-        labelWidth: '80px'
+        labelWidth: '80',
+        inline: false
       },
       rules: {
         formName: [
@@ -51,7 +52,8 @@ export default {
             this.$store.commit({
               type: 'updateConfig',
               formName: this.formValue.formName,
-              labelWidth: this.formValue.labelWidth
+              labelWidth: this.formValue.labelWidth + 'px',
+              inline: this.formValue.inline
             })
             this.dialogVisible = false
           } else {
@@ -116,6 +118,7 @@ export default {
               <el-input
                 value={formValue.labelWidth}
                 onInput={(e) => formValue.labelWidth = e}>
+                <template slot="append">px</template>
               </el-input>
             </el-form-item>
           </el-form>
