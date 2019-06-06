@@ -35,7 +35,23 @@
           max: '',
           length: '',
           trigger: 'change'
-        }
+        },
+        formConfig: [{
+          $type: 'select', // 类型，element-ui 提供的所有表单类型，即 el-xxx
+          $id: 'type', // 每一个原子都存在id，用于存储该原子的值，注意不能重复
+          label: 'type',
+          $options: [{
+            label: '区域一',
+            value: 'shanghai'
+          }, {
+            label: '区域二',
+            value: 'beijing'
+          }],
+        }, {
+          $type: 'switch',
+          $id: 'required',
+          label: 'required'
+        }]
       }
     },
     computed: {
@@ -86,7 +102,7 @@
           }
           targetRef = this.$refs['row' + index]
           if (!targetRef) {
-            return
+            break
           }
           ({ offsetHeight, offsetTop, offsetLeft, offsetWidth } = targetRef.$el)
         }
@@ -101,6 +117,9 @@
         ) {
           this.setCurrentIndex(index)
         }
+        if (y > offsetTop + offsetHeight) {
+          this.setCurrentIndex(index + 1)
+        }
       },
       setCurrentIndex (index) {
         this.$store.commit({
@@ -108,19 +127,23 @@
           index: index
         })
       },
-      showRuleSetting (name) {
+      showRuleSetting (uid) {
         this.dialogVisible = true
+      },
+      checkForm () {
+        this.dialogVisible = false
       }
     },
     render(h) {
+      const {formConfig, titleList} = this
       const ruleSetting = (name) => {
-        return (
+        return name ? (
           <div
             class="setting"
-            onClick={this.showRuleSetting(name)}>
+            onClick={() => this.showRuleSetting(name)}>
             <i class="el-icon-setting"></i>
           </div>
-        )
+        ) : ''
       }
       return h('div', [h('el-form', {
         props: {
@@ -132,7 +155,8 @@
           index: index + 1
         },
         class: {
-          row: this.currentComponentIndex === index
+          'row-highlight': this.currentComponentIndex === index,
+          row: true
         },
         ref: 'row' + index,
         style: {
@@ -140,20 +164,16 @@
         }
       }, [
         (<template slot="label">
-          {h('formItemTitle', {
-            on: {
-              input: (e) => {
-                this.$store.commit({
-                  type: 'updateTitleList',
-                  index: index,
-                  title: e
-                })
-              }
-            },
-            props: {
-              value: this.titleList[index]
-            }
-          })}
+          <form-item-title
+            onInput={(e) => {
+              this.$store.commit({
+                type: 'updateTitleList',
+                index: index,
+                title: e
+              })
+            }}
+            value={titleList[index]}
+          ></form-item-title>
         </template>),
         ...item.map(ele => h('view-component', {
           // key: Math.random(),
@@ -163,39 +183,21 @@
             componentInfo: ele
           }
         })),
-        ruleSetting
+        ruleSetting(item[0] ? item[0].uid : false)
       ]))),
       <el-dialog
         class="dialog"
-        title="全局配置"
+        title="校验规则设置"
         visible={this.dialogVisible}
         {...{on:{'update:visible': () => this.dialogVisible = false}}}>
-        <el-form
-          onInput={console.log}
-          ref="ruleForm"
-          labelWidth="140px"
-          {...{props:{model: formValue}}}>
-          <el-form-item
-            label="表单对象名称"
-            prop="formName">
-            <el-input
-              value={formValue.formName}
-              onInput={(e) => formValue.formName = e}>
-            </el-input>
-          </el-form-item>
-          <el-form-item
-            label="标题宽度"
-            prop="labelWidth">
-            <el-input
-              value={formValue.labelWidth}
-              onInput={(e) => formValue.labelWidth = e}>
-              <template slot="append">px</template>
-            </el-input>
-          </el-form-item>
-        </el-form>
+        <el-form-renderer
+          labelWidth="100px"
+          content={formConfig}
+          style="text-align: left">
+        </el-form-renderer>
         <div slot="footer" class="dialog-footer">
           <el-button onClick={() => this.dialogVisible = false}>取 消</el-button>
-          <el-button type="primary" onClick={checkForm}>确 定</el-button>
+          <el-button type="primary" onClick={this.checkForm}>确 定</el-button>
         </div>
       </el-dialog>])
     },
@@ -204,12 +206,15 @@
 
 <style lang="scss" scoped>
   .row {
+    padding-right: 20px;
+  }
+  .row-highlight {
     box-shadow: 0 0 6px rgb(39, 185, 243);
   }
   .setting {
     position: absolute;
     top: 0;
-    right: 10px;
+    right: -18px;
     cursor: pointer;
   }
   .setting:hover {

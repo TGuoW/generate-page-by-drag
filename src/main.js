@@ -7,8 +7,10 @@ import elementUI from 'element-ui'
 import Hljs from 'highlight.js'
 import 'highlight.js/styles/monokai-sublime.css'
 import VueClipboard from 'vue-clipboard2'
+import ElFormRenderer from 'el-form-renderer'
 
 Vue.use(VueClipboard)
+Vue.component('el-form-renderer', ElFormRenderer)
 let Highlight = {};
 Highlight.install = function (Vue) {
   // 先绑定，后面会有数据更新，调用highlight

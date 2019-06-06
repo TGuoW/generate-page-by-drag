@@ -57,24 +57,17 @@ export default {
             })
             this.dialogVisible = false
           } else {
-            console.log('error submit!!');
             return false;
           }
       })
     }
   },
   render () {
-    const { addFormItem, deleteComponent, clearForm, showConfig, checkForm } = this
+    const { deleteComponent, clearForm, showConfig, checkForm } = this
     const { formValue, rules } = this
 
     return (
       <div class="main1">
-        <el-button
-          class="btn"
-          type="primary"
-          icon="el-icon-plus"
-          onClick={addFormItem}>
-        </el-button>
         <el-button
           class="btn"
           type="danger"
@@ -99,7 +92,7 @@ export default {
           visible={this.dialogVisible}
           {...{on:{'update:visible': () => this.dialogVisible = false}}}>
           <el-form
-            onInput={console.log}
+            onInput={() => {}}
             rules={rules}
             ref="ruleForm"
             labelWidth="140px"

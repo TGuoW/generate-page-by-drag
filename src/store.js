@@ -6,9 +6,9 @@ export function createStore () {
   return new Vuex.Store({
     state: {
       mode: 'move',
-      componentList: [[]],
+      componentList: [],
       pos: [0, 0],
-      titleList: ['默认标题'],
+      titleList: [],
       settings: {
         formName: 'formValue',
         labelWidth: '100px',
@@ -22,8 +22,8 @@ export function createStore () {
         state.settings = {...state.settings, ...payload}
       },
       clearForm (state) {
-        state.componentList = [[]]
-        state.titleList = ['默认标题']
+        state.componentList = []
+        state.titleList = []
       },
       changeMode (state, payload) {
         state.mode = payload.mode
@@ -48,8 +48,10 @@ export function createStore () {
         if (payload.componentInfo.options) {
           payload.componentInfo.options = deepClone(payload.componentInfo.options)
         }
-        state.componentList[state.currentComponentIndex].push({...payload.componentInfo, tid: state.componentList[state.currentComponentIndex].length, uid: Math.random()})
-        state.currentComponent = payload.componentInfo
+        state.componentList.splice(state.currentComponentIndex, 0, [{...payload.componentInfo, tid: 0, uid: Math.random()}])
+        state.titleList.splice(state.currentComponentIndex, 0, '默认标题')
+        // state.componentList[state.currentComponentIndex].push({...payload.componentInfo, tid: state.componentList[state.currentComponentIndex].length, uid: Math.random()})
+        // state.currentComponent = payload.componentInfo
       },
       spliceComponent (state, payload) {
         const component = state.componentList[payload.prevIndex].splice(payload.tid, 1)[0]
