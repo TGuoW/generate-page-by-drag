@@ -48,18 +48,25 @@ export function createStore () {
         if (payload.componentInfo.options) {
           payload.componentInfo.options = deepClone(payload.componentInfo.options)
         }
-        state.componentList.splice(state.currentComponentIndex, 0, [{...payload.componentInfo, tid: 0, uid: Math.random()}])
+        state.componentList.splice(state.currentComponentIndex, 0, [{...payload.componentInfo, tid: 0, uid: Math.random(), viewName: payload.componentInfo.name + state.componentList.length}])
         state.titleList.splice(state.currentComponentIndex, 0, '默认标题')
         // state.componentList[state.currentComponentIndex].push({...payload.componentInfo, tid: state.componentList[state.currentComponentIndex].length, uid: Math.random()})
         // state.currentComponent = payload.componentInfo
       },
       spliceComponent (state, payload) {
-        const component = state.componentList[payload.prevIndex].splice(payload.tid, 1)[0]
-        for (let i = payload.tid; i < state.componentList[payload.prevIndex].length; i++) {
-          state.componentList[payload.prevIndex][i].tid--
-        }
-        component.tid = state.componentList[state.currentComponentIndex].length
-        state.componentList[state.currentComponentIndex].splice(component.tid, 0, component)
+        // const component = state.componentList[payload.prevIndex].splice(payload.tid, 1)[0]
+        // for (let i = payload.tid; i < state.componentList[payload.prevIndex].length; i++) {
+        //   state.componentList[payload.prevIndex][i].tid--
+        // }
+        // component.tid = state.componentList[state.currentComponentIndex].length
+        // state.componentList[state.currentComponentIndex].splice(component.tid, 0, component)
+        const { componentList, currentComponentIndex, titleList } = state
+        const { prevIndex } = payload
+        const component = componentList.splice(prevIndex, 1)[0]
+        componentList.splice(currentComponentIndex, 0, component)
+
+        const title = titleList.splice(prevIndex, 1)[0]
+        titleList.splice(currentComponentIndex, 0, title)
       },
       updateCurrentComponentIndex (state, payload) {
         state.currentComponentIndex = payload.index
@@ -75,10 +82,12 @@ export function createStore () {
         state.titleList.splice(payload.index, 1, payload.title)
       },
       deleteComponent (state, payload) {
-        state.componentList[payload.index].splice(payload.tid, 1)
-        for (let i = payload.tid; i < state.componentList[payload.index].length; i++) {
-          state.componentList[payload.index][i].tid--
-        }
+        state.componentList.splice(payload.index, 1)
+        state.titleList.splice(payload.index, 1)
+        // state.componentList[payload.index].splice(payload.tid, 1)
+        // for (let i = payload.tid; i < state.componentList[payload.index].length; i++) {
+        //   state.componentList[payload.index][i].tid--
+        // }
       }
     },
     actions: {

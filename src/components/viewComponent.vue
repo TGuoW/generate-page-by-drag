@@ -156,9 +156,9 @@ export default {
       class: 'view',
       on: {
         '!click': this.handleClick,
-        'mousedown': this.handleMousedown,
+        // 'mousedown': this.handleMousedown,
         // 'mousemove': this.handleMousemove,
-        'mouseup': this.handleMouseup
+        // 'mouseup': this.handleMouseup
       }
     }, [vnode]) : ''
   }

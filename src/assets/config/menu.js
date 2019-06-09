@@ -24,7 +24,8 @@ export default [
           { label: '备选项1', disabled: false },
           { label: '备选项2', disabled: false }
         ],
-        "innerText": "备选项"
+        "innerText": "备选项",
+        "rules": []
       },
       {
         "name": "Checkbox",
@@ -36,18 +37,21 @@ export default [
           { label: '备选项1', disabled: false },
           { label: '备选项2', disabled: false }
         ],
-        "value": []
+        "value": [],
+        "rules": []
       },
       {
         "name": "Input",
         "desc": "输入框",
         "componentName": "el-input",
+        "rules": []
       },
       {
         "name": "InputNumber",
         "desc": "计数器",
         "componentName": "el-input-number",
-        "value": 0
+        "value": 0,
+        "rules": []
       },
       {
         "name": "Select",
@@ -58,13 +62,15 @@ export default [
           { label: '备选项1', value: 'test1', disabled: false },
           { label: '备选项2', value: 'test2', disabled: false }
         ],
-        "value": ''
+        "value": '',
+        "rules": []
       },
       {
         "name": "Cascader",
         "desc": "级联选择器",
         "componentName": "el-cascader",
         "value": [],
+        "rules": [],
         "options": [{
           value: 'zhinan',
           label: '指南',
@@ -264,22 +270,26 @@ export default [
       {
         "name": "Switch",
         "desc": "开关",
-        "componentName": "el-switch"
+        "componentName": "el-switch",
+        "rules": []
       },
       {
         "name": "Slider",
         "desc": "滑块",
-        "componentName": "el-slider"
+        "componentName": "el-slider",
+        "rules": []
       },
       {
         "name": "TimePicker",
         "desc": "时间选择器",
-        "componentName": "el-time-picker"
+        "componentName": "el-time-picker",
+        "rules": []
       },
       {
         "name": "DatePicker",
         "desc": "日期选择器",
-        "componentName": "el-date-picker"
+        "componentName": "el-date-picker",
+        "rules": []
       },
   //     {
   //       "name": "DateTimePicker",
@@ -295,12 +305,14 @@ export default [
       {
         "name": "Rate",
         "desc": "评分",
-        "componentName": "el-rate"
+        "componentName": "el-rate",
+        "rules": []
       },
       {
         "name": "ColorPicker",
         "desc": "颜色选择器",
-        "componentName": "el-color-picker"
+        "componentName": "el-color-picker",
+        "rules": []
       },
       {
         "name": "Transfer",
@@ -318,7 +330,8 @@ export default [
             label: `备选项2`,
             disabled: false
           }
-        ]
+        ],
+        "rules": []
       },
   //     {
   //       "name": "Form",

@@ -7,12 +7,14 @@
   */
   import viewComponent from './viewComponent.vue'
   import formItemTitle from './editText.vue'
+  import formItem from './formItem.vue'
+  import deepClone from '../assets/js/deepClone'
   let pre = 0
   const throttle = (func, wait) => {
     return function(e){
       const context = this;
       let now = Date.now();
-      if (now - pre >= wait){
+      if (now - pre >= wait) {
         func.call(context, e);
         pre = Date.now();
       }
@@ -21,12 +23,17 @@
   export default {
     components: {
       viewComponent,
-      formItemTitle
+      formItemTitle,
+      formItem
     },
     data() {
       return {
         title: '',
         dialogVisible: false,
+        activeTab: '',
+        currentRule: [],
+        currentSettingIndex: 0,
+        rules: {},
         formValue: {
           type: '',
           method: '',
@@ -41,16 +48,64 @@
           $id: 'type', // 每一个原子都存在id，用于存储该原子的值，注意不能重复
           label: 'type',
           $options: [{
-            label: '区域一',
-            value: 'shanghai'
+            label: 'string',
+            value: 'string'
           }, {
-            label: '区域二',
-            value: 'beijing'
+            label: 'number',
+            value: 'number'
+          }, {
+            label: 'boolean',
+            value: 'boolean'
+          }, {
+            label: 'method',
+            value: 'method'
+          }, {
+            label: 'regexp',
+            value: 'regexp'
+          }, {
+            label: 'integer',
+            value: 'integer'
+          }, {
+            label: 'float',
+            value: 'float'
+          }, {
+            label: 'array',
+            value: 'array'
+          }, {
+            label: 'object',
+            value: 'object'
+          }, {
+            label: 'enum',
+            value: 'enum'
+          }, {
+            label: 'date',
+            value: 'date'
+          }, {
+            label: 'url',
+            value: 'url'
+          }, {
+            label: 'hex',
+            value: 'hex'
+          }, {
+            label: 'email',
+            value: 'email'
           }],
         }, {
           $type: 'switch',
           $id: 'required',
           label: 'required'
+        }, {
+          $type: 'input',
+          $id: 'min',
+          label: 'min'
+        }, {
+          $type: 'input',
+          $id: 'max',
+          label: 'max'
+        }, {
+          $type: 'input',
+          $id: 'message',
+          label: 'message'
         }]
       }
     },
@@ -80,7 +135,16 @@
     },
     methods: {
       updatePos () {
+        let { offsetHeight, offsetTop, offsetLeft, offsetWidth } = document.getElementsByClassName('stage__sketchpad')[0]
         const [x, y] = this.pos
+        if (!(
+          x > offsetLeft &&
+          x < offsetLeft + offsetWidth &&
+          y > offsetTop &&
+          y < offsetTop + offsetHeight
+        )) {
+          return
+        }
         let index = Math.floor((y - 132) / 62)
         let targetRef = this.$refs['row' + index]
         while (!targetRef && index >= 0) {
@@ -90,7 +154,7 @@
         if (index < 0) {
           return
         }
-        let { offsetHeight, offsetTop, offsetLeft, offsetWidth } = targetRef.$el
+        ({ offsetHeight, offsetTop, offsetLeft, offsetWidth } = targetRef.$el)
         let i = 0
         while ((y > offsetHeight + offsetTop || y < offsetTop) && i < 20) {
           i++
@@ -127,30 +191,65 @@
           index: index
         })
       },
-      showRuleSetting (uid) {
+      showRuleSetting (index) {
+        this.currentSettingIndex = index
         this.dialogVisible = true
+        const component = this.componentList[index][0]
+        this.currentRule = component.rules.map(item => {
+          const newRuleConfig = deepClone(this.formConfig)
+          newRuleConfig.forEach(ele => {
+            if (item[ele.$id]) {
+              ele.default = item[ele.$id]
+            }
+          })
+          return newRuleConfig
+        })
       },
       checkForm () {
+        const component = this.componentList[this.currentSettingIndex][0]
+        const rules = this.currentRule.map((item, index) => {
+          const res = this.$refs['form' + index].getFormValue()
+          Object.keys(res).forEach(item => {
+            if (!res[item]) delete res[item]
+          })
+          return res
+        })
+        component.rules = rules
+        this.rules[component.viewName] = deepClone(rules)
         this.dialogVisible = false
+      },
+      addRule () {
+        this.currentRule.push(deepClone(this.formConfig))
       }
     },
     render(h) {
-      const {formConfig, titleList} = this
+      const {formConfig, titleList, currentRule, rules} = this
       const ruleSetting = (name) => {
-        return name ? (
+        return (
           <div
             class="setting"
             onClick={() => this.showRuleSetting(name)}>
             <i class="el-icon-setting"></i>
           </div>
-        ) : ''
+        )
       }
-      return h('div', [h('el-form', {
+      return h('div', {
+        ref: 'sketchpad'
+      }, [h('el-form', {
         props: {
           'label-width': this.settings.labelWidth,
-          inline: this.settings.inline
+          inline: this.settings.inline,
+          rules
         }
-      }, this.componentList.map((item, index) => h('el-form-item', {
+      }, this.componentList.map((item, index) => h('form-item', {
+        ref: 'row' + index,
+        props: {
+          index
+        }
+      }, [h('el-form-item', {
+        props: {
+          prop: item[0].viewName
+        },
         attrs: {
           index: index + 1
         },
@@ -158,7 +257,6 @@
           'row-highlight': this.currentComponentIndex === index,
           row: true
         },
-        ref: 'row' + index,
         style: {
           minHeight: '40px'
         }
@@ -183,18 +281,30 @@
             componentInfo: ele
           }
         })),
-        ruleSetting(item[0] ? item[0].uid : false)
-      ]))),
+        ruleSetting(index)
+      ])]))),
       <el-dialog
         class="dialog"
         title="校验规则设置"
         visible={this.dialogVisible}
         {...{on:{'update:visible': () => this.dialogVisible = false}}}>
-        <el-form-renderer
-          labelWidth="100px"
-          content={formConfig}
-          style="text-align: left">
-        </el-form-renderer>
+        <el-button onClick={this.addRule}>添加规则</el-button>
+        <el-collapse
+          value={this.activeTab}
+          onInput={(e) => this.activeTab = e}>
+          {currentRule.map((item, index) =>
+            <el-collapse-item
+              title={`第${index + 1}组`}
+              name={index}>
+              <el-form-renderer
+                labelWidth="100px"
+                content={item}
+                ref={`form${index}`}
+                style="text-align: left">
+              </el-form-renderer>
+            </el-collapse-item>
+          )}
+        </el-collapse>
         <div slot="footer" class="dialog-footer">
           <el-button onClick={() => this.dialogVisible = false}>取 消</el-button>
           <el-button type="primary" onClick={this.checkForm}>确 定</el-button>

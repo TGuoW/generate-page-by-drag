@@ -17,6 +17,7 @@
 
 <script>
 // import hljs from 'highlight.js'
+import deepClone from '../assets/js/deepClone'
 const filterAttr = [
   'name',
   'desc',
@@ -27,7 +28,9 @@ const filterAttr = [
   'innerText',
   'tid',
   'uid',
-  'value'
+  'value',
+  'viewName',
+  'rules'
 ]
 export default {
   data () {
@@ -75,16 +78,16 @@ export default {
       this.$message('复制失败！')
     },
     renderCode (componentList) {
-      /* fuck, 谁看懂这个垃圾代码我给他10块钱, 我是已经看不懂了 */
+      /* shi */
       const { formName } = this
       const formValueObj = {}
       const dataOther = {}
       let dataIndex = 1
-      let code = '<template>\n<el-form :model="' + formName + '" label-width="100px">\n'
+      let code = '<template>\n<el-form :model="' + formName + '" :rules="rules" label-width="100px">\n'
       componentList.forEach((item, index) => {
-        code += '  <el-form-item label="' + this.titleList[index] + '">\n'
+        code += '  <el-form-item label="' + this.titleList[index] + '" prop="' + item[0].viewName + '">\n'
         item.forEach(ele => {
-          let name = ele.name + dataIndex++
+          let name = ele.viewName
           formValueObj[name] = ele.value
           if (ele.childComponentArr || ele.data || ele.options) {
             dataOther[name] = ele.childComponentArr || ele.data || ele.options
@@ -113,6 +116,7 @@ export default {
       code += '  data () {\n'
       code += '    return {\n'
       code += this.renderData(formValueObj)
+      code += this.renderRules(componentList)
       code += this.renderOther(dataOther, '      ')
       code = code.substr(0, code.length - 2)
       code += '}\n'
@@ -175,6 +179,17 @@ export default {
       })
       code += space + '},\n'
       return code
+    },
+    renderRules (componentList) {
+      const rules = {}
+      componentList.forEach(item => {
+        item.forEach(ele => {
+          if (ele.rules.length) {
+            rules[ele.viewName] = deepClone(ele.rules)
+          }
+        })
+      })
+      return `      rules: ${this.renderOther(rules, '        ')}\n`
     },
     renderOther (dataObj, space) {
       let code = space === '      ' ? '' : '{\n'
