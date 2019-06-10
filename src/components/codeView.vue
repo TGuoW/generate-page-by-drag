@@ -1,6 +1,7 @@
 <template>
   <div>
     <el-button
+
       v-clipboard:copy="code"
       v-clipboard:success="onCopy"
       v-clipboard:error="onError"
@@ -82,7 +83,6 @@ export default {
       const { formName } = this
       const formValueObj = {}
       const dataOther = {}
-      let dataIndex = 1
       let code = '<template>\n<el-form :model="' + formName + '" :rules="rules" label-width="100px">\n'
       componentList.forEach((item, index) => {
         code += '  <el-form-item label="' + this.titleList[index] + '" prop="' + item[0].viewName + '">\n'

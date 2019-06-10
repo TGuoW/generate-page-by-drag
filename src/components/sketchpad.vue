@@ -44,6 +44,10 @@
           trigger: 'change'
         },
         formConfig: [{
+          $type: 'switch',
+          $id: 'required',
+          label: 'required'
+        }, {
           $type: 'select', // 类型，element-ui 提供的所有表单类型，即 el-xxx
           $id: 'type', // 每一个原子都存在id，用于存储该原子的值，注意不能重复
           label: 'type',
@@ -90,10 +94,6 @@
             label: 'email',
             value: 'email'
           }],
-        }, {
-          $type: 'switch',
-          $id: 'required',
-          label: 'required'
         }, {
           $type: 'input',
           $id: 'min',
@@ -195,8 +195,9 @@
         this.currentSettingIndex = index
         this.dialogVisible = true
         const component = this.componentList[index][0]
+        const formConfig = component.name !== 'Input' ? [deepClone(this.formConfig)[0]] : deepClone(this.formConfig)
         this.currentRule = component.rules.map(item => {
-          const newRuleConfig = deepClone(this.formConfig)
+          const newRuleConfig = deepClone(formConfig)
           newRuleConfig.forEach(ele => {
             if (item[ele.$id]) {
               ele.default = item[ele.$id]
@@ -215,15 +216,18 @@
           return res
         })
         component.rules = rules
-        this.rules[component.viewName] = deepClone(rules)
+        this.$set(this.rules, component.viewName, deepClone(rules))
+        // this.rules[component.viewName] = deepClone(rules)
         this.dialogVisible = false
       },
       addRule () {
-        this.currentRule.push(deepClone(this.formConfig))
+        const index = this.currentSettingIndex
+        const component = this.componentList[index][0]
+        this.currentRule.push(component.name !== 'Input' ? [deepClone(this.formConfig)[0]] : deepClone(this.formConfig))
       }
     },
     render(h) {
-      const {formConfig, titleList, currentRule, rules} = this
+      const {titleList, currentRule, rules} = this
       const ruleSetting = (name) => {
         return (
           <div
@@ -239,7 +243,8 @@
         props: {
           'label-width': this.settings.labelWidth,
           inline: this.settings.inline,
-          rules
+          rules,
+          model: {}
         }
       }, this.componentList.map((item, index) => h('form-item', {
         ref: 'row' + index,
