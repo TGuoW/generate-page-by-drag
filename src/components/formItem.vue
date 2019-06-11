@@ -59,8 +59,9 @@ export default {
     // },
     handleMouseup () {
       if (!this.isMove) return
-      this.canMove = false
       this.isMove = false
+      if (!this.canMove) return
+      this.canMove = false
       if (this.index === this.$store.state.currentComponentIndex) return
       this.$store.commit({
         type: 'spliceComponent',

@@ -19,7 +19,11 @@ export function createStore () {
     },
     mutations: {
       updateConfig (state, payload) {
+        delete payload.type
         state.settings = {...state.settings, ...payload}
+        if (payload.settings) {
+          state.settings = payload.settings
+        }
       },
       clearForm (state) {
         state.componentList = []

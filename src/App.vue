@@ -27,9 +27,10 @@ export default {
       }
     }
   },
-  mounted () {
+  beforeMount () {
     const componentList = localStorage.getItem('componentList')
     const titleList = localStorage.getItem('titleList')
+    const settings = localStorage.getItem('settings')
     if (componentList) {
       this.$store.commit({
         type: 'updateComponentList',
@@ -37,10 +38,17 @@ export default {
         titleList: JSON.parse(titleList)
       })
     }
+    if (settings) {
+      this.$store.commit({
+        type: 'updateConfig',
+        settings: JSON.parse(settings)
+      })
+    }
     window.addEventListener('mousemove', throttle(this.handleMouseMove, 14))
     window.onbeforeunload = () => {
       localStorage.setItem('componentList', JSON.stringify(this.$store.state.componentList))
       localStorage.setItem('titleList', JSON.stringify(this.$store.state.titleList))
+      localStorage.setItem('settings', JSON.stringify(this.$store.state.settings))
     }
   },
   methods: {

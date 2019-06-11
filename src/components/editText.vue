@@ -3,6 +3,7 @@
     :style="{
       height: height + 'px'
     }"
+    class="input"
     @keyup.enter="hideInput"
   >
     <el-input
@@ -96,5 +97,9 @@ export default {
 <style scoped>
   .main {
     height: 32px;
+  }
+  .input>* {
+    display: inline-block;
+    width: calc(100% - 20px);
   }
 </style>

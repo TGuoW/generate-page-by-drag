@@ -1,13 +1,11 @@
 <script>
 export default {
   data () {
+    const formValue = {...this.$store.state.settings}
+    formValue.labelWidth = parseInt(formValue.labelWidth).toString()
     return {
       dialogVisible: false,
-      formValue: {
-        formName: 'formValue',
-        labelWidth: '80',
-        inline: false
-      },
+      formValue,
       rules: {
         formName: [
           {min: 1, required: true, message: '请输入', trigger: 'blur'}

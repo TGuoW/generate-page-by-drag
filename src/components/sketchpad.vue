@@ -34,15 +34,17 @@
         currentRule: [],
         currentSettingIndex: 0,
         rules: {},
-        formValue: {
-          type: '',
-          method: '',
-          required: false,
-          min: '',
-          max: '',
-          length: '',
-          trigger: 'change'
-        },
+        isShowRule: false,
+        // formValue: {
+        //   type: '',
+        //   method: '',
+        //   required: false,
+        //   min: '',
+        //   max: '',
+        //   length: '',
+        //   trigger: 'change'
+        // },
+        formValue: {},
         formConfig: [{
           $type: 'switch',
           $id: 'required',
@@ -131,9 +133,32 @@
         handler () {
           throttle(this.updatePos, 100)()
         }
+      },
+      componentList: {
+        handler () {
+          this.setRules()
+          this.formValue = {}
+          this.componentList.forEach(item => {
+            this.formValue[item[0].viewName] = item[0].value
+          })
+        }
       }
     },
+    mounted () {
+      this.setRules()
+    },
     methods: {
+      setRules () {
+        this.componentList.forEach(item => {
+          const rules = deepClone(item[0].rules)
+          rules.forEach(ele => {
+            Object.keys(ele).forEach(i => {
+              if (parseInt(ele[i]).toString() === ele[i]) ele[i] = parseInt(ele[i])
+            })
+          })
+          this.$set(this.rules, item[0].viewName, rules)
+        })
+      },
       updatePos () {
         let { offsetHeight, offsetTop, offsetLeft, offsetWidth } = document.getElementsByClassName('stage__sketchpad')[0]
         const [x, y] = this.pos
@@ -200,7 +225,9 @@
           const newRuleConfig = deepClone(formConfig)
           newRuleConfig.forEach(ele => {
             if (item[ele.$id]) {
-              ele.default = item[ele.$id]
+              ele.$default = item[ele.$id]
+            } else {
+              delete ele.$default
             }
           })
           return newRuleConfig
@@ -214,6 +241,11 @@
             if (!res[item]) delete res[item]
           })
           return res
+        })
+        rules.forEach(ele => {
+          Object.keys(ele).forEach(i => {
+            if (parseInt(ele[i]).toString() === ele[i]) ele[i] = parseInt(ele[i])
+          })
         })
         component.rules = rules
         this.$set(this.rules, component.viewName, deepClone(rules))
@@ -244,7 +276,7 @@
           'label-width': this.settings.labelWidth,
           inline: this.settings.inline,
           rules,
-          model: {}
+          model: this.formValue
         }
       }, this.componentList.map((item, index) => h('form-item', {
         ref: 'row' + index,
@@ -253,7 +285,8 @@
         }
       }, [h('el-form-item', {
         props: {
-          prop: item[0].viewName
+          prop: item[0].viewName,
+          key: item[0].viewName
         },
         attrs: {
           index: index + 1
