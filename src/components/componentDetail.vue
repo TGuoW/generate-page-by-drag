@@ -133,21 +133,6 @@ export default {
   render (h) {
     const currentComponent = () => {
       return [
-        // h(this.currentComponent.componentName, {
-        //   on: {
-        //     input: (e) => this.sync('value', e)
-        //   },
-        //   props: this.formValue,
-        //   attrs: this.formValue,
-        //   style: {
-        //     width: '180px'
-        //   }
-        // }),
-        // }, [this.currentComponent.childComponentName
-        //   ? h(this.currentComponent.childComponentName, {
-        //     props: {...this.formValue, ...this.currentComponent.childComponentArr[0]}
-        //   })
-        //   : this.formValue.innerText]),
         h('div', this.currentComponent.name ? this.currentComponent.desc + ' ' + this.currentComponent.name : '')
       ]
     }

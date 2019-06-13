@@ -87,14 +87,8 @@ export default {
       }
     }
   },
-  created () {
-
-  },
   methods: {
     handleClick () {
-      // if (e) {
-      //   e.stopPropagation()
-      // }
       if (this.mode === 'delete' && !this.hasDelete) {
         this.hasDelete = true
         this.$store.commit({
@@ -110,29 +104,6 @@ export default {
           index: this.index
         })
       }
-    },
-    handleMousedown ({pageX, pageY}) {
-      if (event.target.className.includes('el-slider__button')) { // 对Slider特殊处理
-        return
-      }
-      event.stopPropagation()
-      this.isMove = true
-      this.currentPos = [pageX, pageY]
-    },
-    // handleMousemove ({pageX, pageY}) {
-
-    // },
-    handleMouseup () {
-      this.canMove = false
-      this.isMove = false
-      if (this.index === this.$store.state.currentComponentIndex) {
-        return
-      }
-      this.$store.commit({
-        type: 'spliceComponent',
-        prevIndex: this.index,
-        tid: this.componentInfo.tid
-      })
     },
     sync (prop, value) {
       this.$set(this.newComponentInfo, prop, value)
@@ -155,10 +126,7 @@ export default {
       style: this.canMove ? this.moveStyle : this.initialStyle,
       class: 'view',
       on: {
-        '!click': this.handleClick,
-        // 'mousedown': this.handleMousedown,
-        // 'mousemove': this.handleMousemove,
-        // 'mouseup': this.handleMouseup
+        '!click': this.handleClick
       }
     }, [vnode]) : ''
   }

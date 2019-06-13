@@ -35,15 +35,6 @@
         currentSettingIndex: 0,
         rules: {},
         isShowRule: false,
-        // formValue: {
-        //   type: '',
-        //   method: '',
-        //   required: false,
-        //   min: '',
-        //   max: '',
-        //   length: '',
-        //   trigger: 'change'
-        // },
         formValue: {},
         formConfig: [{
           $type: 'switch',

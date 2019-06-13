@@ -39,10 +39,6 @@ export default {
       pos: [0, 0],
       isMove: false
     }
-  },
-  mounted () {
-  },
-  methods: {
   }
 }
 </script>

@@ -46,17 +46,17 @@ export default {
     },
     checkForm () {
       this.$refs.ruleForm.validate((valid) => {
-          if (valid) {
-            this.$store.commit({
-              type: 'updateConfig',
-              formName: this.formValue.formName,
-              labelWidth: this.formValue.labelWidth + 'px',
-              inline: this.formValue.inline
-            })
-            this.dialogVisible = false
-          } else {
-            return false;
-          }
+        if (valid) {
+          this.$store.commit({
+            type: 'updateConfig',
+            formName: this.formValue.formName,
+            labelWidth: this.formValue.labelWidth + 'px',
+            inline: this.formValue.inline
+          })
+          this.dialogVisible = false
+        } else {
+          return false;
+        }
       })
     }
   },

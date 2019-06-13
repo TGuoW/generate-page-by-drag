@@ -17,7 +17,6 @@
 </template>
 
 <script>
-// import hljs from 'highlight.js'
 import deepClone from '../assets/js/deepClone'
 const filterAttr = [
   'name',
@@ -83,7 +82,10 @@ export default {
       const { formName } = this
       const formValueObj = {}
       const dataOther = {}
-      let code = '<template>\n<el-form :model="' + formName + '" :rules="rules" label-width="100px">\n'
+      // let code = '<template>\n<el-form :model="' + formName + '" :rules="rules" label-width="100px">\n'
+      let code = `<template>
+<el-form :model="${formName}" :rules="rules" label-width="100px">
+`
       componentList.forEach((item, index) => {
         code += '  <el-form-item label="' + this.titleList[index] + '" prop="' + item[0].viewName + '">\n'
         item.forEach(ele => {

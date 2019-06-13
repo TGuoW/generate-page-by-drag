@@ -10,7 +10,6 @@ export default {
   },
   data () {
     return {
-      newComponentInfo: {},
       currentPos: [],
       isShow: true,
       isMove: false,
@@ -19,8 +18,7 @@ export default {
         position: 'relative',
         left: '0',
         top: '0'
-      },
-      hasDelete: false,
+      }
     }
   },
   computed: {
@@ -54,9 +52,6 @@ export default {
       this.isMove = true
       this.currentPos = [pageX, pageY]
     },
-    // handleMousemove ({pageX, pageY}) {
-
-    // },
     handleMouseup () {
       if (!this.isMove) return
       this.isMove = false
@@ -74,9 +69,7 @@ export default {
       style: this.canMove ? this.moveStyle : this.initialStyle,
       class: 'view',
       on: {
-        // '!click': this.handleClick,
         'mousedown': this.handleMousedown,
-        // 'mousemove': this.handleMousemove,
         'mouseup': this.handleMouseup
       }
     }, this.$slots.default) : ''

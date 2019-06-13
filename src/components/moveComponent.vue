@@ -49,8 +49,7 @@ export default {
         this.isMove = false
         this.$store.commit({
           type: 'addComponent',
-          componentInfo: this.info,
-          // index: 0
+          componentInfo: this.info
         })
       }
     }
