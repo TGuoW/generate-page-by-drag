@@ -32,12 +32,6 @@ serverCompiler.watch({}, (err, stats) =>{
   bundle = JSON.parse(mfs.readFileSync(bundlePath,'utf-8'))
   console.log('new bundle generated')
 })
-let clientPort
-portfinder.basePort = 8080;
-portfinder.getPort(function (err, port) {
-  if (err) { throw err; }
-  clientPort = port
-});
 const handleRequest = async ctx => {
   if (!bundle) {
     ctx.body = '等待webpack打包完成后在访问在访问'
@@ -50,7 +44,7 @@ const handleRequest = async ctx => {
   }
 
   // 4、获取最新的 vue-ssr-client-manifest.json
-  const clientManifestResp = await axios.get('http://localhost:' + clientPort + '/vue-ssr-client-manifest.json')
+  const clientManifestResp = await axios.get('http://localhost:8089/vue-ssr-client-manifest.json')
   const clientManifest = clientManifestResp.data
 
   const renderer = createBundleRenderer(bundle, {
@@ -74,4 +68,3 @@ const router = new Router()
 router.get("*", handleRequest);
 
 module.exports = router
-module.exports.clientPort = clientPort

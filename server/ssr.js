@@ -8,7 +8,6 @@ const app = new Koa()
 
 const isDev = process.env.NODE_ENV !== 'production'
 const router = isDev ? require('./dev.ssr') : require('./server')
-const clientPort = require('./dev.ssr').clientPort
 app.use(router.routes()).use(router.allowedMethods())
 // 开放目录
 app.use(koaStatic(resolve("../dist")));
@@ -32,5 +31,4 @@ if (!serverPort) {
 
 
 module.exports = app
-module.exports.clientPort = clientPort
 module.exports.serverPort = serverPort

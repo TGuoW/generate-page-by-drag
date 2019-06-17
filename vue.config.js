@@ -6,14 +6,14 @@ const merge = require('lodash.merge')
 const TARGET_NODE = process.env.WEBPACK_TARGET === 'node'
 const target = TARGET_NODE ? 'server' : 'client'
 const isDev = process.env.NODE_ENV !== 'production'
-// const clientPort = require('./server/ssr').clientPort
 function resolve(dir) {
   return path.join(__dirname, '..', dir)
 }
 module.exports = {
-  publicPath: isDev ? 'http://127.0.0.1:8080' : '',
+  publicPath: isDev ? 'http://127.0.0.1:8089' : '',
   devServer: {
-    headers: {'Access-Control-Allow-Origin': '*'}
+    headers: {'Access-Control-Allow-Origin': '*'},
+    port: 8089
   },
   css: {
     extract: false
