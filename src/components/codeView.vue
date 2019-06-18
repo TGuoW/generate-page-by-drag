@@ -1,7 +1,6 @@
 <template>
   <div>
     <el-button
-
       v-clipboard:copy="code"
       v-clipboard:success="onCopy"
       v-clipboard:error="onError"
@@ -10,14 +9,58 @@
     >
       Copy!
     </el-button>
-    <pre v-highlight="code">
-      <code class="html xml hljs" />
+    <el-button
+      class="btn"
+      size="mini"
+      @click="mode = mode === 'preview' ? 'edit' : 'preview'"
+    >
+      {{ mode === 'preview' ? '编辑' : '预览' }}
+    </el-button>
+    <el-button
+      v-show="mode === 'edit'"
+      class="btn"
+      size="mini"
+      @click="mountCode"
+    >
+      运行
+    </el-button>
+    <pre
+      v-show="mode === 'preview'"
+      v-highlight="code"
+    >
+      <code
+        class="html xml hljs"
+        style="height: 100%"
+      />
     </pre>
+    <codemirror
+      v-show="mode === 'edit'"
+      ref="myCm"
+      class="codemirror"
+      :value="code"
+      :options="cmOptions"
+      @input="onCmCodeChange"
+    />
   </div>
 </template>
 
 <script>
+import Vue from 'vue'
+import VueCodemirror from 'vue-codemirror'
+// require styles
+import 'codemirror/lib/codemirror.css'
+// language js
+import 'codemirror/mode/vue/vue.js'
+// theme css
+// import 'codemirror/theme/base16-dark.css'
+import 'codemirror/theme/monokai.css'
 import deepClone from '../assets/js/deepClone'
+
+Vue.use(VueCodemirror, {
+  options: { theme: 'monokai'},
+  events: ['scroll']
+})
+
 const filterAttr = [
   'name',
   'desc',
@@ -28,7 +71,7 @@ const filterAttr = [
   'innerText',
   'tid',
   'uid',
-  'value',
+  // 'value',
   'viewName',
   'rules'
 ]
@@ -36,6 +79,28 @@ export default {
   data () {
     return {
       code: '',
+      mode: 'preview',
+      instance: null,
+      cmOptions: {
+        // codemirror options
+        tabSize: 4,
+        mode: 'text/x-vue',
+        // theme: 'base16-dark',
+        lineNumbers: true,
+        line: true,
+          styleActiveLine: true,
+          foldGutter: true,
+          styleSelectedText: true,
+          // mode: 'text/javascript',
+          // keyMap: "sublime",
+          matchBrackets: true,
+          showCursorWhenSelecting: true,
+          extraKeys: { "Ctrl": "autocomplete" },
+          hintOptions:{
+            completeSingle: false
+          }
+        // more codemirror options, 更多 codemirror 的高级配置...
+      }
     }
   },
   computed: {
@@ -53,28 +118,33 @@ export default {
       return this.$store.state.settings.formName
     }
   },
-  watch: {
-    componentList: {
-      handler () {
-
-      },
-      deep: true
-    }
-  },
   mounted () {
     setTimeout(() => {
       this.renderCode(this.componentList)
     }, 1000)
-
   },
   methods: {
-    onCopy: function () {
+    onCmCodeChange(newCode) {
+      this.code = newCode
+    },
+    mountCode () {
+      const { code } = this
+      const template = `<div>${code.match(/<template>([\s\S]*)<\/template>/)[1]}</div>`
+      const script = code.match(/<script>([\s\S]*)<\/script>/)[0]
+      const vueObj = eval(`(${script.slice(script.indexOf('{'), script.lastIndexOf('}') + 1)})`)
+      const res = Vue.compile(template)
+      this.instance = new Vue({
+        ...vueObj,
+        render: res.render
+      }).$mount('#sketchpad')
+    },
+    onCopy () {
       this.$message({
         message: '复制成功！',
         type: 'success'
       })
     },
-    onError: function () {
+    onError () {
       this.$message('复制失败！')
     },
     renderCode (componentList) {
@@ -99,8 +169,8 @@ export default {
                     '      v-model="' + formName + '.' + name + '"' +
                     this.objToString(ele, '    ', name) + '>\n'
             code += '      <' + ele.childComponentName + '\n' +
-                    '        v-for="(item, index) in options"\n' +
-                    '        :key="item"' + this.objToStringChild(ele.childComponentArr[0], '      ') + '/>\n'
+                    '        v-for="(item, index) in ' + name + '"\n' +
+                    '        :key="index"' + this.objToStringChild(ele.childComponentArr[0], '      ') + '/>\n'
             code += '    </' + ele.componentName + '>\n'
           } else {
             code += ele.componentName
@@ -208,11 +278,17 @@ export default {
 <style lang="scss" scoped>
   div {
     width: 100%;
-    height: 100%;
+    // height: 100%;
     background: #23241f;
   }
   .btn {
     margin: 12px 0 0 12px;
   }
+  .codemirror {
+    
+  }
+  .codemirror /deep/ .CodeMirror {
+    width: 100%;
+    height: calc(100% - 52px);
+  }
 </style>
-

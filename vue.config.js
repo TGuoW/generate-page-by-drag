@@ -28,6 +28,12 @@ module.exports = {
     output: {
       libraryTarget: TARGET_NODE ? 'commonjs2' : undefined
     },
+    resolve: {
+      alias: {
+        'vue$': 'vue/dist/vue',
+        '@': path.join(__dirname, 'src')
+      }
+    },
     // https://webpack.js.org/configuration/externals/#function
     // https://github.com/liady/webpack-node-externals
     // 外置化应用程序依赖模块。可以使服务器构建速度更快，

@@ -261,7 +261,10 @@
         )
       }
       return h('div', {
-        ref: 'sketchpad'
+        ref: 'sketchpad',
+        attrs: {
+          id: 'sketchpad'
+        }
       }, [h('el-form', {
         props: {
           'label-width': this.settings.labelWidth,
