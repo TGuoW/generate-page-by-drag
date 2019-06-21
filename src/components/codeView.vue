@@ -1,40 +1,33 @@
 <template>
-  <div>
-    <el-button
-      v-clipboard:copy="code"
-      v-clipboard:success="onCopy"
-      v-clipboard:error="onError"
-      class="btn"
-      size="mini"
-    >
-      Copy!
-    </el-button>
-    <el-button
-      class="btn"
-      size="mini"
-      @click="mode = mode === 'preview' ? 'edit' : 'preview'"
-    >
-      {{ mode === 'preview' ? '编辑' : '预览' }}
-    </el-button>
-    <el-button
-      v-show="mode === 'edit'"
-      class="btn"
-      size="mini"
-      @click="mountCode"
-    >
-      运行
-    </el-button>
-    <pre
-      v-show="mode === 'preview'"
-      v-highlight="code"
-    >
-      <code
-        class="html xml hljs"
-        style="height: 100%"
-      />
-    </pre>
+  <div class="code-view">
+    <div>
+      <el-button
+        v-clipboard:copy="code"
+        v-clipboard:success="onCopy"
+        v-clipboard:error="onError"
+        class="btn"
+        size="mini"
+      >
+        Copy!
+      </el-button>
+      <el-button
+        class="btn"
+        size="mini"
+        @click="changeMode"
+      >
+        {{ mode === 'preview' ? '编辑' : '预览' }}
+      </el-button>
+      <el-button
+        v-show="mode === 'edit'"
+        class="btn"
+        size="mini"
+        @click="mountCode"
+      >
+        运行
+      </el-button>
+    </div>
+
     <codemirror
-      v-show="mode === 'edit'"
       ref="myCm"
       class="codemirror"
       :value="code"
@@ -88,17 +81,18 @@ export default {
         // theme: 'base16-dark',
         lineNumbers: true,
         line: true,
-          styleActiveLine: true,
-          foldGutter: true,
-          styleSelectedText: true,
-          // mode: 'text/javascript',
-          // keyMap: "sublime",
-          matchBrackets: true,
-          showCursorWhenSelecting: true,
-          extraKeys: { "Ctrl": "autocomplete" },
-          hintOptions:{
-            completeSingle: false
-          }
+        styleActiveLine: true,
+        foldGutter: true,
+        styleSelectedText: true,
+        // mode: 'text/javascript',
+        // keyMap: "sublime",
+        matchBrackets: true,
+        showCursorWhenSelecting: true,
+        extraKeys: { "Ctrl": "autocomplete" },
+        hintOptions:{
+          completeSingle: false
+        },
+        readOnly: 'nocursor'
         // more codemirror options, 更多 codemirror 的高级配置...
       }
     }
@@ -124,19 +118,50 @@ export default {
     }, 1000)
   },
   methods: {
+    changeMode () {
+      const { mode } = this
+      if (mode === 'preview') {
+        this.mode = 'edit'
+        this.cmOptions.readOnly = false
+      } else {
+        this.$confirm('是否舍弃已编辑代码', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$store.commit({
+            type: 'changeMode',
+            mode: 'move'
+          })
+          this.mode = 'preview'
+          this.cmOptions.readOnly = 'nocursor'
+        }).catch(() => {
+        })
+      }
+    },
     onCmCodeChange(newCode) {
       this.code = newCode
     },
     mountCode () {
       const { code } = this
-      const template = `<div>${code.match(/<template>([\s\S]*)<\/template>/)[1]}</div>`
+      const template = `<div id="sketchpad">${code.match(/<template>([\s\S]*)<\/template>/)[1]}</div>`
       const script = code.match(/<script>([\s\S]*)<\/script>/)[0]
       const vueObj = eval(`(${script.slice(script.indexOf('{'), script.lastIndexOf('}') + 1)})`)
       const res = Vue.compile(template)
-      this.instance = new Vue({
-        ...vueObj,
-        render: res.render
-      }).$mount('#sketchpad')
+      this.$nextTick(() => {
+        this.$nextTick(() => {
+          this.instance = new Vue({
+            ...vueObj,
+            render: res.render
+          }).$mount('#sketchpad')
+        })
+      })
+      if (this.$store.state.mode !== 'edit') {
+        this.$store.commit({
+          type: 'changeMode',
+          mode: 'edit'
+        })
+      }
     },
     onCopy () {
       this.$message({
@@ -276,19 +301,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  div {
+  .code-view {
     width: 100%;
-    // height: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
     background: #23241f;
   }
   .btn {
     margin: 12px 0 0 12px;
   }
   .codemirror {
-    
+    flex: 1;
   }
   .codemirror /deep/ .CodeMirror {
     width: 100%;
-    height: calc(100% - 52px);
+    height: 100%;
   }
 </style>

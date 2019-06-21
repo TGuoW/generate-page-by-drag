@@ -103,6 +103,9 @@
       }
     },
     computed: {
+      mode () {
+        return this.$store.state.mode
+      },
       pos () {
         return this.$store.state.pos
       },
@@ -260,11 +263,14 @@
           </div>
         )
       }
-      return h('div', {
-        ref: 'sketchpad',
-        attrs: {
-          id: 'sketchpad'
-        }
+      const editView = h('div', [h('div', {
+          attrs: {
+            id: 'sketchpad'
+          }
+        })
+      ])
+      const previewView = h('div', {
+        ref: 'sketchpad'
       }, [h('el-form', {
         props: {
           'label-width': this.settings.labelWidth,
@@ -342,6 +348,8 @@
           <el-button type="primary" onClick={this.checkForm}>确 定</el-button>
         </div>
       </el-dialog>])
+
+      return this.mode === 'edit' ? editView : previewView
     },
   }
 </script>

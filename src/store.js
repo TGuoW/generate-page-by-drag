@@ -5,7 +5,7 @@ Vue.use(Vuex)
 export function createStore () {
   return new Vuex.Store({
     state: {
-      mode: 'move',
+      mode: 'move', // move, edit, delete
       componentList: [],
       pos: [0, 0],
       titleList: [],
