@@ -20,6 +20,9 @@ export default {
     }
   },
   computed: {
+    mode () {
+      return this.$store.state.mode
+    },
     pos () {
       return this.$store.state.pos
     },
@@ -47,6 +50,13 @@ export default {
     handleMouseUp () {
       if (this.isMove) {
         this.isMove = false
+        if (this.mode !== 'move') {
+          this.$message({
+            type: 'warning',
+            message: '请切换为预览模式'
+          })
+          return
+        }
         this.$store.commit({
           type: 'addComponent',
           componentInfo: this.info

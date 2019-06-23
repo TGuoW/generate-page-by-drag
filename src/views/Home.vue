@@ -13,7 +13,7 @@
       </div>
     </el-header>
     <el-container class="main">
-      <el-aside width="240px">
+      <el-aside :style="{width: mode === 'edit' ? '0' : '240px'}" class="stage__aside">
         <aside-menu />
       </el-aside>
       <el-main class="main__stage">
@@ -24,7 +24,7 @@
         <div class="stage__code">
           <code-view />
         </div>
-        <div class="stage__detail">
+        <div :class="['stage__detail', mode === 'edit' ? 'width-0' : '']">
           <component-detail />
         </div>
       </el-main>
@@ -47,6 +47,11 @@ export default {
     codeView,
     ThemePicker,
     componentDetail
+  },
+  computed: {
+    mode () {
+      return this.$store.state.mode
+    }
   },
   data () {
     return {
@@ -84,6 +89,10 @@ export default {
     height: 100%;
     padding: 10px;
     background: #e7e7e7;
+        .stage__aside {
+      width: 240px;
+      transition: all 300ms;
+    }
     .main__stage {
       margin-left: 10px;
       text-align: left;
@@ -108,9 +117,15 @@ export default {
       .stage__detail {
         background: #fff;
         margin-left: 10px;
-        min-width: 400px;
         width: 400px;
         overflow-y: scroll;
+        transition: all 300ms;
+        opacity: 1;
+      }
+      .width-0 {
+        width: 0;
+        margin-left: 0;
+        opacity: 0;
       }
     }
   }

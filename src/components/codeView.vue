@@ -28,9 +28,10 @@
     </div>
 
     <codemirror
+      v-if="a"
       ref="myCm"
       class="codemirror"
-      :value="code"
+      v-model="code"
       :options="cmOptions"
       @input="onCmCodeChange"
     />
@@ -71,6 +72,7 @@ const filterAttr = [
 export default {
   data () {
     return {
+      a: true,
       code: '',
       mode: 'preview',
       instance: null,
@@ -99,9 +101,7 @@ export default {
   },
   computed: {
     componentList () {
-      let componentList = this.$store.state.componentList
-      this.renderCode(componentList)
-      return componentList
+      return this.$store.state.componentList
     },
     titleList () {
       let titleList = this.$store.state.titleList
@@ -112,10 +112,13 @@ export default {
       return this.$store.state.settings.formName
     }
   },
-  mounted () {
-    setTimeout(() => {
+  watch: {
+    componentList () {
       this.renderCode(this.componentList)
-    }, 1000)
+    }
+  },
+  mounted () {
+    this.renderCode(this.componentList)
   },
   methods: {
     changeMode () {
@@ -123,6 +126,7 @@ export default {
       if (mode === 'preview') {
         this.mode = 'edit'
         this.cmOptions.readOnly = false
+        this.mountCode()
       } else {
         this.$confirm('是否舍弃已编辑代码', '提示', {
           confirmButtonText: '确定',
@@ -150,10 +154,10 @@ export default {
       const res = Vue.compile(template)
       this.$nextTick(() => {
         this.$nextTick(() => {
-          this.instance = new Vue({
-            ...vueObj,
-            render: res.render
-          }).$mount('#sketchpad')
+            this.instance = new Vue({
+              ...vueObj,
+              render: res.render
+            }).$mount('#sketchpad')
         })
       })
       if (this.$store.state.mode !== 'edit') {

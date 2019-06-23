@@ -19,6 +19,9 @@ export default {
   computed: {
     mode () {
       return this.$store.state.mode
+    },
+    btnDisabled () {
+      return !(this.mode === 'move')
     }
   },
   methods: {
@@ -62,25 +65,28 @@ export default {
   },
   render () {
     const { deleteComponent, clearForm, showConfig, checkForm } = this
-    const { formValue, rules } = this
+    const { formValue, rules, btnDisabled } = this
 
     return (
       <div class="main1">
         <el-button
           class="btn"
           type="danger"
+          disabled={btnDisabled}
           onClick={deleteComponent}>
           {this.mode === 'delete' ? '取消' : '删除'}
         </el-button>
         <el-button
           class="btn"
           type="danger"
+          disabled={btnDisabled}
           onClick={clearForm}>
           清空
         </el-button>
         <el-button
           class="btn"
           type="primary"
+          disabled={btnDisabled}
           onClick={showConfig}>
           全局配置
         </el-button>
