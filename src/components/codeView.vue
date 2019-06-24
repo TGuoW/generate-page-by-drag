@@ -28,10 +28,9 @@
     </div>
 
     <codemirror
-      v-if="a"
       ref="myCm"
-      class="codemirror"
       v-model="code"
+      class="codemirror"
       :options="cmOptions"
       @input="onCmCodeChange"
     />
@@ -65,14 +64,13 @@ const filterAttr = [
   'innerText',
   'tid',
   'uid',
-  // 'value',
+  'value',
   'viewName',
   'rules'
 ]
 export default {
   data () {
     return {
-      a: true,
       code: '',
       mode: 'preview',
       instance: null,
