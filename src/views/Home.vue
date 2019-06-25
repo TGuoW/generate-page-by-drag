@@ -1,29 +1,36 @@
 <template>
-  <el-container class="container">
-    <el-header>
-      <c-header class="header" />
-    </el-header>
-    <el-container class="main">
-      <el-aside
-        :style="{width: mode === 'edit' ? '0' : '240px'}"
-        class="stage__aside"
-      >
-        <aside-menu />
-      </el-aside>
-      <el-main class="main__stage">
-        <div class="stage__sketchpad">
-          <operate />
-          <sketchpad />
-        </div>
-        <div class="stage__code">
-          <code-view />
-        </div>
-        <div :class="['stage__detail', mode === 'edit' ? 'width-0' : '']">
-          <component-detail />
-        </div>
-      </el-main>
-    </el-container>
-  </el-container>
+  <div style="height: 100%">
+    <!-- <button @click="aaa">
+      asdad
+    </button> -->
+    <div class="container">
+      <cTransition :is-show="ss">
+        <el-header>
+          <c-header class="header" />
+        </el-header>
+      </cTransition>
+      <el-container class="main">
+        <el-aside
+          :style="{width: mode === 'edit' ? '0' : '240px'}"
+          class="stage__aside"
+        >
+          <aside-menu />
+        </el-aside>
+        <el-main class="main__stage">
+          <div class="stage__sketchpad">
+            <operate />
+            <sketchpad />
+          </div>
+          <div class="stage__code">
+            <code-view />
+          </div>
+          <div :class="['stage__detail', mode === 'edit' ? 'width-0' : '']">
+            <component-detail />
+          </div>
+        </el-main>
+      </el-container>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -33,8 +40,10 @@ import operate from '@/components/operate'
 import sketchpad from '@/components/sketchpad'
 import codeView from '@/components/codeView'
 import componentDetail from '@/components/componentDetail'
+import cTransition from '@/components/cTransition/cTransition'
 export default {
   components: {
+    cTransition,
     asideMenu,
     'c-header': header,
     operate,
@@ -42,9 +51,19 @@ export default {
     codeView,
     componentDetail
   },
+  data () {
+    return {
+      ss: true
+    }
+  },
   computed: {
     mode () {
       return this.$store.state.mode
+    }
+  },
+  methods: {
+    aaa () {
+      this.ss = !this.ss
     }
   }
 }
@@ -54,13 +73,14 @@ export default {
   @import "@/assets/scss/index.scss";
   .container {
     height: 100%;
+    display: flex;
+    flex-direction: column;
   }
 
   .main {
-    height: 100%;
     padding: 10px;
     background: #e7e7e7;
-        .stage__aside {
+    .stage__aside {
       width: 240px;
       transition: all 300ms;
     }
