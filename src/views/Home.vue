@@ -1,14 +1,9 @@
 <template>
   <div style="height: 100%">
-    <!-- <button @click="aaa">
-      asdad
-    </button> -->
     <div class="container">
-      <cTransition :is-show="ss">
-        <el-header>
-          <c-header class="header" />
-        </el-header>
-      </cTransition>
+      <el-header>
+        <c-header class="header" />
+      </el-header>
       <el-container class="main">
         <el-aside
           :style="{width: mode === 'edit' ? '0' : '240px'}"
@@ -40,10 +35,8 @@ import operate from '@/components/operate'
 import sketchpad from '@/components/sketchpad'
 import codeView from '@/components/codeView'
 import componentDetail from '@/components/componentDetail'
-import cTransition from '@/components/cTransition/cTransition'
 export default {
   components: {
-    cTransition,
     asideMenu,
     'c-header': header,
     operate,

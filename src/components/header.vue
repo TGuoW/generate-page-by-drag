@@ -6,8 +6,11 @@
         alt=""
       >
     </div>
+    <button @click="ss = !ss">asdasd</button>
     <div class="header__p">
-      <theme-picker style="line-height: 76px" />
+      <cTransition :is-show="ss">
+        <theme-picker style="line-height: 76px" />
+      </cTransition>
       <div>HELLO, USERNAME</div>
     </div>
   </el-header>
@@ -15,12 +18,15 @@
 
 <script>
 import ThemePicker from '@/components/ThemePicker'
+import cTransition from '@/components/cTransition/cTransition'
 export default {
   components: {
-    ThemePicker
+    ThemePicker,
+    cTransition
   },
   data () {
     return {
+      ss: false
     }
   }
 }
