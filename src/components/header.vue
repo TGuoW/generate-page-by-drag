@@ -8,7 +8,7 @@
     </div>
     <button @click="ss = !ss">asdasd</button>
     <div class="header__p">
-      <cTransition :is-show="ss">
+      <cTransition :is-show="ss" :needBg="true">
         <theme-picker style="line-height: 76px" />
       </cTransition>
       <div>HELLO, USERNAME</div>

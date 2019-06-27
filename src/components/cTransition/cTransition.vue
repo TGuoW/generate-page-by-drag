@@ -70,6 +70,7 @@ export default {
   },
   methods: {},
   render () {
+
     this.$nextTick(() => {
       const { target } = this
       const {bgElm, mainElm} = this.$refs
@@ -77,18 +78,22 @@ export default {
       if (getComputedStyle(targetElm, null).getPropertyValue('position') === 'static') {
         targetElm.style.position = 'relative'
       }
-      const sourceElm = this.$scopedSlots.default()[0].elm
-      addStyle({target: sourceElm}, mainElm)
+      // const sourceElm = this.$scopedSlots.default()[0].elm
+      // addStyle({target: sourceElm}, mainElm)
     })
+
     const bgClass = ['c-transition-bg']
     const mainClass = ['c-transition-main']
     if (this.isShow) {
       bgClass.push('c-transition-block')
       mainClass.push('c-transition-block')
     }
+    if (this.needBg) {
+      bgClass.push('c-transition-bg-bg')
+    }
     return (
       <div ref="bgElm" class={bgClass}>
-        <div ref="mainElm" class="c-transition-main">
+        <div ref="mainElm" class="c-transition-main" style="height: 40px; width:20px">
           {this.$scopedSlots.default()}
         </div>
       </div>
@@ -120,11 +125,13 @@ export default {
     right: 0;
     top: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.3);
     display: none;
     transition: all 500ms;
     overflow: hidden;
     animation: fade-in 0.5s;
+  }
+  .c-transition-bg-bg {
+    background: rgba(0, 0, 0, 0.3);
   }
   .c-transition-main {
     animation:slide-in 0.5s;
