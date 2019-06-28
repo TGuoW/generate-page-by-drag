@@ -55,7 +55,7 @@ export default {
     needBg: {
       type: Boolean,
       default () {
-        return false
+        return true
       }
     },
     target: {
@@ -63,27 +63,41 @@ export default {
       default () {
         return ''
       }
+    },
+    position: {
+      type: Array,
+      default () {
+        return ['bottom','right']
+      }
     }
   },
   data () {
     return {}
   },
   methods: {},
-  render () {
-
+  render (h) {
+    const { position } = this
     this.$nextTick(() => {
       const { target } = this
       const {bgElm, mainElm} = this.$refs
-      const targetElm = target ? document.querySelector(target) : bgElm.parentElement
-      if (getComputedStyle(targetElm, null).getPropertyValue('position') === 'static') {
-        targetElm.style.position = 'relative'
+      if (bgElm) {
+        const targetElm = target ? document.querySelector(target) : bgElm.parentElement
+        if (getComputedStyle(targetElm, null).getPropertyValue('position') === 'static') {
+          targetElm.style.position = 'relative'
+        }
       }
-      // const sourceElm = this.$scopedSlots.default()[0].elm
-      // addStyle({target: sourceElm}, mainElm)
+      if (mainElm) {
+        const sourceElm = this.$scopedSlots.default()[0].elm
+        addStyle({target: sourceElm}, mainElm)
+      }
     })
 
     const bgClass = ['c-transition-bg']
     const mainClass = ['c-transition-main']
+    const mainStyle = {}
+    position.forEach(property => {
+      mainStyle[property] = 0
+    })
     if (this.isShow) {
       bgClass.push('c-transition-block')
       mainClass.push('c-transition-block')
@@ -91,33 +105,56 @@ export default {
     if (this.needBg) {
       bgClass.push('c-transition-bg-bg')
     }
+    mainClass.push('c-transition-main-' + position[0] || 'left')
+    console.log(this.render(h))
     return (
-      <div ref="bgElm" class={bgClass}>
-        <div ref="mainElm" class="c-transition-main" style="height: 40px; width:20px">
-          {this.$scopedSlots.default()}
-        </div>
-      </div>
+      <transition name="slide-fade">
+        {/*this.isShow && <div ref="bgElm" class={bgClass}>
+          <div ref="mainElm" class={mainClass} style={mainStyle}>
+            {this.$scopedSlots.default()}
+          </div>
+        </div>*/}
+        {this.isShow && <div>123</div>}
+      </transition>
     )
   }
 }
 </script>
 
 <style scoped>
-  @keyframes slide-in {
-    0%{
-        transform: translateX(-100%)
-    }
-    100%{
-        transform: translateX(0)
-    }
+  .slide-fade-enter-active {
+    transition: all .8s ease;
   }
-  @keyframes fade-in {
-    0%{
-      opacity: 0;
-    }
-    100%{
-      opacity: 1;
-    }
+  .slide-fade-leave-active {
+    transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  }
+  .slide-fade-enter, .slide-fade-leave-to
+  /* .slide-fade-leave-active for below version 2.1.8 */ {
+    opacity: 0;
+  }
+  .slide-fade-enter .c-transition-main-left {
+    transform: translateX(-100%)
+  }
+  .slide-fade-leave-to .c-transition-main-left {
+    transform: translateX(-100%)
+  }
+    .slide-fade-enter .c-transition-main-top {
+    transform: translateY(-100%)
+  }
+  .slide-fade-leave-to .c-transition-main-top {
+    transform: translateY(-100%)
+  }
+    .slide-fade-enter .c-transition-main-right {
+    transform: translateX(100%)
+  }
+  .slide-fade-leave-to .c-transition-main-right {
+    transform: translateX(100%)
+  }
+    .slide-fade-enter .c-transition-main-bottom {
+    transform: translateY(100%)
+  }
+  .slide-fade-leave-to .c-transition-main-bottom {
+    transform: translateY(100%)
   }
   .c-transition-bg {
     position: absolute;
@@ -125,19 +162,19 @@ export default {
     right: 0;
     top: 0;
     bottom: 0;
-    display: none;
-    transition: all 500ms;
+    /* display: none; */
+    /* transition: all 500ms; */
     overflow: hidden;
-    animation: fade-in 0.5s;
+    /* animation: fade-in 0.5s; */
   }
   .c-transition-bg-bg {
     background: rgba(0, 0, 0, 0.3);
   }
   .c-transition-main {
-    animation:slide-in 0.5s;
+    /* animation:slide-in 0.5s; */
     position: absolute;
-    width: 100%;
-    height: 100%;
+    transition: all .8s;
+    position: absolute;
   }
   .c-transition-block {
     display: block;
