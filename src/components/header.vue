@@ -6,9 +6,6 @@
         alt=""
       >
     </div>
-    <button @click="text">
-      asdasd
-    </button>
     <div class="header__p">
       <theme-picker style="line-height: 76px" />
       <div>HELLO, USERNAME</div>
@@ -20,8 +17,7 @@
 import ThemePicker from '@/components/ThemePicker'
 export default {
   components: {
-    ThemePicker,
-    CTransition
+    ThemePicker
   }
 }
 </script>
