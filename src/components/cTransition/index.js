@@ -4,23 +4,23 @@ const CTransiionConstructor = Vue.extend(Main)
 
 let instance
 
-const CTransiion = function (options) {
-    instance = new CTransiionConstructor({
-        props: {
-            target: options.target,
-            needBg: options.needBg
-        },
-        data: {
-            render: options.render
-        }
-    })
-    instance.vm = instance.$mount()
-    console.log(instance.vm)
-    const parentElm = document.querySelector(options.target)
-    parentElm.appendChild(instance.vm.$el)
-    instance.vm.visible = true;
-    instance.dom = instance.vm.$el
-    return instance.vm
+export default function (options) {
+  instance = new CTransiionConstructor({
+    data () {
+      return {
+        target: options.target,
+        render: options.render
+      }
+    }
+  })
+  instance.needBg = options.needBg
+  instance.vm = instance.$mount()
+  instance.$slots.default = [options.render]
+  const parentElm = document.querySelector(options.target)
+  parentElm.appendChild(instance.vm.$el)
+  instance.vm.isShow = true;
+  instance.dom = instance.vm.$el
+  return instance.vm
 }
 
-export default CTransiion
+export const CTransition = Main

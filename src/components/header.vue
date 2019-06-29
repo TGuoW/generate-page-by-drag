@@ -10,12 +10,7 @@
       asdasd
     </button>
     <div class="header__p">
-      <!-- <cTransition
-        :is-show="ss"
-        :need-bg="true"
-      > -->
       <theme-picker style="line-height: 76px" />
-      <!-- </cTransition> -->
       <div>HELLO, USERNAME</div>
     </div>
   </el-header>
@@ -23,27 +18,10 @@
 
 <script>
 import ThemePicker from '@/components/ThemePicker'
-import cTransition from '@/components/cTransition'
 export default {
   components: {
     ThemePicker,
-    // cTransition
-  },
-  data () {
-    return {
-      ss: false
-    }
-  },
-  methods: {
-    text () {
-      cTransition({
-        target: '.header__p',
-        needBg: true,
-        render () {
-          return <div>123132</div>
-        }
-      })
-    }
+    CTransition
   }
 }
 </script>

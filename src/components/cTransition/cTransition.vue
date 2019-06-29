@@ -55,13 +55,7 @@ export default {
     needBg: {
       type: Boolean,
       default () {
-        return true
-      }
-    },
-    target: {
-      type: String,
-      default () {
-        return ''
+        return false
       }
     },
     position: {
@@ -86,12 +80,11 @@ export default {
           targetElm.style.position = 'relative'
         }
       }
-      if (mainElm) {
-        const sourceElm = this.$scopedSlots.default()[0].elm
-        addStyle({target: sourceElm}, mainElm)
+      if (mainElm && !this.render) {
+        const sourceElm = this.$slots.default[0].elm
+        sourceElm && addStyle({target: sourceElm}, mainElm)
       }
     })
-
     const bgClass = ['c-transition-bg']
     const mainClass = ['c-transition-main']
     const mainStyle = {}
@@ -106,15 +99,13 @@ export default {
       bgClass.push('c-transition-bg-bg')
     }
     mainClass.push('c-transition-main-' + position[0] || 'left')
-    console.log(this.render(h))
     return (
       <transition name="slide-fade">
-        {/*this.isShow && <div ref="bgElm" class={bgClass}>
+        {this.isShow && <div ref="bgElm" class={bgClass}>
           <div ref="mainElm" class={mainClass} style={mainStyle}>
-            {this.$scopedSlots.default()}
+            {this.$slots.default}
           </div>
-        </div>*/}
-        {this.isShow && <div>123</div>}
+        </div>}
       </transition>
     )
   }
