@@ -34,9 +34,9 @@ const addStyle = (options, instance) => {
   //     document.documentElement[scroll] +
   //     'px';
   // });
-  ['height', 'width'].forEach(property => {
-    maskStyle[property] = options.target.getBoundingClientRect()[property] + 'px';
-  });
+  // ['height', 'width'].forEach(property => {
+  //   maskStyle[property] = options.target.getBoundingClientRect()[property] + 'px';
+  // });
   const filterProperty = ['top', 'right', 'bottom', 'left']
   Object.keys(maskStyle).forEach(property => {
     !filterProperty.includes(property) && (instance.style[property] = maskStyle[property])
@@ -63,13 +63,33 @@ export default {
       default () {
         return ['bottom','right']
       }
+    },
+    mainStyle: {
+      type: Object,
+      default () {
+        return {}
+      }
     }
   },
   data () {
     return {}
   },
-  methods: {},
-  render (h) {
+  methods: {
+    close () {
+      this.isShow = false
+    },
+    handleAfterLeave () {
+      this.$destroy(true)
+    },
+    handleClick () {
+      if (event.target !== event.currentTarget) return
+      this.close()
+    }
+  },
+  beforeDestroy () {
+    
+  },
+  render () {
     const { position } = this
     this.$nextTick(() => {
       const { target } = this
@@ -87,10 +107,11 @@ export default {
     })
     const bgClass = ['c-transition-bg']
     const mainClass = ['c-transition-main']
-    const mainStyle = {}
+    const mainStyle = {...this.mainStyle}
     position.forEach(property => {
       mainStyle[property] = 0
     })
+
     if (this.isShow) {
       bgClass.push('c-transition-block')
       mainClass.push('c-transition-block')
@@ -100,8 +121,8 @@ export default {
     }
     mainClass.push('c-transition-main-' + position[0] || 'left')
     return (
-      <transition name="slide-fade">
-        {this.isShow && <div ref="bgElm" class={bgClass}>
+      <transition name="slide-fade"  on-after-leave={this.handleAfterLeave}>
+        {this.isShow && <div ref="bgElm" class={bgClass} on-click={this.handleClick}>
           <div ref="mainElm" class={mainClass} style={mainStyle}>
             {this.$slots.default}
           </div>
@@ -153,10 +174,8 @@ export default {
     right: 0;
     top: 0;
     bottom: 0;
-    /* display: none; */
-    /* transition: all 500ms; */
+    z-index: 100000;
     overflow: hidden;
-    /* animation: fade-in 0.5s; */
   }
   .c-transition-bg-bg {
     background: rgba(0, 0, 0, 0.3);

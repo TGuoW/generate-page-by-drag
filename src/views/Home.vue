@@ -4,7 +4,7 @@
       <el-header>
         <c-header class="header" />
       </el-header>
-      <el-container class="main">
+      <el-container class="main-container">
         <el-aside
           :style="{width: mode === 'edit' ? '0' : '240px'}"
           class="stage__aside"
@@ -44,19 +44,9 @@ export default {
     codeView,
     componentDetail
   },
-  data () {
-    return {
-      ss: true
-    }
-  },
   computed: {
     mode () {
       return this.$store.state.mode
-    }
-  },
-  methods: {
-    aaa () {
-      this.ss = !this.ss
     }
   }
 }
@@ -70,7 +60,7 @@ export default {
     flex-direction: column;
   }
 
-  .main {
+  .main-container {
     padding: 10px;
     background: #e7e7e7;
     .stage__aside {

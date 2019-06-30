@@ -1,5 +1,35 @@
 <template>
   <div class="code-view">
+    <el-dialog
+      title="提示"
+      :visible.sync="centerDialogVisible"
+      width="30%"
+      center>
+      <el-form
+        :model="templateForm"
+        ref="form"
+        :rules="templateFormRules"
+      >
+        <el-form-item
+          prop="name"
+          label="模板名称"
+        >
+          <el-input
+            placeholder="请输入模板名称"
+            v-model="templateForm.name"
+          />
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="centerDialogVisible = false">取 消</el-button>
+        <el-button
+          type="primary"
+          @click="checkSaveCode"
+        >
+          保存
+        </el-button>
+      </span>
+    </el-dialog>
     <div>
       <el-button
         v-clipboard:copy="code"
@@ -24,6 +54,13 @@
         @click="mountCode"
       >
         运行
+      </el-button>
+      <el-button
+        type="primary"
+        size="mini"
+        @click="saveCode"
+      >
+        保存
       </el-button>
     </div>
 
@@ -72,6 +109,7 @@ export default {
   data () {
     return {
       code: '',
+      templateCode: '',
       mode: 'preview',
       instance: null,
       cmOptions: {
@@ -94,7 +132,23 @@ export default {
         },
         readOnly: 'nocursor'
         // more codemirror options, 更多 codemirror 的高级配置...
-      }
+      },
+      templateForm: {
+        name: ''
+      },
+      templateFormRules: {
+        name: [
+          {required: true, message: '请输入模板名称', trigger: 'blur'},
+          {validator: (rule, value, callback) => {
+            if (this.$store.state.templateList.some(item => item.name === value)) {
+              callback(new Error('此名称已存在'))
+            } else {
+              callback()
+            }
+          }, trigger: 'blur'}
+        ]
+      },
+      centerDialogVisible: false
     }
   },
   computed: {
@@ -108,17 +162,55 @@ export default {
     },
     formName () {
       return this.$store.state.settings.formName
+    },
+    currentCode () {
+      return this.$store.state.currentCode
     }
   },
   watch: {
     componentList () {
       this.renderCode(this.componentList)
+    },
+    currentCode (val) {
+      this.$nextTick(() => {
+        this.code = val
+        if (this.mode === 'preview') {
+          this.changeMode()
+        } else {
+          this.mountCode()
+        }
+      })
     }
   },
   mounted () {
     this.renderCode(this.componentList)
   },
   methods: {
+    saveCode () {
+      this.centerDialogVisible = true
+    },
+    checkSaveCode () {
+      this.$refs.form.validate((valid) => {
+        if (valid) {
+          const content = {
+            componentList: this.$store.state.componentList,
+            titleList: this.$store.state.titleList,
+            code: this.code
+          }
+          this.$store.commit({
+            type: 'editTemplateList',
+            action: 'push',
+            params: [{
+              ...this.templateForm,
+              content
+            }]
+          })
+          this.centerDialogVisible = false
+        } else {
+          return false
+        }
+      })
+    },
     changeMode () {
       const { mode } = this
       if (mode === 'preview') {
@@ -223,6 +315,7 @@ export default {
       code += '}\n'
       code += '</' + 'script>\n'
       this.code = code
+      this.templateCode = code
     },
     objToStringChild (obj, space) {
       return Object.keys(obj).reduce((a, b) => {

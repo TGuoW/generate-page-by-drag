@@ -15,7 +15,9 @@ export function createStore () {
         inline: false
       },
       currentComponentIndex: 0,
-      currentComponent: {}
+      currentComponent: {},
+      templateList: [],
+      currentCode: ''
     },
     mutations: {
       updateConfig (state, payload) {
@@ -92,6 +94,17 @@ export function createStore () {
         // for (let i = payload.tid; i < state.componentList[payload.index].length; i++) {
         //   state.componentList[payload.index][i].tid--
         // }
+      },
+      editTemplateList (state, payload) {
+        let {action, params} = payload
+        params = deepClone(params)
+        state.templateList[action](...params)
+      },
+      checkoutTemplate (state, payload) {
+        const template = state.templateList.filter(item => item.name === payload.name)[0]
+        state.currentCode = template.content.code
+        state.componentList = template.content.componentList
+        state.titleList = template.content.titleList
       }
     },
     actions: {

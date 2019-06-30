@@ -13,7 +13,11 @@ export default function (options) {
       }
     }
   })
-  instance.needBg = options.needBg
+  const propertyArr = ['needBg', 'position', 'mainStyle']
+  propertyArr.forEach(property => {
+    options[property] !== undefined && (instance[property] = options[property])
+  })
+
   instance.vm = instance.$mount()
   instance.$slots.default = [options.render]
   const parentElm = document.querySelector(options.target)
