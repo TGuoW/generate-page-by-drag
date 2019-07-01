@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import deepClone from './assets/js/deepClone'
+import persistentVuex from './assets/js/persistentVuex'
 Vue.use(Vuex)
 export function createStore () {
   return new Vuex.Store({
@@ -20,12 +21,9 @@ export function createStore () {
       currentCode: ''
     },
     mutations: {
-      updateConfig (state, payload) {
+      updateSettings (state, payload) {
         delete payload.type
         state.settings = {...state.settings, ...payload}
-        if (payload.settings) {
-          state.settings = payload.settings
-        }
       },
       clearForm (state) {
         state.componentList = []
@@ -37,9 +35,11 @@ export function createStore () {
       updatePos (state, payload) {
         state.pos = payload.pos
       },
-      updateComponentList (state, payload) {
-        state.componentList = payload.componentList
-        state.titleList = payload.titleList
+      updateState (state, payload) {
+        delete payload.type
+        Object.keys(payload).forEach(key => {
+          payload[key] && (state[key] = payload[key])
+        })
       },
       addFormItem (state) {
         state.componentList.push([])
@@ -108,6 +108,7 @@ export function createStore () {
       }
     },
     actions: {
-    }
+    },
+    plugins: [persistentVuex()]
   })
 }

@@ -86,9 +86,6 @@ export default {
       this.close()
     }
   },
-  beforeDestroy () {
-    
-  },
   render () {
     const { position } = this
     this.$nextTick(() => {

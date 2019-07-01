@@ -4,10 +4,11 @@
       title="提示"
       :visible.sync="centerDialogVisible"
       width="30%"
-      center>
+      center
+    >
       <el-form
-        :model="templateForm"
         ref="form"
+        :model="templateForm"
         :rules="templateFormRules"
       >
         <el-form-item
@@ -15,12 +16,15 @@
           label="模板名称"
         >
           <el-input
-            placeholder="请输入模板名称"
             v-model="templateForm.name"
+            placeholder="请输入模板名称"
           />
         </el-form-item>
       </el-form>
-      <span slot="footer" class="dialog-footer">
+      <span
+        slot="footer"
+        class="dialog-footer"
+      >
         <el-button @click="centerDialogVisible = false">取 消</el-button>
         <el-button
           type="primary"

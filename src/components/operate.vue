@@ -51,7 +51,7 @@ export default {
       this.$refs.ruleForm.validate((valid) => {
         if (valid) {
           this.$store.commit({
-            type: 'updateConfig',
+            type: 'updateSettings',
             formName: this.formValue.formName,
             labelWidth: this.formValue.labelWidth + 'px',
             inline: this.formValue.inline

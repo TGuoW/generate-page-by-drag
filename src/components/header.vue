@@ -63,7 +63,7 @@ export default {
                     text-color="#fff"
                     active-text-color="#ffd04b"
                     on-select={this.selectMenu}>
-                    {this.templateList.map(({name}, index) =>
+                    {this.templateList.map(({name}) =>
                       <el-menu-item index={String(name)} key={name}>
                         <span slot="title">{name}</span>
                       </el-menu-item>
