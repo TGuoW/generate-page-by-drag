@@ -1,7 +1,7 @@
 const path = require('path')
 const VueSSRServerPlugin = require('vue-server-renderer/server-plugin')
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin')
-const nodeExternals = require('webpack-node-externals')
+// const nodeExternals = require('webpack-node-externals')
 const merge = require('lodash.merge')
 const TARGET_NODE = process.env.WEBPACK_TARGET === 'node'
 const target = TARGET_NODE ? 'server' : 'client'
@@ -38,49 +38,18 @@ module.exports = {
     // https://github.com/liady/webpack-node-externals
     // 外置化应用程序依赖模块。可以使服务器构建速度更快，
     // 并生成较小的 bundle 文件。
-    externals: TARGET_NODE
-      ? nodeExternals({
-        // 不要外置化 webpack 需要处理的依赖模块。
-        // 你可以在这里添加更多的文件类型。例如，未处理 *.vue 原始文件，
-        // 你还应该将修改 `global`（例如 polyfill）的依赖模块列入白名单
-        whitelist: [/\.css$/]
-      })
-      : undefined,
-    optimization: {
-      // splitChunks: undefined
-      splitChunks: isDev ? undefined : {
-        chunks: 'all',
-        cacheGroups: {
-          libs: {
-            name: 'chunk-libs',
-            test: /[\\/]node_modules[\\/]/,
-            priority: 10,
-            chunks: 'initial' // 只打包初始时依赖的第三方
-          },
-          elementUI: {
-            name: 'chunk-elementUI', // 单独将 elementUI 拆包
-            priority: 40, // 权重要大于 libs 和 app 不然会被打包进 libs 或者 app
-            test: /[\\/]node_modules[\\/]element-ui[\\/]/
-          },
-          elementUICss: {
-            name: 'chunk-elementUICss', // 单独将 elementUI 拆包
-            priority: 60, // 权重要大于 libs 和 app 不然会被打包进 libs 或者 app
-            test: /[\\/]node_modules[\\/]element-ui[\\/]lib[\\/]theme-chalk[\\/]/
-          },
-          highlight: {
-            name: 'chunk-highlight', // 单独将 elementUI 拆包
-            priority: 30, // 权重要大于 libs 和 app 不然会被打包进 libs 或者 app
-            test: /[\\/]node_modules[\\/]highlight\.js[\\/]/
-          },
-          commons: {
-            name: 'chunk-commons',
-            test: resolve('src/components'), // 可自定义拓展你的规则
-            minChunks: 3, // 最小公用次数
-            priority: 5,
-            reuseExistingChunk: true
-          }
-        }
-      },
+    // externals: TARGET_NODE
+    //   ? nodeExternals({
+    //     // 不要外置化 webpack 需要处理的依赖模块。
+    //     // 你可以在这里添加更多的文件类型。例如，未处理 *.vue 原始文件，
+    //     // 你还应该将修改 `global`（例如 polyfill）的依赖模块列入白名单
+    //     whitelist: [/\.css$/]
+    //   })
+    //   : undefined,
+    externals: {
+      'vue': 'Vue',
+      'vue-router': 'VueRouter',
+      'vuex': 'Vuex'
     },
     plugins: [TARGET_NODE ? new VueSSRServerPlugin() : new VueSSRClientPlugin()]
   }),
@@ -93,5 +62,41 @@ module.exports = {
           optimizeSSR: false
         })
       })
+      config
+      // https://webpack.js.org/configuration/devtool/#development
+      .when(process.env.NODE_ENV === 'development',
+        config => config.devtool('cheap-source-map')
+      )
+
+    config
+      .when(process.env.NODE_ENV !== 'development',
+        config => {
+          config
+            .optimization.splitChunks({
+              chunks: 'all',
+              cacheGroups: {
+                libs: {
+                  name: 'chunk-libs',
+                  test: /[\\/]node_modules[\\/]/,
+                  priority: 10,
+                  chunks: 'initial' // only package third parties that are initially dependent
+                },
+                codemirror: {
+                  name: 'chunk-codemirror', // split elementUI into a single package
+                  priority: 20, // the weight needs to be larger than libs and app or it will be packaged into libs or app
+                  test: /[\\/]node_modules[\\/]_?codemirror(.*)/ // in order to adapt to cnpm
+                },
+                commons: {
+                  name: 'chunk-commons',
+                  test: resolve('src/components'), // can customize your rules
+                  minChunks: 3, //  minimum common number
+                  priority: 5,
+                  reuseExistingChunk: true
+                }
+              }
+            })
+          config.optimization.runtimeChunk('single')
+        }
+      )
   }
 }

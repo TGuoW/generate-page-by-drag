@@ -37,7 +37,7 @@ yarn run build
 - [x] 支持Tree
 - [x] 代码生成优化
 - [x] 页面优化
-- [x] SSR
+- [ ] SSR
 - [x] 拖曳
 - [x] 代码缓存
 - [x] 编辑代码--全局mode
