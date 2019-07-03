@@ -4,6 +4,12 @@ const typeofVariable = function (varibale) {
 
 const persistentVuex = function (options = {}) {
   return function (store) {
+    try {
+      localStorage.setItem('@@', '@@')
+      localStorage.removeItem('@@')
+    } catch (e) {
+      return
+    }
     let state = Object.keys(store.state)
     const { includes, excludes } = options
     if (includes) {
