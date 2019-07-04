@@ -12,7 +12,8 @@
     "start": "cross-env NODE_ENV=production node ./server/ssr.js",
     "lint": "vue-cli-service lint",
     "dev:serve": "cross-env WEBPACK_TARGET=node node ./server/ssr.js",
-    "dev": "concurrently \"npm run serve\" \"npm run dev:serve\" "
+    "dev": "concurrently \"npm run serve\" \"npm run dev:serve\" ",
+    "dll": "webpack -p --progress --config ./webpack.dll.conf.js"
   },
   "dependencies": {
     "@femessage/el-form-renderer": "^1.5.6",
@@ -46,6 +47,7 @@
     "vue-server-renderer": "^2.5.21",
     "vue-template-compiler": "^2.5.21",
     "webpack": "^4.20.2",
+    "webpack-cli": "^3.3.5",
     "webpack-node-externals": "^1.7.2"
   },
   "eslintConfig": {

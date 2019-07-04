@@ -109,6 +109,8 @@ export function createStore () {
     },
     actions: {
     },
-    plugins: [persistentVuex()]
+    plugins: [persistentVuex({
+      excludes: ['mode', 'pos']
+    })]
   })
 }
