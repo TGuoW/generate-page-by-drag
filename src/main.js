@@ -12,6 +12,7 @@ Vue.component('el-form-renderer', ElFormRenderer)
 
 // Vue.use(elementUI)
 Vue.config.productionTip = false
+Vue.config.devtools = process.env.NODE_ENV === 'development'
 
 export function createApp () {
   const router = createRouter()

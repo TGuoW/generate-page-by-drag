@@ -65,7 +65,7 @@ export default {
     background: #e7e7e7;
     .stage__aside {
       width: 240px;
-      transition: all 300ms;
+      transition: width 300ms;
     }
     .main__stage {
       margin-left: 10px;
@@ -93,7 +93,7 @@ export default {
         margin-left: 10px;
         width: 400px;
         overflow-y: scroll;
-        transition: all 300ms;
+        transition: width 300ms;
         opacity: 1;
       }
       .width-0 {

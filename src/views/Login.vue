@@ -2,12 +2,17 @@
   <div class="home">
     <el-form class="form">
       <el-form-item>
-        <keep-alive>
-          <el-input placeholder="请输入用户名" />
-        </keep-alive>
+        <el-input
+          value="admin"
+          placeholder="请输入用户名"
+        />
       </el-form-item>
       <el-form-item>
-        <el-input placeholder="请输入密码" />
+        <el-input
+          value="123456"
+          type="password"
+          placeholder="请输入密码"
+        />
       </el-form-item>
       <el-form-item>
         <el-button

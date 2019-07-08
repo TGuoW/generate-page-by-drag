@@ -1,4 +1,5 @@
 <script>
+
 export default {
   data () {
     const formValue = {...this.$store.state.settings}
@@ -66,30 +67,21 @@ export default {
   render () {
     const { deleteComponent, clearForm, showConfig, checkForm } = this
     const { formValue, rules, btnDisabled } = this
-
+    const createButton = (type, disabled, content, onClick) => (
+      <el-button
+        class="btn"
+        type={type}
+        size="small"
+        disabled={disabled}
+        onClick={onClick}>
+        {content}
+      </el-button>
+    )
     return (
       <div class="main1">
-        <el-button
-          class="btn"
-          type="danger"
-          disabled={btnDisabled}
-          onClick={deleteComponent}>
-          {this.mode === 'delete' ? '取消' : '删除'}
-        </el-button>
-        <el-button
-          class="btn"
-          type="danger"
-          disabled={btnDisabled}
-          onClick={clearForm}>
-          清空
-        </el-button>
-        <el-button
-          class="btn"
-          type="primary"
-          disabled={btnDisabled}
-          onClick={showConfig}>
-          全局配置
-        </el-button>
+        {createButton('danger', btnDisabled && this.mode !== 'delete', this.mode === 'delete' ? '取消' : '删除', deleteComponent)}
+        {createButton('danger', btnDisabled, '清空', clearForm)}
+        {createButton('primary', btnDisabled, '全局配置', showConfig)}
         <el-dialog
           class="dialog"
           title="全局配置"

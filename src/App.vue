@@ -19,25 +19,31 @@ const throttle = (func, wait) => {
 
 export default {
   watch: {
-    '$store.state.mode' (val) {
-      if (val === 'delete') {
-        document.body.style.cursor = 'no-drop'
-      } else {
-        document.body.style.cursor = ''
-      }
+    '$store.state.mode': {
+      handler (val) {
+        if (val === 'edit') {
+          window.removeEventListener('mousemove', this.handleMouseMove)
+        } else {
+          window.addEventListener('mousemove', this.handleMouseMove)
+        }
+        if (val === 'delete') {
+          document.body.style.cursor = 'no-drop'
+        } else {
+          document.body.style.cursor = ''
+        }
+      },
+      immediate: true
     }
   },
-  beforeMount () {
-    window.addEventListener('mousemove', throttle(this.handleMouseMove, 14))
-  },
   methods: {
-    handleMouseMove ({ pageX, pageY }) {
+    handleMouseMove: throttle(function ({ pageX, pageY }) {
       this.$store.commit({
         type: 'updatePos',
         pos: [pageX, pageY]
       })
-    }
-  }
+    }, 18)
+  },
+
 }
 </script>
 
