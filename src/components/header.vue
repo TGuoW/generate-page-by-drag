@@ -58,17 +58,19 @@ export default {
             width: '240px',
             background: '#545c64'
           },
-          render: <el-menu
-                    background-color="#545c64"
-                    text-color="#fff"
-                    active-text-color="#ffd04b"
-                    on-select={this.selectMenu}>
-                    {this.templateList.map(({name}) =>
-                      <el-menu-item index={String(name)} key={name}>
-                        <span slot="title">{name}</span>
-                      </el-menu-item>
-                    )}
-                  </el-menu>
+          render: this.templateList.length ?
+                    <el-menu
+                      background-color="#545c64"
+                      text-color="#fff"
+                      active-text-color="#ffd04b"
+                      on-select={this.selectMenu}>
+                      {this.templateList.map(({name}) =>
+                        <el-menu-item index={String(name)} key={name}>
+                          <span slot="title">{name}</span>
+                        </el-menu-item>
+                      )}
+                    </el-menu>
+                  : <div style="color: #fff;line-height: 3rem;">暂无内容</div>
         })
       }
     }

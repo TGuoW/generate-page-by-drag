@@ -6,12 +6,15 @@
       </el-header>
       <el-container class="main-container">
         <el-aside
-          :style="{width: mode === 'edit' ? '0' : '240px'}"
+          :style="{width: mode === 'edit' ? '0' : '250px'}"
           class="stage__aside"
         >
           <aside-menu />
         </el-aside>
-        <el-main class="main__stage">
+        <el-main
+          class="main__stage"
+          :style="mode === 'edit' ? {margin: 0} : {}"
+        >
           <div class="stage__sketchpad">
             <operate />
             <sketchpad />
@@ -19,10 +22,13 @@
           <div class="stage__code">
             <code-view />
           </div>
-          <div :class="['stage__detail', mode === 'edit' ? 'width-0' : '']">
-            <component-detail />
-          </div>
         </el-main>
+        <div
+          class="stage__detail"
+          :style="{width: mode === 'edit' ? '0' : '400px'}"
+        >
+          <component-detail />
+        </div>
       </el-container>
     </div>
   </div>
@@ -63,17 +69,24 @@ export default {
   .main-container {
     padding: 10px;
     background: #e7e7e7;
+    position: relative;
     .stage__aside {
-      width: 240px;
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      height: auto;
+      margin: 10px;
       transition: width 300ms;
     }
     .main__stage {
-      margin-left: 10px;
+      margin: 0 410px 0 260px;
       text-align: left;
       width: 100%;
       height: 100%;
       padding: 0;
       display: flex;
+      transition: margin 300ms;
       .stage__sketchpad {
         padding: 10px;
         min-width: 360px;
@@ -88,19 +101,24 @@ export default {
         flex: 1;
         overflow-y: scroll;
       }
-      .stage__detail {
-        background: #fff;
-        margin-left: 10px;
-        width: 400px;
-        overflow-y: scroll;
-        transition: width 300ms;
-        opacity: 1;
-      }
-      .width-0 {
-        width: 0;
-        margin-left: 0;
-        opacity: 0;
-      }
     }
+    .stage__detail {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      background: #fff;
+      width: 400px;
+      overflow-y: scroll;
+      margin: 10px;
+      transition: width 300ms;
+      opacity: 1;
+      text-align: left;
+    }
+  }
+  .width-0 {
+    width: 0;
+    margin-left: 0;
+    opacity: 0;
   }
 </style>
