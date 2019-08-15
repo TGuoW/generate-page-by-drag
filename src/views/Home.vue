@@ -87,6 +87,9 @@ export default {
       padding: 0;
       display: flex;
       transition: margin 300ms;
+          &::-webkit-scrollbar {
+      background: #fff;
+    }
       .stage__sketchpad {
         padding: 10px;
         min-width: 360px;
