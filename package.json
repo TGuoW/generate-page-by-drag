@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@femessage/el-form-renderer": "^1.5.6",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "element-ui": "^2.9.1",
     "highlight.js": "^9.14.2",
     "koa": "^2.5.3",
